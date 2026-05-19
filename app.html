@@ -1,0 +1,3080 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>A1 German Marathon Trainer</title>
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+                -webkit-tap-highlight-color: transparent;
+            }
+            /* Smooth transition for theme switching */
+            .theme-transition {
+                transition:
+                    background-color 0.3s ease,
+                    border-color 0.3s ease,
+                    text-color 0.3s ease;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-slate-50 text-slate-900 min-h-screen flex flex-col theme-transition"
+    >
+        <!-- TOP HEADER -->
+        <header
+            class="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 py-3 md:px-8 shadow-sm"
+        >
+            <div
+                class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+            >
+                <!-- Title & Target -->
+                <div class="flex items-center gap-3">
+                    <div
+                        class="bg-indigo-600 text-white p-2 rounded-xl shadow-md"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                            />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg md:text-xl text-slate-800">
+                            A1 German Elite Marathon
+                        </h1>
+                        <p class="text-xs text-slate-500">
+                            June 5th Target: 3,000 Exercises Sprint
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quick Metrics Tracker -->
+                <div
+                    class="flex items-center gap-6 bg-slate-100 px-4 py-2 rounded-2xl w-full md:w-auto justify-around"
+                >
+                    <div class="text-center">
+                        <span
+                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                            >Progress</span
+                        >
+                        <span
+                            id="header-progress"
+                            class="font-bold text-indigo-600 text-lg"
+                            >0 / 300</span
+                        >
+                    </div>
+                    <div class="h-8 w-px bg-slate-300"></div>
+                    <div class="text-center">
+                        <span
+                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                            >Accuracy</span
+                        >
+                        <span
+                            id="header-accuracy"
+                            class="font-bold text-emerald-600 text-lg"
+                            >100%</span
+                        >
+                    </div>
+                    <div class="h-8 w-px bg-slate-300"></div>
+                    <div class="text-center">
+                        <span
+                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                            >Active Run</span
+                        >
+                        <span
+                            id="header-score"
+                            class="font-bold text-amber-600 text-lg"
+                            >0 Correct</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN STUDY AREA -->
+        <main
+            class="max-w-7xl mx-auto w-full flex-1 p-4 md:p-8 flex flex-col lg:flex-row gap-8"
+        >
+            <!-- LEFT NAVIGATION: SECTIONS -->
+            <aside class="w-full lg:w-80 flex flex-col gap-4 shrink-0">
+                <div
+                    class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-3"
+                >
+                    <h3
+                        class="font-bold text-sm text-slate-500 uppercase tracking-wider mb-2"
+                    >
+                        Workbook Chapters
+                    </h3>
+
+                    <button
+                        onclick="switchSection(1)"
+                        id="btn-sec-1"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between bg-indigo-50 text-indigo-700 border border-indigo-100"
+                    >
+                        <span>Sec 1: Nom vs. Akk</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-indigo-200"
+                            id="badge-sec-1"
+                            >0/50</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(2)"
+                        id="btn-sec-2"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>Sec 2: Dative Case</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-2"
+                            >0/50</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(3)"
+                        id="btn-sec-3"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>Sec 3: Possessive Articles</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-3"
+                            >0/50</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(4)"
+                        id="btn-sec-4"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>Sec 4: Mixed Drills</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-4"
+                            >0/50</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(5)"
+                        id="btn-sec-5"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>Sec 5: Sentence & Letters</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-5"
+                            >0/100</span
+                        >
+                    </button>
+                </div>
+
+                <!-- Reset & Support -->
+                <div
+                    class="bg-slate-100 p-4 rounded-xl border border-slate-200 text-center"
+                >
+                    <p class="text-xs text-slate-500 mb-3">
+                        Answers are processed inside memory. Keep browser active
+                        to save session.
+                    </p>
+                    <button
+                        onclick="resetProgress()"
+                        class="text-xs font-semibold text-rose-600 hover:text-rose-800 transition"
+                    >
+                        Reset Workbook State
+                    </button>
+                </div>
+            </aside>
+
+            <!-- RIGHT ACTION CARD CONTAINER -->
+            <section class="flex-1 flex flex-col gap-6">
+                <!-- Section Title & Navigation -->
+                <div
+                    class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4"
+                >
+                    <div>
+                        <h2
+                            id="current-section-title"
+                            class="font-extrabold text-xl text-slate-800"
+                        >
+                            Section 1: Nominative vs. Accusative
+                        </h2>
+                        <p
+                            id="current-section-desc"
+                            class="text-sm text-slate-500"
+                        >
+                            Identify Subjects (Nom.) vs. Objects (Akk.). Tap or
+                            type correct articles.
+                        </p>
+                    </div>
+
+                    <!-- Pagination controls -->
+                    <div class="flex items-center gap-2">
+                        <button
+                            onclick="prevPage()"
+                            class="p-2 rounded-lg border border-slate-300 hover:bg-slate-50 transition active:scale-95"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 19l-7-7 7-7"
+                                />
+                            </svg>
+                        </button>
+                        <span
+                            id="page-indicator"
+                            class="text-sm font-semibold text-slate-700 bg-slate-100 px-3 py-1 rounded-md"
+                            >Page 1 of 5</span
+                        >
+                        <button
+                            onclick="nextPage()"
+                            class="p-2 rounded-lg border border-slate-300 hover:bg-slate-50 transition active:scale-95"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- QUESTIONS MAIN BATCH LIST -->
+                <div id="questions-container" class="flex flex-col gap-6">
+                    <!-- Interactive Question Cards will render here dynamically -->
+                </div>
+
+                <!-- FOOTER PAGINATION -->
+                <div class="flex items-center justify-between mt-4">
+                    <button
+                        onclick="prevPage()"
+                        class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white font-medium hover:bg-slate-50 transition active:scale-95 flex items-center gap-2 text-sm text-slate-700"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"
+                            />
+                        </svg>
+                        Previous Questions
+                    </button>
+                    <button
+                        onclick="nextPage()"
+                        class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white font-medium hover:bg-slate-50 transition active:scale-95 flex items-center gap-2 text-sm text-slate-700"
+                    >
+                        Next Questions
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- DATABASE ENGINE -->
+        <script>
+            // Generate all 300 Questions structurally
+            const questionsDatabase = [];
+
+            // --- SECTION 1 DATABUILD (Q1 - 50) ---
+            const s1Raw = [
+                {
+                    id: 1,
+                    prompt: "Das ist ______ Kaffee.",
+                    hint: "der Kaffee / This is a coffee (Nom.)",
+                    ans: "ein",
+                    opt: ["ein", "einen", "eine", "kein"],
+                },
+                {
+                    id: 2,
+                    prompt: "Ich möchte ______ Kaffee.",
+                    hint: "der Kaffee / I would like a coffee (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 3,
+                    prompt: "______ Hund bellt.",
+                    hint: "der Hund / The dog is barking (Nom.)",
+                    ans: "Der",
+                    opt: ["Der", "Den", "Das", "Ein"],
+                },
+                {
+                    id: 4,
+                    prompt: "Ich sehe ______ Hund.",
+                    hint: "der Hund / I see a dog (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 5,
+                    prompt: "Hast du ______ Laptop?",
+                    hint: "der Laptop / Do you have a laptop? (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 6,
+                    prompt: "______ Laptop ist neu.",
+                    hint: "der Laptop / The laptop is new (Nom.)",
+                    ans: "Der",
+                    opt: ["Der", "Den", "Ein", "Einen"],
+                },
+                {
+                    id: 7,
+                    prompt: "Er sucht ______ Schlüssel.",
+                    hint: "der Schlüssel / He is looking for a key (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 8,
+                    prompt: "Wo ist ______ Schlüssel?",
+                    hint: "der Schlüssel / Where is the key? (Nom.)",
+                    ans: "der",
+                    opt: ["der", "den", "ein", "einen"],
+                },
+                {
+                    id: 9,
+                    prompt: "Wir haben ______ Auto.",
+                    hint: "das Auto / We have a car (Akk.)",
+                    ans: "ein",
+                    opt: ["ein", "einen", "eine", "kein"],
+                },
+                {
+                    id: 10,
+                    prompt: "______ Auto ist rot.",
+                    hint: "das Auto / The car is red (Nom.)",
+                    ans: "Das",
+                    opt: ["Das", "Der", "Ein", "Eine"],
+                },
+                {
+                    id: 11,
+                    prompt: "Sie kauft ______ Buch.",
+                    hint: "das Buch / She buys a book (Akk.)",
+                    ans: "ein",
+                    opt: ["ein", "einen", "eine", "kein"],
+                },
+                {
+                    id: 12,
+                    prompt: "Ich finde ______ Buch nicht.",
+                    hint: "das Buch / I can't find the book (Akk.)",
+                    ans: "das",
+                    opt: ["das", "der", "ein", "eine"],
+                },
+                {
+                    id: 13,
+                    prompt: "Ich trinke ______ Tee.",
+                    hint: "der Tee / I am drinking a tea (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 14,
+                    prompt: "Das ist ______ Tee.",
+                    hint: "der Tee / That is a tea (Nom.)",
+                    ans: "ein",
+                    opt: ["ein", "einen", "eine", "kein"],
+                },
+                {
+                    id: 15,
+                    prompt: "Er isst ______ Apfel.",
+                    hint: "der Apfel / He is eating an apple (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 16,
+                    prompt: "Ich brauche ______ Euro.",
+                    hint: "der Euro / I need a euro (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 17,
+                    prompt: "______ Euro liegt auf dem Tisch.",
+                    hint: "der Euro / A euro is lying on the table (Nom.)",
+                    ans: "Ein",
+                    opt: ["Ein", "Einen", "Eine", "Kein"],
+                },
+                {
+                    id: 18,
+                    prompt: "Wir mieten ______ Wohnung.",
+                    hint: "die Wohnung / We are renting an apartment (Akk.)",
+                    ans: "eine",
+                    opt: ["ein", "einen", "eine", "keine"],
+                },
+                {
+                    id: 19,
+                    prompt: "______ Wohnung ist groß.",
+                    hint: "die Wohnung / The apartment is big (Nom.)",
+                    ans: "Die",
+                    opt: ["Die", "Der", "Eine", "Ein"],
+                },
+                {
+                    id: 20,
+                    prompt: "Suchst du ______ Handy?",
+                    hint: "das Handy / Are you looking for the phone? (Akk.)",
+                    ans: "das",
+                    opt: ["das", "der", "ein", "eine"],
+                },
+                {
+                    id: 21,
+                    prompt: "______ Handy ist kaputt.",
+                    hint: "das Handy / The phone is broken (Nom.)",
+                    ans: "Das",
+                    opt: ["Das", "Der", "Ein", "Eine"],
+                },
+                {
+                    id: 22,
+                    prompt: "Ich bestelle ______ Salat.",
+                    hint: "der Salat / I order a salad (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 23,
+                    prompt: "______ Salat schmeckt gut.",
+                    hint: "der Salat / The salad tastes good (Nom.)",
+                    ans: "Der",
+                    opt: ["Der", "Den", "Ein", "Einen"],
+                },
+                {
+                    id: 24,
+                    prompt: "Kennst du ______ Weg?",
+                    hint: "der Weg / Do you know the way? (Akk.)",
+                    ans: "den",
+                    opt: ["der", "den", "das", "ein"],
+                },
+                {
+                    id: 25,
+                    prompt: "Er hat ______ Job.",
+                    hint: "der Job / He has a job (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 26,
+                    prompt: "______ Job ist stressig.",
+                    hint: "der Job / The job is stressful (Nom.)",
+                    ans: "Der",
+                    opt: ["Der", "Den", "Ein", "Einen"],
+                },
+                {
+                    id: 27,
+                    prompt: "Ich wünsche dir ______ guten Tag.",
+                    hint: "der Tag / I wish you a good day (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "guter"],
+                },
+                {
+                    id: 28,
+                    prompt: "Das ist ______ guter Tag.",
+                    hint: "der Tag / This is a good day (Nom.)",
+                    ans: "ein",
+                    opt: ["ein", "einen", "eine", "kein"],
+                },
+                {
+                    id: 29,
+                    prompt: "Sie trinkt ______ Wein.",
+                    hint: "der Wein / She is drinking a wine (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 30,
+                    prompt: "Ich esse ______ Pizza.",
+                    hint: "die Pizza / I am eating a pizza (Akk.)",
+                    ans: "eine",
+                    opt: ["ein", "einen", "eine", "keine"],
+                },
+                {
+                    id: 31,
+                    prompt: "______ Pizza ist kalt.",
+                    hint: "die Pizza / The pizza is cold (Nom.)",
+                    ans: "Die",
+                    opt: ["Die", "Der", "Eine", "Das"],
+                },
+                {
+                    id: 32,
+                    prompt: "Er kauft ______ Computer.",
+                    hint: "der Computer / He buys a computer (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 33,
+                    prompt: "Ich brauche ______ Hilfe.",
+                    hint: "die Hilfe / I need no help (Akk. Negation)",
+                    ans: "keine",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 34,
+                    prompt: "Das ist ______ Problem.",
+                    hint: "das Problem / That is not a problem (Nom. Negation)",
+                    ans: "kein",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 35,
+                    prompt: "Er spricht ______ Deutsch.",
+                    hint: "Deutsch / He speaks no German (Akk. Negation)",
+                    ans: "kein",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 36,
+                    prompt: "Ich habe ______ Zeit.",
+                    hint: "die Zeit / I have no time (Akk. Negation)",
+                    ans: "keine",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 37,
+                    prompt: "Wir suchen ______ Hotel.",
+                    hint: "das Hotel / We are looking for no hotel (Akk. Negation)",
+                    ans: "kein",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 38,
+                    prompt: "Er trinkt ______ Alkohol.",
+                    hint: "der Alkohol / He drinks no alcohol (Akk. Negation)",
+                    ans: "keinen",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 39,
+                    prompt: "Sie hat ______ Kinder.",
+                    hint: "die Kinder / She has no children (Akk. Plural Negation)",
+                    ans: "keine",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 40,
+                    prompt: "Ich kenne ______ Arzt hier.",
+                    hint: "der Arzt / I know no doctor here (Akk. Negation)",
+                    ans: "keinen",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 41,
+                    prompt: "Das ist ______ mein Handy.",
+                    hint: "das Handy / That is not my phone (Possessive Negation)",
+                    ans: "nicht",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 42,
+                    prompt: "Das ist ______ der richtige Weg.",
+                    hint: "der Weg / That is not the right way (Definite Negation)",
+                    ans: "nicht",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 43,
+                    prompt: "Ich verstehe ______ Wort.",
+                    hint: "das Wort / I don't understand a word (Akk. Negation)",
+                    ans: "kein",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 44,
+                    prompt: "Ich mag ______ Kaffee.",
+                    hint: "der Kaffee / I don't like coffee (Akk. Negation)",
+                    ans: "keinen",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 45,
+                    prompt: "Wir haben ______ Angebote.",
+                    hint: "die Angebote / We have no offers (Akk. Plural Negation)",
+                    ans: "keine",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 46,
+                    prompt: "Er lernt ______ Deutschkurs.",
+                    hint: "der Kurs / He learns the German course (Akk.)",
+                    ans: "den",
+                    opt: ["der", "den", "dem", "ein"],
+                },
+                {
+                    id: 47,
+                    prompt: "Ich nehme ______ Bus.",
+                    hint: "der Bus / I take the bus (Akk.)",
+                    ans: "den",
+                    opt: ["der", "den", "dem", "ein"],
+                },
+                {
+                    id: 48,
+                    prompt: "______ Bus kommt jetzt.",
+                    hint: "der Bus / The bus is coming now (Nom.)",
+                    ans: "Der",
+                    opt: ["Der", "Den", "Dem", "Ein"],
+                },
+                {
+                    id: 49,
+                    prompt: "Wir besuchen ______ Freund.",
+                    hint: "der Freund / We visit a friend (Akk.)",
+                    ans: "einen",
+                    opt: ["ein", "einen", "eine", "keinen"],
+                },
+                {
+                    id: 50,
+                    prompt: "______ Freund besucht uns.",
+                    hint: "der Freund / A friend visits us (Nom.)",
+                    ans: "Ein",
+                    opt: ["Ein", "Einen", "Eine", "Der"],
+                },
+            ];
+
+            s1Raw.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 1,
+                    type: "fill",
+                    prompt: q.prompt,
+                    hint: q.hint,
+                    correctAnswer: q.ans,
+                    options: q.opt,
+                });
+            });
+
+            // --- SECTION 2 DATABUILD (Q51 - 100) ---
+            const s2Raw = [
+                {
+                    id: 51,
+                    prompt: "Ich fahre mit ______ Auto.",
+                    hint: "mit + das Auto -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 52,
+                    prompt: "Ich spreche mit ______ Chef.",
+                    hint: "mit + der Chef -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 53,
+                    prompt: "Er geht zu ______ Arzt.",
+                    hint: "zu + der Arzt -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 54,
+                    prompt: "Sie wohnt bei ______ Familie.",
+                    hint: "bei + die Familie -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 55,
+                    prompt: "Nach ______ Arbeit trinke ich ein Bier.",
+                    hint: "nach + die Arbeit -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 56,
+                    prompt: "Er kommt aus ______ Schweiz.",
+                    hint: "aus + die Schweiz -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 57,
+                    prompt: "Ich wohne gegenüber ______ Park.",
+                    hint: "gegenüber + der Park -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 58,
+                    prompt: "Wir danken ______ Lehrer.",
+                    hint: "danken + der Lehrer -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 59,
+                    prompt: "Er hilft ______ Kind.",
+                    hint: "helfen + das Kind -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 60,
+                    prompt: "Das Auto gehört ______ Frau.",
+                    hint: "gehören + die Frau -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 61,
+                    prompt: "Wie geht es ______ Bruder?",
+                    hint: "gehen + der Bruder -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 62,
+                    prompt: "Ich spiele mit ______ Baby.",
+                    hint: "mit + das Baby -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 63,
+                    prompt: "Sie gratulieren ______ Kollegin.",
+                    hint: "gratulieren + die Kollegin -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 64,
+                    prompt: "Wir reisen mit ______ Zug.",
+                    hint: "mit + der Zug -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 65,
+                    prompt: "Er wohnt bei ______ Eltern.",
+                    hint: "bei + die Eltern (Plur.) -> Dative Plural",
+                    ans: "den",
+                    opt: ["dem", "der", "den", "denen"],
+                },
+                {
+                    id: 66,
+                    prompt: "Das Haus gefällt ______ Mann.",
+                    hint: "gefallen + der Mann -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 67,
+                    prompt: "Ich antworte ______ Chefin.",
+                    hint: "antworten + die Chefin -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 68,
+                    prompt: "Er schenkt ______ Freund einen Wein.",
+                    hint: "schenken + der Freund (Indirect Object) -> Dative",
+                    ans: "einem",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+                {
+                    id: 69,
+                    prompt: "Ich gebe ______ Baby die Milch.",
+                    hint: "geben + das Baby -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 70,
+                    prompt: "Nach ______ Unterricht gehen wir nach Hause.",
+                    hint: "nach + der Unterricht -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 71,
+                    prompt: "Wir gehen mit ______ Freunden ins Kino.",
+                    hint: "mit + die Freunde -> Dative Plural",
+                    ans: "den",
+                    opt: ["dem", "der", "den", "denen"],
+                },
+                {
+                    id: 72,
+                    prompt: "Er wohnt in ______ Stadt.",
+                    hint: "in + die Stadt (Static position) -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 73,
+                    prompt: "Die Kinder spielen in ______ Garten.",
+                    hint: "in + der Garten (Static position) -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 74,
+                    prompt: "Wir sitzen in ______ Café.",
+                    hint: "in + das Café (Static position) -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 75,
+                    prompt: "Ich fahre mit ______ Fahrrad.",
+                    hint: "mit + das Fahrrad -> Dative",
+                    ans: "einem",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+                {
+                    id: 76,
+                    prompt: "Sie geht zu ______ Bäcker.",
+                    hint: "zu + der Bäcker -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 77,
+                    prompt: "Er kommt aus ______ Türkei.",
+                    hint: "aus + die Türkei -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 78,
+                    prompt: "Ich danke ______ Arzt für die Hilfe.",
+                    hint: "danken + der Arzt -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 79,
+                    prompt: "Sie hilft ______ Oma.",
+                    hint: "helfen + die Oma -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 80,
+                    prompt: "Das Buch gehört ______ Mädchen.",
+                    hint: "gehören + das Mädchen -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 81,
+                    prompt: "Er wohnt bei ______ Freundin.",
+                    hint: "bei + die Freundin -> Dative",
+                    ans: "einer",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+                {
+                    id: 82,
+                    prompt: "Nach ______ Kurs essen wir Pizza.",
+                    hint: "nach + der Kurs -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 83,
+                    prompt: "Ich fahre mit ______ Bus.",
+                    hint: "mit + der Bus -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 84,
+                    prompt: "Wie geht es ______ Kindern?",
+                    hint: "gehen + die Kinder -> Dative Plural",
+                    ans: "den",
+                    opt: ["dem", "der", "den", "denen"],
+                },
+                {
+                    id: 85,
+                    prompt: "Ich wohne gegenüber ______ Bahnhof.",
+                    hint: "gegenüber + der Bahnhof -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 86,
+                    prompt: "Er spricht mit ______ Arzt.",
+                    hint: "mit + der Arzt -> Dative",
+                    ans: "einem",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+                {
+                    id: 87,
+                    prompt: "Sie hilft ______ Kollegen.",
+                    hint: "helfen + der Kollege -> Dative",
+                    ans: "einem",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+                {
+                    id: 88,
+                    prompt: "Wir gratulieren ______ Team.",
+                    hint: "gratulieren + das Team -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 89,
+                    prompt: "Er schenkt ______ Kind ein Spielzeug.",
+                    hint: "schenken + das Kind -> Dative (Indirect)",
+                    ans: "einem",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+                {
+                    id: 90,
+                    prompt: "Ich antworte ______ Lehrer.",
+                    hint: "antworten + der Lehrer -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 91,
+                    prompt: "Das gehört ______ Hund.",
+                    hint: "gehören + der Hund -> Dative",
+                    ans: "dem",
+                    opt: ["dem", "der", "den", "einem"],
+                },
+                {
+                    id: 92,
+                    prompt: "Er geht mit ______ Kollegin essen.",
+                    hint: "mit + die Kollegin -> Dative",
+                    ans: "einer",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+                {
+                    id: 93,
+                    prompt: "Nach ______ Party räumen wir auf.",
+                    hint: "nach + die Party -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 94,
+                    prompt: "Wir wohnen bei ______ Oma.",
+                    hint: "bei + die Oma -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 95,
+                    prompt: "Sie kommt aus ______ USA.",
+                    hint: "aus + die USA (Plur.) -> Dative Plural",
+                    ans: "den",
+                    opt: ["dem", "der", "den", "denen"],
+                },
+                {
+                    id: 96,
+                    prompt: "Ich fahre mit ______ U-Bahn.",
+                    hint: "mit + die U-Bahn -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 97,
+                    prompt: "Das gefällt ______ Gästen.",
+                    hint: "gefallen + die Gäste (Plur.) -> Dative Plural",
+                    ans: "den",
+                    opt: ["dem", "der", "den", "denen"],
+                },
+                {
+                    id: 98,
+                    prompt: "Er dankt ______ Vater.",
+                    hint: "danken + der Vater (Dative). Answer: seinem",
+                    ans: "seinem",
+                    opt: ["sein", "seinen", "seinem", "seiner"],
+                },
+                {
+                    id: 99,
+                    prompt: "Ich spiele mit ______ Katze.",
+                    hint: "mit + die Katze -> Dative",
+                    ans: "der",
+                    opt: ["dem", "der", "den", "einer"],
+                },
+                {
+                    id: 100,
+                    prompt: "Er wohnt in ______ Dorf.",
+                    hint: "in + das Dorf -> Dative",
+                    ans: "einem",
+                    opt: ["ein", "einen", "einem", "einer"],
+                },
+            ];
+
+            s2Raw.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 2,
+                    type: "fill",
+                    prompt: q.prompt,
+                    hint: q.hint,
+                    correctAnswer: q.ans,
+                    options: q.opt,
+                });
+            });
+
+            // --- SECTION 3 DATABUILD (Q101 - 150) ---
+            const s3Raw = [
+                {
+                    id: 101,
+                    prompt: "______ Laptop ist kaputt.",
+                    hint: "My (Nom. Masculine)",
+                    ans: "Mein",
+                    opt: ["Mein", "Meine", "Meinen", "Meinem"],
+                },
+                {
+                    id: 102,
+                    prompt: "______ Frau arbeitet hier.",
+                    hint: "His (Nom. Feminine)",
+                    ans: "Seine",
+                    opt: ["Sein", "Seine", "Seinen", "Seinem"],
+                },
+                {
+                    id: 103,
+                    prompt: "______ Auto ist blau.",
+                    hint: "Her (Nom. Neuter)",
+                    ans: "Ihr",
+                    opt: ["Ihr", "Ihre", "Ihren", "Ihrem"],
+                },
+                {
+                    id: 104,
+                    prompt: "______ Kinder schlafen.",
+                    hint: "Our (Nom. Plural)",
+                    ans: "Unsere",
+                    opt: ["Unser", "Unsere", "Unseren", "Unserem"],
+                },
+                {
+                    id: 105,
+                    prompt: "______ Kaffee ist fertig.",
+                    hint: "Your - informal (Nom. Masculine)",
+                    ans: "Dein",
+                    opt: ["Dein", "Deine", "Deinen", "Deinem"],
+                },
+                {
+                    id: 106,
+                    prompt: "______ Haus ist schön.",
+                    hint: "Their (Nom. Neuter)",
+                    ans: "Ihr",
+                    opt: ["Ihr", "Ihre", "Ihren", "Ihrem"],
+                },
+                {
+                    id: 107,
+                    prompt: "______ Name ist sehr bekannt.",
+                    hint: "Your - formal (Nom. Masculine)",
+                    ans: "Ihr",
+                    opt: ["Ihr", "Ihre", "Ihren", "Ihrem"],
+                },
+                {
+                    id: 108,
+                    prompt: "______ Tasche ist verloren.",
+                    hint: "My (Nom. Feminine)",
+                    ans: "Meine",
+                    opt: ["Mein", "Meine", "Meinen", "Meinem"],
+                },
+                {
+                    id: 109,
+                    prompt: "______ Buch liegt dort.",
+                    hint: "His (Nom. Neuter)",
+                    ans: "Sein",
+                    opt: ["Sein", "Seine", "Seinen", "Seinem"],
+                },
+                {
+                    id: 110,
+                    prompt: "______ Termine sind voll.",
+                    hint: "Our (Nom. Plural)",
+                    ans: "Unsere",
+                    opt: ["Unser", "Unsere", "Unseren", "Unserem"],
+                },
+                {
+                    id: 111,
+                    prompt: "Ich besuche ______ Vater.",
+                    hint: "My (Akk. Masculine)",
+                    ans: "meinen",
+                    opt: ["mein", "meine", "meinen", "meinem"],
+                },
+                {
+                    id: 112,
+                    prompt: "Er sucht ______ Schlüssel.",
+                    hint: "His (Akk. Masculine)",
+                    ans: "seinen",
+                    opt: ["sein", "seine", "seinen", "seinem"],
+                },
+                {
+                    id: 113,
+                    prompt: "Wir haben ______ Laptop vergessen.",
+                    hint: "Our (Akk. Masculine)",
+                    ans: "unseren",
+                    opt: ["unser", "unsere", "unseren", "unserem"],
+                },
+                {
+                    id: 114,
+                    prompt: "Sie liebt ______ Hund.",
+                    hint: "Her (Akk. Masculine)",
+                    ans: "ihren",
+                    opt: ["ihr", "ihre", "ihren", "ihrem"],
+                },
+                {
+                    id: 115,
+                    prompt: "Ich esse ______ Apfel.",
+                    hint: "My (Akk. Masculine)",
+                    ans: "meinen",
+                    opt: ["mein", "meine", "meinen", "meinem"],
+                },
+                {
+                    id: 116,
+                    prompt: "Sie liest ______ Buch.",
+                    hint: "Her (Akk. Neuter)",
+                    ans: "ihr",
+                    opt: ["ihr", "ihre", "ihren", "ihrem"],
+                },
+                {
+                    id: 117,
+                    prompt: "Wir besuchen ______ Freundin.",
+                    hint: "Our (Akk. Feminine)",
+                    ans: "unsere",
+                    opt: ["unser", "unsere", "unseren", "unserem"],
+                },
+                {
+                    id: 118,
+                    prompt: "Hast du ______ Handy dabei?",
+                    hint: "Your - informal (Akk. Neuter)",
+                    ans: "dein",
+                    opt: ["dein", "deine", "deinen", "deinem"],
+                },
+                {
+                    id: 119,
+                    prompt: "Sie rufen ______ Kollegen an.",
+                    hint: "Their (Akk. Masculine)",
+                    ans: "ihren",
+                    opt: ["ihr", "ihre", "ihren", "ihrem"],
+                },
+                {
+                    id: 120,
+                    prompt: "Wir buchen ______ Urlaub.",
+                    hint: "Our (Akk. Masculine)",
+                    ans: "unseren",
+                    opt: ["unser", "unsere", "unseren", "unserem"],
+                },
+                {
+                    id: 121,
+                    prompt: "Er mag ______ Job.",
+                    hint: "His (Akk. Masculine)",
+                    ans: "seinen",
+                    opt: ["sein", "seine", "seinen", "seinem"],
+                },
+                {
+                    id: 122,
+                    prompt: "Ich love ______ Familie.",
+                    hint: "My (Akk. Feminine)",
+                    ans: "meine",
+                    opt: ["mein", "meine", "meinen", "meinem"],
+                },
+                {
+                    id: 123,
+                    prompt: "Verstehst du ______ Lehrer?",
+                    hint: "Your - formal (Akk. Masculine)",
+                    ans: "Ihren",
+                    opt: ["Ihr", "Ihre", "Ihren", "Ihrem"],
+                },
+                {
+                    id: 124,
+                    prompt: "Sie trinken ______ Wein.",
+                    hint: "Their (Akk. Masculine)",
+                    ans: "ihren",
+                    opt: ["ihr", "ihre", "ihren", "ihrem"],
+                },
+                {
+                    id: 125,
+                    prompt: "Er kauft ______ Auto.",
+                    hint: "His (Akk. Neuter)",
+                    ans: "sein",
+                    opt: ["sein", "seine", "seinen", "seinem"],
+                },
+                {
+                    id: 126,
+                    prompt: "Ich fahre mit ______ Auto.",
+                    hint: "My (Dative Neuter)",
+                    ans: "meinem",
+                    opt: ["mein", "meine", "meinen", "meinem"],
+                },
+                {
+                    id: 127,
+                    prompt: "Er spricht mit ______ Chef.",
+                    hint: "His (Dative Masculine)",
+                    ans: "seinem",
+                    opt: ["sein", "seine", "seinen", "seinem"],
+                },
+                {
+                    id: 128,
+                    prompt: "Wir reisen mit ______ Kindern.",
+                    hint: "Our (Dative Plural)",
+                    ans: "unseren",
+                    opt: ["unser", "unsere", "unseren", "unserem"],
+                },
+                {
+                    id: 129,
+                    prompt: "Sie geht mit ______ Freundin ins Kino.",
+                    hint: "Her (Dative Feminine)",
+                    ans: "ihrer",
+                    opt: ["ihr", "ihre", "ihren", "ihrer"],
+                },
+                {
+                    id: 130,
+                    prompt: "Kommst du mit ______ Hund?",
+                    hint: "Your - informal (Dative Masculine)",
+                    ans: "deinem",
+                    opt: ["dein", "deine", "deinen", "deinem"],
+                },
+                {
+                    id: 131,
+                    prompt: "Ich spreche mit ______ Kollegen.",
+                    hint: "Your - formal (Dative Masculine)",
+                    ans: "Ihrem",
+                    opt: ["Ihr", "Ihre", "Ihren", "Ihrem"],
+                },
+                {
+                    id: 132,
+                    prompt: "Er wohnt bei ______ Schwester.",
+                    hint: "His (Dative Feminine)",
+                    ans: "seiner",
+                    opt: ["sein", "seine", "seinen", "seiner"],
+                },
+                {
+                    id: 133,
+                    prompt: "Sie fahren mit ______ Auto.",
+                    hint: "Their (Dative Neuter)",
+                    ans: "ihrem",
+                    opt: ["ihr", "ihre", "ihren", "ihrem"],
+                },
+                {
+                    id: 134,
+                    prompt: "Nach ______ Arbeit gehe ich nach Hause.",
+                    hint: "My (Dative Feminine)",
+                    ans: "meiner",
+                    opt: ["mein", "meine", "meinen", "meiner"],
+                },
+                {
+                    id: 135,
+                    prompt: "Er hilft ______ Vater.",
+                    hint: "His (Dative Masculine)",
+                    ans: "seinem",
+                    opt: ["sein", "seine", "seinen", "seinem"],
+                },
+                {
+                    id: 136,
+                    prompt: "Wir danken ______ Arzt.",
+                    hint: "Our (Dative Masculine)",
+                    ans: "unserem",
+                    opt: ["unser", "unsere", "unseren", "unserem"],
+                },
+                {
+                    id: 137,
+                    prompt: "Sie gratuliert ______ Kollegin.",
+                    hint: "Her (Dative Feminine)",
+                    ans: "ihrer",
+                    opt: ["ihr", "ihre", "ihren", "ihrer"],
+                },
+                {
+                    id: 138,
+                    prompt: "Ich wohne bei ______ Eltern.",
+                    hint: "My (Dative Plural)",
+                    ans: "meinen",
+                    opt: ["mein", "meine", "meinen", "meinem"],
+                },
+                {
+                    id: 139,
+                    prompt: "Das Buch gefällt ______ Bruder.",
+                    hint: "My (Dative Masculine)",
+                    ans: "meinem",
+                    opt: ["mein", "meine", "meinen", "meinem"],
+                },
+                {
+                    id: 140,
+                    prompt: "Er schenkt ______ Mutter Blumen.",
+                    hint: "His (Dative Feminine)",
+                    ans: "seiner",
+                    opt: ["sein", "seine", "seinen", "seiner"],
+                },
+                {
+                    id: 141,
+                    prompt: "______ Wohnung hat drei Zimmer.",
+                    hint: "My (Nom. Feminine)",
+                    ans: "Meine",
+                    opt: ["Mein", "Meine", "Meinen", "Meinem"],
+                },
+                {
+                    id: 142,
+                    prompt: "Ich liebe ______ Wohnung.",
+                    hint: "My (Akk. Feminine)",
+                    ans: "meine",
+                    opt: ["mein", "meine", "meinen", "meinem"],
+                },
+                {
+                    id: 143,
+                    prompt: "Ich wohne in ______ Wohnung.",
+                    hint: "My (Dative Feminine static)",
+                    ans: "meiner",
+                    opt: ["mein", "meine", "meinen", "meiner"],
+                },
+                {
+                    id: 144,
+                    prompt: "______ Hund läuft im Park.",
+                    hint: "His (Nom. Masculine)",
+                    ans: "Sein",
+                    opt: ["Sein", "Seine", "Seinen", "Seinem"],
+                },
+                {
+                    id: 145,
+                    prompt: "Er sucht ______ Hund.",
+                    hint: "His (Akk. Masculine)",
+                    ans: "seinen",
+                    opt: ["sein", "seine", "seinen", "seinem"],
+                },
+                {
+                    id: 146,
+                    prompt: "Er spielt mit ______ Hund.",
+                    hint: "His (Dative Masculine)",
+                    ans: "seinem",
+                    opt: ["sein", "seine", "seinen", "seinem"],
+                },
+                {
+                    id: 147,
+                    prompt: "______ Auto steht hier.",
+                    hint: "Their (Nom. Neuter)",
+                    ans: "Ihr",
+                    opt: ["Ihr", "Ihre", "Ihren", "Ihrem"],
+                },
+                {
+                    id: 148,
+                    prompt: "Sie waschen ______ Auto.",
+                    hint: "Their (Akk. Neuter)",
+                    ans: "ihr",
+                    opt: ["ihr", "ihre", "ihren", "ihrem"],
+                },
+                {
+                    id: 149,
+                    prompt: "Sie fahren in ______ Auto.",
+                    hint: "Their (Dative Neuter static)",
+                    ans: "ihrem",
+                    opt: ["ihr", "ihre", "ihren", "ihrem"],
+                },
+                {
+                    id: 150,
+                    prompt: "______ Lehrer sind nett.",
+                    hint: "Our (Nom. Plural)",
+                    ans: "Unsere",
+                    opt: ["Unser", "Unsere", "Unseren", "Unserem"],
+                },
+            ];
+
+            s3Raw.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 3,
+                    type: "fill",
+                    prompt: q.prompt,
+                    hint: q.hint,
+                    correctAnswer: q.ans,
+                    options: q.opt,
+                });
+            });
+
+            // --- SECTION 4 DATABUILD (Q151 - 200) ---
+            const s4Raw = [
+                {
+                    id: 151,
+                    prompt: "Ich habe heute ______ Kaffee getrunken.",
+                    hint: "No coffee (Akk. Masculine)",
+                    ans: "keinen",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 152,
+                    prompt: "Das schmeckt mir ______ gut.",
+                    hint: "Not good",
+                    ans: "nicht",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 153,
+                    prompt: "Kannst du ______ helfen?",
+                    hint: "Me (Dative pronoun)",
+                    ans: "mir",
+                    opt: ["mich", "mir", "ich", "mein"],
+                },
+                {
+                    id: 154,
+                    prompt: "Er besucht ______ nicht oft.",
+                    hint: "Us (Akk. pronoun)",
+                    ans: "uns",
+                    opt: ["wir", "uns", "euch", "sie"],
+                },
+                {
+                    id: 155,
+                    prompt: "Ich liebe ______!",
+                    hint: "Her (Akk. pronoun)",
+                    ans: "sie",
+                    opt: ["sie", "ihr", "ihn", "es"],
+                },
+                {
+                    id: 156,
+                    prompt: "Wo ist mein Laptop? Ich suche ______.",
+                    hint: "It - masculine (Akk. pronoun)",
+                    ans: "ihn",
+                    opt: ["er", "ihn", "ihm", "es"],
+                },
+                {
+                    id: 157,
+                    prompt: "Wir geben ______ ein Geschenk.",
+                    hint: "Him (Dative pronoun)",
+                    ans: "ihm",
+                    opt: ["ihn", "ihm", "er", "seinen"],
+                },
+                {
+                    id: 158,
+                    prompt: "Das Auto gehört ______ nicht.",
+                    hint: "Her (Dative pronoun)",
+                    ans: "ihr",
+                    opt: ["sie", "ihr", "ihnen", "es"],
+                },
+                {
+                    id: 159,
+                    prompt: "Wie geht es ______?",
+                    hint: "You - formal (Dative pronoun)",
+                    ans: "Ihnen",
+                    opt: ["Sie", "Ihnen", "euch", "dir"],
+                },
+                {
+                    id: 160,
+                    prompt: "Das schmeckt ______ sehr gut.",
+                    hint: "Me (Dative pronoun)",
+                    ans: "mir",
+                    opt: ["mich", "mir", "ich", "mein"],
+                },
+                {
+                    id: 161,
+                    prompt: "Ich rufe ______ heute Abend an.",
+                    hint: "You - informal (Akk. pronoun)",
+                    ans: "dich",
+                    opt: ["du", "dich", "dir", "dein"],
+                },
+                {
+                    id: 162,
+                    prompt: "Er dankt ______ für die Hilfe.",
+                    hint: "Her (Dative pronoun)",
+                    ans: "ihr",
+                    opt: ["sie", "ihr", "ihnen", "es"],
+                },
+                {
+                    id: 163,
+                    prompt: "Ich habe gestern im Supermarkt ______.",
+                    hint: "Grocery shopped (einkaufen past)",
+                    ans: "eingekauft",
+                    opt: ["gekauft", "eingekauft", "einkaufen", "gekaufe"],
+                },
+                {
+                    id: 164,
+                    prompt: "Er hat ein neues Auto ______.",
+                    hint: "Bought (kaufen past)",
+                    ans: "gekauft",
+                    opt: ["gekauft", "eingekauft", "kaufen", "gekaufen"],
+                },
+                {
+                    id: 165,
+                    prompt: "______ du gestern Brot gekauft?",
+                    hint: "Have (du helper)",
+                    ans: "Hast",
+                    opt: ["Habe", "Hast", "Hat", "Haben"],
+                },
+                {
+                    id: 166,
+                    prompt: "Wir ______ gestern viele Lebensmittel eingekauft.",
+                    hint: "Have (wir helper)",
+                    ans: "haben",
+                    opt: ["habe", "hast", "hat", "haben"],
+                },
+                {
+                    id: 167,
+                    prompt: "Ich ______ gestern im Kino.",
+                    hint: "Was (ich helper)",
+                    ans: "war",
+                    opt: ["bin", "war", "habe", "hatte"],
+                },
+                {
+                    id: 168,
+                    prompt: "Ich bin ______ Kino.",
+                    hint: "In the - static (Dative)",
+                    ans: "im",
+                    opt: ["im", "ins", "in der", "in den"],
+                },
+                {
+                    id: 169,
+                    prompt: "Ich gehe ______ Kino.",
+                    hint: "Into the - movement (Akkusative)",
+                    ans: "ins",
+                    opt: ["im", "ins", "in der", "in den"],
+                },
+                {
+                    id: 170,
+                    prompt: "Wir wohnen ______ Stadt.",
+                    hint: "In the - static (Dative)",
+                    ans: "in der",
+                    opt: ["im", "ins", "in der", "in die"],
+                },
+                {
+                    id: 171,
+                    prompt: "Wir fahren ______ Stadt.",
+                    hint: "Into the - movement (Akkusative)",
+                    ans: "in die",
+                    opt: ["in der", "in die", "im", "ins"],
+                },
+                {
+                    id: 172,
+                    prompt: "Er arbeitet ______ Supermarkt.",
+                    hint: "In the - static (Dative)",
+                    ans: "im",
+                    opt: ["im", "ins", "in den", "in dem"],
+                },
+                {
+                    id: 173,
+                    prompt: "Er geht ______ Supermarkt.",
+                    hint: "Into the - movement (Akkusative)",
+                    ans: "in den",
+                    opt: ["im", "ins", "in den", "in dem"],
+                },
+                {
+                    id: 174,
+                    prompt: "Meine Frau und seine Frau ______ sich im Fitnessstudio kennengelernt.",
+                    hint: "Have (plural helper)",
+                    ans: "haben",
+                    opt: ["haben", "sind", "hat", "werden"],
+                },
+                {
+                    id: 175,
+                    prompt: "Das ist ______ ein Hund, das ist eine Katze.",
+                    hint: "Not a dog",
+                    ans: "kein",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 176,
+                    prompt: "Das ist ______ mein Auto.",
+                    hint: "Not my car",
+                    ans: "nicht",
+                    opt: ["kein", "keinen", "nicht", "nein"],
+                },
+                {
+                    id: 177,
+                    prompt: "Ich trinke kein Wasser, ______ Cola.",
+                    hint: "but rather",
+                    ans: "sondern",
+                    opt: ["aber", "und", "sondern", "oder"],
+                },
+                {
+                    id: 178,
+                    prompt: "Ich habe ______ Geld mehr.",
+                    hint: "No money",
+                    ans: "kein",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 179,
+                    prompt: "Er spricht ______ Deutsch.",
+                    hint: "Not German",
+                    ans: "nicht",
+                    opt: ["kein", "keinen", "nicht", "nein"],
+                },
+                {
+                    id: 180,
+                    prompt: "Sie kommt ______ aus Berlin.",
+                    hint: "Not from Berlin",
+                    ans: "nicht",
+                    opt: ["kein", "nicht", "keine", "nie"],
+                },
+                {
+                    id: 181,
+                    prompt: "Er wohnt ______ hier.",
+                    hint: "Not here",
+                    ans: "nicht",
+                    opt: ["kein", "nicht", "keine", "nie"],
+                },
+                {
+                    id: 182,
+                    prompt: "Er ist ______ Arzt.",
+                    hint: "No doctor",
+                    ans: "kein",
+                    opt: ["kein", "keinen", "keine", "nicht"],
+                },
+                {
+                    id: 183,
+                    prompt: "Kannst du ______ sehen?",
+                    hint: "Me (Akkusative)",
+                    ans: "mich",
+                    opt: ["mich", "mir", "ich", "mein"],
+                },
+                {
+                    id: 184,
+                    prompt: "Bringst du ______ einen Kaffee?",
+                    hint: "Them (Dative)",
+                    ans: "ihnen",
+                    opt: ["sie", "ihr", "ihnen", "ihm"],
+                },
+                {
+                    id: 185,
+                    prompt: "Der Mantel passt ______ nicht.",
+                    hint: "Him (Dative)",
+                    ans: "ihm",
+                    opt: ["ihn", "ihm", "er", "seinen"],
+                },
+                {
+                    id: 186,
+                    prompt: "Wir gratulieren ______ zum Geburtstag.",
+                    hint: "You - informal (Dative)",
+                    ans: "dir",
+                    opt: ["du", "dich", "dir", "dein"],
+                },
+                {
+                    id: 187,
+                    prompt: "Sie lädt ______ zum Kaffee ein.",
+                    hint: "Us (Akkusative)",
+                    ans: "uns",
+                    opt: ["wir", "uns", "euch", "sie"],
+                },
+                {
+                    id: 188,
+                    prompt: "Das Buch gefällt ______ sehr.",
+                    hint: "Them (Dative)",
+                    ans: "ihnen",
+                    opt: ["sie", "ihr", "ihnen", "ihm"],
+                },
+                {
+                    id: 189,
+                    prompt: "Hast du mein Handy? Ja, ich habe ______.",
+                    hint: "It - neuter (Akkusative)",
+                    ans: "es",
+                    opt: ["ihn", "es", "ihm", "das"],
+                },
+                {
+                    id: 190,
+                    prompt: "Kannst du ______ die Uhrzeit sagen?",
+                    hint: "Me (Dative)",
+                    ans: "mir",
+                    opt: ["mich", "mir", "ich", "mein"],
+                },
+                {
+                    id: 191,
+                    prompt: "Er liebt ______ über alles.",
+                    hint: "You - formal (Akkusative)",
+                    ans: "Sie",
+                    opt: ["Sie", "Ihnen", "du", "dich"],
+                },
+                {
+                    id: 192,
+                    prompt: "Wir antworten ______ morgen.",
+                    hint: "Him (Dative)",
+                    ans: "ihm",
+                    opt: ["ihn", "ihm", "er", "seinen"],
+                },
+                {
+                    id: 193,
+                    prompt: "Sie besuchen ______ am Sonntag.",
+                    hint: "Them (Akkusative)",
+                    ans: "sie",
+                    opt: ["sie", "ihnen", "ihr", "uns"],
+                },
+                {
+                    id: 194,
+                    prompt: "Ich schicke ______ eine E-Mail.",
+                    hint: "You - formal (Dative)",
+                    ans: "Ihnen",
+                    opt: ["Sie", "Ihnen", "dir", "euch"],
+                },
+                {
+                    id: 195,
+                    prompt: "Siehst du das Haus? Ja, ich sehe ______.",
+                    hint: "It - neuter (Akkusative)",
+                    ans: "es",
+                    opt: ["ihn", "es", "ihm", "das"],
+                },
+                {
+                    id: 196,
+                    prompt: "Was ______ du bei Aldi gekauft?",
+                    hint: "have (du helper)",
+                    ans: "hast",
+                    opt: ["habe", "hast", "hat", "haben"],
+                },
+                {
+                    id: 197,
+                    prompt: "Sie ______ gestern Obst und Gemüse eingekauft.",
+                    hint: "has (sie - singular helper)",
+                    ans: "hat",
+                    opt: ["habe", "hast", "hat", "haben"],
+                },
+                {
+                    id: 198,
+                    prompt: "Wir ______ ein schönes Haus gekauft.",
+                    hint: "have (wir helper)",
+                    ans: "haben",
+                    opt: ["habe", "hast", "hat", "haben"],
+                },
+                {
+                    id: 199,
+                    prompt: "Er ______ gestern für die ganze Familie eingekauft.",
+                    hint: "has (er helper)",
+                    ans: "hat",
+                    opt: ["habe", "hast", "hat", "haben"],
+                },
+                {
+                    id: 200,
+                    prompt: "______ ihr den Tisch gekauft?",
+                    hint: "Have (ihr helper)",
+                    ans: "Habt",
+                    opt: ["Habe", "Hast", "Hat", "Habt"],
+                },
+            ];
+
+            s4Raw.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 4,
+                    type: "fill",
+                    prompt: q.prompt,
+                    hint: q.hint,
+                    correctAnswer: q.ans,
+                    options: q.opt,
+                });
+            });
+
+            // --- SECTION 5 PART A DATABUILD: SCRAMBLED WORDS (Q201 - 250) ---
+            const s5aRaw = [
+                {
+                    id: 201,
+                    words: ["ich", "Kaffee", "trinke", "einen", "morgen"],
+                    correct: "Ich trinke morgen einen Kaffee.",
+                    eng: "I drink a coffee in the morning.",
+                },
+                {
+                    id: 202,
+                    words: ["haben", "wir", "Angebote", "keine"],
+                    correct: "Wir haben keine Angebote.",
+                    eng: "We have no offers.",
+                },
+                {
+                    id: 203,
+                    words: ["ist", "mein", "kaputt", "Laptop"],
+                    correct: "Mein Laptop ist kaputt.",
+                    eng: "My laptop is broken.",
+                },
+                {
+                    id: 204,
+                    words: ["kaufen", "ein", "Auto", "wir", "wollen"],
+                    correct: "Wir wollen ein Auto kaufen.",
+                    eng: "We want to buy a car.",
+                },
+                {
+                    id: 205,
+                    words: ["gestern", "habe", "ich", "eingekauft"],
+                    correct: "Ich habe gestern eingekauft.",
+                    eng: "I grocery shopped yesterday.",
+                },
+                {
+                    id: 206,
+                    words: ["einen", "er", "Computer", "gekauft", "hat"],
+                    correct: "Er hat einen Computer gekauft.",
+                    eng: "He bought a computer.",
+                },
+                {
+                    id: 207,
+                    words: ["mit", "ich", "fahre", "dem", "Auto"],
+                    correct: "Ich fahre mit dem Auto.",
+                    eng: "I travel by car.",
+                },
+                {
+                    id: 208,
+                    words: ["im", "wir", "gestern", "waren", "Kino"],
+                    correct: "Wir waren gestern im Kino.",
+                    eng: "We were at the cinema yesterday.",
+                },
+                {
+                    id: 209,
+                    words: ["geht", "in", "das", "sie", "Kino"],
+                    correct: "Sie geht in das Kino.",
+                    eng: "She goes into the cinema.",
+                },
+                {
+                    id: 210,
+                    words: ["helfen", "kannst", "mir", "du", "?"],
+                    correct: "Kannst du mir helfen?",
+                    eng: "Can you help me?",
+                },
+                {
+                    id: 211,
+                    words: ["nicht", "ich", "kommen", "morgen", "kann"],
+                    correct: "Ich kann morgen nicht kommen.",
+                    eng: "I cannot come tomorrow.",
+                },
+                {
+                    id: 212,
+                    words: ["einen", "wir", "Termin", "haben", "morgen"],
+                    correct: "Wir haben morgen einen Termin.",
+                    eng: "We have an appointment tomorrow.",
+                },
+                {
+                    id: 213,
+                    words: ["mit", "spreche", "ich", "Chef", "dem"],
+                    correct: "Ich spreche mit dem Chef.",
+                    eng: "I speak with the boss.",
+                },
+                {
+                    id: 214,
+                    words: [
+                        "meine",
+                        "seine",
+                        "Frau",
+                        "und",
+                        "Frau",
+                        "haben",
+                        "gelernt",
+                        "sich",
+                        "kennen",
+                    ],
+                    correct:
+                        "Meine Frau und seine Frau haben sich kennengelernt.",
+                    eng: "My wife and his wife met.",
+                },
+                {
+                    id: 215,
+                    words: ["nicht", "das", "ist", "Chef", "der"],
+                    correct: "Das ist nicht der Chef.",
+                    eng: "That is not the boss.",
+                },
+                {
+                    id: 216,
+                    words: ["keine", "ich", "Milch", "trinke"],
+                    correct: "Ich trinke keine Milch.",
+                    eng: "I don't drink milk.",
+                },
+                {
+                    id: 217,
+                    words: ["eine", "ich", "E-Mail", "schreiben", "muss"],
+                    correct: "Ich muss eine E-Mail schreiben.",
+                    eng: "I must write an email.",
+                },
+                {
+                    id: 218,
+                    words: ["heute", "wir", "arbeiten", "nicht"],
+                    correct: "Wir arbeiten heute nicht.",
+                    eng: "We don't work today.",
+                },
+                {
+                    id: 219,
+                    words: ["aus", "er", "kommt", "Schweiz", "der"],
+                    correct: "Er kommt aus der Schweiz.",
+                    eng: "He comes from Switzerland.",
+                },
+                {
+                    id: 220,
+                    words: ["wohnen", "in", "wir", "Berlin"],
+                    correct: "Wir wohnen in Berlin.",
+                    eng: "We live in Berlin.",
+                },
+                {
+                    id: 221,
+                    words: ["uns", "besucht", "er", "oft", "nicht"],
+                    correct: "Er besucht uns nicht oft.",
+                    eng: "He does not visit us often.",
+                },
+                {
+                    id: 222,
+                    words: ["danke", "dir", "ich", "die", "für", "Hilfe"],
+                    correct: "Ich danke dir für die Hilfe.",
+                    eng: "I thank you for the help.",
+                },
+                {
+                    id: 223,
+                    words: ["unsere", "sind", "Angebote", "gut"],
+                    correct: "Unsere Angebote sind gut.",
+                    eng: "Our offers are good.",
+                },
+                {
+                    id: 224,
+                    words: ["kein", "ich", "Geld", "habe"],
+                    correct: "Ich habe kein Geld.",
+                    eng: "I have no money.",
+                },
+                {
+                    id: 225,
+                    words: ["schönen", "dir", "ich", "wünsche", "einen", "Tag"],
+                    correct: "Ich wünsche dir einen schönen Tag.",
+                    eng: "I wish you a good day.",
+                },
+                {
+                    id: 226,
+                    words: ["heißt", "wie", "Ihr", "Name", "?"],
+                    correct: "Wie heißt Ihr Name?",
+                    eng: "What is your name? (Formal)",
+                },
+                {
+                    id: 227,
+                    words: ["wo", "deine", "wohnt", "Familie", "?"],
+                    correct: "Wo wohnt deine Familie?",
+                    eng: "Where does your family live?",
+                },
+                {
+                    id: 228,
+                    words: ["ein", "hat", "neues", "er", "Handy"],
+                    correct: "Er hat ein neues Handy.",
+                    eng: "He has a new phone.",
+                },
+                {
+                    id: 229,
+                    words: ["am", "wir", "Samstag", "kommen"],
+                    correct: "Wir kommen am Samstag.",
+                    eng: "We are coming on Saturday.",
+                },
+                {
+                    id: 230,
+                    words: ["gern", "ich", "Pizza", "esse"],
+                    correct: "Ich esse gern Pizza.",
+                    eng: "I like eating pizza.",
+                },
+                {
+                    id: 231,
+                    words: ["beim", "ich", "arbeite", "Supermarkt"],
+                    correct: "Ich arbeite beim Supermarkt.",
+                    eng: "I work at the supermarket.",
+                },
+                {
+                    id: 232,
+                    words: ["nicht", "das", "schmeckt", "mir"],
+                    correct: "Das schmeckt mir nicht.",
+                    eng: "I do not like the taste of that.",
+                },
+                {
+                    id: 233,
+                    words: ["kannst", "mir", "das", "zeigen", "du", "?"],
+                    correct: "Kannst du mir das zeigen?",
+                    eng: "Can you show me that?",
+                },
+                {
+                    id: 234,
+                    words: ["eine", "hat", "er", "Frage"],
+                    correct: "Er hat eine Frage.",
+                    eng: "He has a question.",
+                },
+                {
+                    id: 235,
+                    words: ["wir", "den", "nehmen", "Bus"],
+                    correct: "Wir nehmen den Bus.",
+                    eng: "We take the bus.",
+                },
+                {
+                    id: 236,
+                    words: ["morgen", "rufen", "ich", "an", "dich"],
+                    correct: "Ich rufe dich morgen an.",
+                    eng: "I am calling you tomorrow.",
+                },
+                {
+                    id: 237,
+                    words: [
+                        "einladen",
+                        "ich",
+                        "dich",
+                        "möchte",
+                        "zum",
+                        "Geburtstag",
+                    ],
+                    correct: "Ich möchte dich zum Geburtstag einladen.",
+                    eng: "I want to invite you to the birthday.",
+                },
+                {
+                    id: 238,
+                    words: ["ein", "das", "ist", "schönes", "Haus"],
+                    correct: "Das ist ein schönes Haus.",
+                    eng: "That is a beautiful house.",
+                },
+                {
+                    id: 239,
+                    words: ["keine", "wir", "haben", "Zeit"],
+                    correct: "Wir haben keine Zeit.",
+                    eng: "We have no time.",
+                },
+                {
+                    id: 240,
+                    words: ["ist", "wo", "der", "Bahnhof", "?"],
+                    correct: "Wo ist der Bahnhof?",
+                    eng: "Where is the train station?",
+                },
+                {
+                    id: 241,
+                    words: ["eine", "ich", "buche", "Reise"],
+                    correct: "Ich buche eine Reise.",
+                    eng: "I am booking a trip.",
+                },
+                {
+                    id: 242,
+                    words: ["gehört", "das", "Auto", "mir"],
+                    correct: "Das Auto gehört mir.",
+                    eng: "The car belongs to me.",
+                },
+                {
+                    id: 243,
+                    words: ["wir", "gratulieren", "dir", "herzlich"],
+                    correct: "Wir gratulieren dir herzlich.",
+                    eng: "We congratulate you warmly.",
+                },
+                {
+                    id: 244,
+                    words: [
+                        "nach",
+                        "der",
+                        "Arbeit",
+                        "gehe",
+                        "ich",
+                        "Hause",
+                        "nach",
+                    ],
+                    correct: "Nach der Arbeit gehe ich nach Hause.",
+                    eng: "After work I go home.",
+                },
+                {
+                    id: 245,
+                    words: ["wohnen", "wir", "gegenüber", "dem", "Hotel"],
+                    correct: "Wir wohnen gegenüber dem Hotel.",
+                    eng: "We live opposite the hotel.",
+                },
+                {
+                    id: 246,
+                    words: ["sie", "uns", "liebt"],
+                    correct: "Sie liebt uns.",
+                    eng: "She loves us.",
+                },
+                {
+                    id: 247,
+                    words: ["mit", "reisen", "wir", "Zug", "dem"],
+                    correct: "Wir reisen mit dem Zug.",
+                    eng: "We travel by train.",
+                },
+                {
+                    id: 248,
+                    words: ["ist", "dein", "kalt", "Tee"],
+                    correct: "Dein Tee ist kalt.",
+                    eng: "Your tea is cold.",
+                },
+                {
+                    id: 249,
+                    words: ["ein", "er", "Bier", "bestellt"],
+                    correct: "Er bestellt ein Bier.",
+                    eng: "He orders a beer.",
+                },
+                {
+                    id: 250,
+                    words: ["ihr", "wo", "seid", "gestern", "gewesen", "?"],
+                    correct: "Wo seid ihr gestern gewesen?",
+                    eng: "Where were you guys yesterday?",
+                },
+            ];
+
+            s5aRaw.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 5,
+                    part: "A",
+                    type: "scramble",
+                    words: q.words,
+                    correctAnswer: q.correct,
+                    hint: q.eng,
+                });
+            });
+
+            // --- SECTION 5 PART B: CORE PHRASE TRANSLATION (Q251 - 280) ---
+            const s5bRaw = [
+                {
+                    id: 251,
+                    eng: "I cannot come tomorrow.",
+                    correct: "Ich kann morgen nicht kommen.",
+                    hint: "kann morgen nicht kommen",
+                },
+                {
+                    id: 252,
+                    eng: "I am sick today.",
+                    correct: "Ich bin heute krank.",
+                    hint: "bin heute krank",
+                },
+                {
+                    id: 253,
+                    eng: "I would like to make an appointment.",
+                    correct: "Ich möchte einen Termin machen.",
+                    hint: "möchte einen Termin machen",
+                },
+                {
+                    id: 254,
+                    eng: "Can you help me?",
+                    correct: "Kannst du mir helfen?",
+                    hint: "Kannst du mir helfen",
+                },
+                {
+                    id: 255,
+                    eng: "Thank you for your invitation.",
+                    correct: "Vielen Dank für Ihre Einladung.",
+                    hint: "Danke/Vielen Dank für Ihre Einladung",
+                },
+                {
+                    id: 256,
+                    eng: "I am coming at 14:00.",
+                    correct: "Ich komme um 14 Uhr.",
+                    hint: "komme um 14 Uhr",
+                },
+                {
+                    id: 257,
+                    eng: "I would like to invite you.",
+                    correct: "Ich möchte dich einladen.",
+                    hint: "möchte dich einladen",
+                },
+                {
+                    id: 258,
+                    eng: "Unfortunately, I cannot come.",
+                    correct: "Leider kann ich nicht kommen.",
+                    hint: "Leider kann ich nicht kommen",
+                },
+                {
+                    id: 259,
+                    eng: "Where is the office?",
+                    correct: "Wo ist das Büro?",
+                    hint: "Wo ist das Büro",
+                },
+                {
+                    id: 260,
+                    eng: "My laptop is broken.",
+                    correct: "Mein Laptop ist kaputt.",
+                    hint: "Laptop ist kaputt",
+                },
+                {
+                    id: 261,
+                    eng: "I must write an email.",
+                    correct: "Ich muss eine E-Mail schreiben.",
+                    hint: "muss eine E-Mail schreiben",
+                },
+                {
+                    id: 262,
+                    eng: "Can we meet on Saturday?",
+                    correct: "Können wir uns am Samstag treffen?",
+                    hint: "am Samstag treffen",
+                },
+                {
+                    id: 263,
+                    eng: "Please write back soon.",
+                    correct: "Bitte antworten Sie bald.",
+                    hint: "Bitte schreiben/antworten Sie bald",
+                },
+                {
+                    id: 264,
+                    eng: "Sincerely",
+                    correct: "Mit freundlichen Grüßen",
+                    hint: "Mit freundlichen Grüßen",
+                },
+                {
+                    id: 265,
+                    eng: "Best regards",
+                    correct: "Viele Grüße",
+                    hint: "Viele Grüße / Liebe Grüße",
+                },
+                {
+                    id: 266,
+                    eng: "Dear Mr. Müller",
+                    correct: "Sehr geehrter Herr Müller,",
+                    hint: "Sehr geehrter Herr",
+                },
+                {
+                    id: 267,
+                    eng: "Dear Mrs. Schmidt",
+                    correct: "Sehr geehrte Frau Schmidt,",
+                    hint: "Sehr geehrte Frau",
+                },
+                {
+                    id: 268,
+                    eng: "Dear Anna",
+                    correct: "Liebe Anna,",
+                    hint: "Liebe",
+                },
+                {
+                    id: 269,
+                    eng: "Dear Thomas",
+                    correct: "Lieber Thomas,",
+                    hint: "Lieber",
+                },
+                {
+                    id: 270,
+                    eng: "I need your help.",
+                    correct: "Ich brauche deine Hilfe.",
+                    hint: "brauche deine Hilfe",
+                },
+                {
+                    id: 271,
+                    eng: "When does the course begin?",
+                    correct: "Wann fängt der Kurs an?",
+                    hint: "Wann beginnt/fängt der Kurs an",
+                },
+                {
+                    id: 272,
+                    eng: "I am sorry.",
+                    correct: "Es tut mir leid.",
+                    hint: "Es tut mir leid",
+                },
+                {
+                    id: 273,
+                    eng: "How are you? (Formal)",
+                    correct: "Wie geht es Ihnen?",
+                    hint: "Wie geht es Ihnen",
+                },
+                {
+                    id: 274,
+                    eng: "How are you? (Informal)",
+                    correct: "Wie geht es dir?",
+                    hint: "Wie geht es dir",
+                },
+                {
+                    id: 275,
+                    eng: "I am looking for an apartment.",
+                    correct: "Ich suche eine Wohnung.",
+                    hint: "suche eine Wohnung",
+                },
+                {
+                    id: 276,
+                    eng: "We are traveling by train.",
+                    correct: "Wir fahren mit dem Zug.",
+                    hint: "fahren mit dem Zug",
+                },
+                {
+                    id: 277,
+                    eng: "I have a question.",
+                    correct: "Ich habe eine Frage.",
+                    hint: "habe eine Frage",
+                },
+                {
+                    id: 278,
+                    eng: "Can you send me an email?",
+                    correct: "Können Sie mir eine E-Mail schicken?",
+                    hint: "mir eine E-Mail schicken",
+                },
+                {
+                    id: 279,
+                    eng: "The course starts tomorrow.",
+                    correct: "Der Kurs beginnt morgen.",
+                    hint: "Kurs beginnt/fängt morgen an",
+                },
+                {
+                    id: 280,
+                    eng: "I will bring my wife.",
+                    correct: "Ich bringe meine Frau mit.",
+                    hint: "bringe meine Frau mit",
+                },
+            ];
+
+            s5bRaw.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 5,
+                    part: "B",
+                    type: "translate",
+                    prompt: q.eng,
+                    correctAnswer: q.correct,
+                    hint: q.hint,
+                });
+            });
+
+            // --- SECTION 5 PART C: REAL WORLD QUICK RESPONSES (Q281 - 300) ---
+            const s5cRaw = [
+                {
+                    id: 281,
+                    prompt: "Apologize because you are sick.",
+                    model: "Es tut mir leid, aber ich bin heute krank.",
+                    hint: "Es tut mir leid + krank sein",
+                },
+                {
+                    id: 282,
+                    prompt: "Ask your friend if they have time on Saturday.",
+                    model: "Hast du am Samstag Zeit?",
+                    hint: "Hast du am... Zeit?",
+                },
+                {
+                    id: 283,
+                    prompt: "Invite a colleague to your birthday party.",
+                    model: "Ich möchte Sie zu meiner Geburtstagsparty einladen.",
+                    hint: "möchte Sie/dich einladen",
+                },
+                {
+                    id: 284,
+                    prompt: "Tell your teacher you cannot come to class tomorrow.",
+                    model: "Ich kann morgen leider nicht zum Kurs kommen.",
+                    hint: "nicht zum Kurs kommen",
+                },
+                {
+                    id: 285,
+                    prompt: "Ask what time the German course starts.",
+                    model: "Um wie viel Uhr beginnt der Deutschkurs?",
+                    hint: "Um wie viel Uhr...",
+                },
+                {
+                    id: 286,
+                    prompt: "Tell your landlord that your heating is broken.",
+                    model: "Hallo Herr Vermieter, meine Heizung ist kaputt.",
+                    hint: "Heizung ist kaputt",
+                },
+                {
+                    id: 287,
+                    prompt: "Confirm that you will arrive at the train station at 15:00.",
+                    model: "Ich komme um 15:00 Uhr am Bahnhof an.",
+                    hint: "komme um... am Bahnhof an",
+                },
+                {
+                    id: 288,
+                    prompt: "Ask your friend to bring a salad to the party.",
+                    model: "Kannst du bitte einen Salat zur Party mitbringen?",
+                    hint: "Salat mitbringen",
+                },
+                {
+                    id: 289,
+                    prompt: "Request an appointment with Dr. Weber.",
+                    model: "Ich möchte bitte einen Termin mit Dr. Weber machen.",
+                    hint: "Termin machen/vereinbaren",
+                },
+                {
+                    id: 290,
+                    prompt: "Apologize for arriving late today.",
+                    model: "Entschuldigung, dass ich heute zu spät komme.",
+                    hint: "Entschuldigung / zu spät",
+                },
+                {
+                    id: 291,
+                    prompt: "Tell your boss you are working from home today.",
+                    model: "Ich arbeite heute im Homeoffice.",
+                    hint: "arbeite im Homeoffice",
+                },
+                {
+                    id: 292,
+                    prompt: "Ask your colleague to call you back.",
+                    model: "Kannst du mich bitte zurückrufen?",
+                    hint: "zurückrufen",
+                },
+                {
+                    id: 293,
+                    prompt: "State that you are looking for a three-room apartment.",
+                    model: "Ich suche eine 3-Zimmer-Wohnung.",
+                    hint: "suche eine... Wohnung",
+                },
+                {
+                    id: 294,
+                    prompt: "Tell your friend you will buy the drinks.",
+                    model: "Ich kaufe die Getränke.",
+                    hint: "Ich kaufe die Getränke",
+                },
+                {
+                    id: 295,
+                    prompt: "Ask your landlord for the key.",
+                    model: "Kann ich bitte den Schlüssel haben?",
+                    hint: "Bitte den Schlüssel",
+                },
+                {
+                    id: 296,
+                    prompt: "Express thanks for a beautiful gift.",
+                    model: "Vielen Dank für das schöne Geschenk!",
+                    hint: "Danke für das Geschenk",
+                },
+                {
+                    id: 297,
+                    prompt: "State that you are driving by car to the party.",
+                    model: "Ich fahre mit dem Auto zur Party.",
+                    hint: "fahre mit dem Auto",
+                },
+                {
+                    id: 298,
+                    prompt: "Ask a colleague to write you an email.",
+                    model: "Kannst du mir bitte eine E-Mail schreiben?",
+                    hint: "E-Mail schreiben",
+                },
+                {
+                    id: 299,
+                    prompt: "Tell your friend that the movie starts at 20:00.",
+                    model: "Der Film beginnt um 20:00 Uhr.",
+                    hint: "Film beginnt um 20 Uhr",
+                },
+                {
+                    id: 300,
+                    prompt: "Apologize because your child is sick today.",
+                    model: "Es tut mir leid, aber mein Kind ist heute krank.",
+                    hint: "mein Kind ist krank",
+                },
+            ];
+
+            s5cRaw.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 5,
+                    part: "C",
+                    type: "response",
+                    prompt: q.prompt,
+                    correctAnswer: q.model,
+                    hint: q.hint,
+                });
+            });
+
+            // --- MAIN ENGINE APP STATE ---
+            let currentSection = 1;
+            let currentPage = 1;
+            const questionsPerPage = 10;
+
+            // Store user answers and results
+            // format: { questionId: { correct: boolean, inputVal: string } }
+            let userProgress = {};
+
+            // Load progress from storage
+            function loadProgress() {
+                const saved = localStorage.getItem(
+                    "german_a1_marathon_progress",
+                );
+                if (saved) {
+                    userProgress = JSON.parse(saved);
+                }
+                updateGlobalHeader();
+            }
+
+            // Save progress to storage
+            function saveProgress() {
+                localStorage.setItem(
+                    "german_a1_marathon_progress",
+                    JSON.stringify(userProgress),
+                );
+                updateGlobalHeader();
+            }
+
+            function resetProgress() {
+                if (
+                    confirm(
+                        "Are you sure you want to completely clear your progress?",
+                    )
+                ) {
+                    userProgress = {};
+                    localStorage.removeItem("german_a1_marathon_progress");
+                    updateGlobalHeader();
+                    renderQuestions();
+                }
+            }
+
+            function switchSection(sectionNum) {
+                currentSection = sectionNum;
+                currentPage = 1;
+
+                // Update sidebar visual states
+                document.querySelectorAll(".section-nav-btn").forEach((btn) => {
+                    btn.classList.remove(
+                        "bg-indigo-50",
+                        "text-indigo-700",
+                        "border-indigo-100",
+                    );
+                    btn.classList.add(
+                        "text-slate-600",
+                        "hover:bg-slate-50",
+                        "border-transparent",
+                    );
+                });
+
+                const activeBtn = document.getElementById(
+                    `btn-sec-${sectionNum}`,
+                );
+                if (activeBtn) {
+                    activeBtn.classList.remove(
+                        "text-slate-600",
+                        "hover:bg-slate-50",
+                        "border-transparent",
+                    );
+                    activeBtn.classList.add(
+                        "bg-indigo-50",
+                        "text-indigo-700",
+                        "border-indigo-100",
+                    );
+                }
+
+                // Titles & Descriptions
+                const titles = {
+                    1: [
+                        "Section 1: Nominative vs. Accusative",
+                        "Identify Subjects (Nom.) vs. Objects (Akk.). Tap or type correct articles.",
+                    ],
+                    2: [
+                        "Section 2: Dative Case",
+                        "Practice prepositions & verbs triggering the Dative Case. Dem, der, einem, einer, den.",
+                    ],
+                    3: [
+                        "Section 3: Possessive Articles",
+                        "Match 'my, your, his, her, our, their' with the correct case endings based on gender.",
+                    ],
+                    4: [
+                        "Section 4: Mixed Drills",
+                        "Test your knowledge dynamically with pronouns, negations, past tense and directional shifts.",
+                    ],
+                    5: [
+                        "Section 5: Sentence Builder & Letters",
+                        "Drag & Tap words to build sentences, translate email phrases, and answer writing prompts.",
+                    ],
+                };
+
+                document.getElementById("current-section-title").innerText =
+                    titles[sectionNum][0];
+                document.getElementById("current-section-desc").innerText =
+                    titles[sectionNum][1];
+
+                renderQuestions();
+            }
+
+            // Get current filtered questions
+            function getSectionQuestions() {
+                return questionsDatabase.filter(
+                    (q) => q.section === currentSection,
+                );
+            }
+
+            function prevPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderQuestions();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+            }
+
+            function nextPage() {
+                const maxPages = Math.ceil(
+                    getSectionQuestions().length / questionsPerPage,
+                );
+                if (currentPage < maxPages) {
+                    currentPage++;
+                    renderQuestions();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+            }
+
+            // Update global progress metrics
+            function updateGlobalHeader() {
+                let solved = 0;
+                let correct = 0;
+                let total = questionsDatabase.length;
+
+                // Section counts
+                let secCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+                Object.keys(userProgress).forEach((qid) => {
+                    const q = questionsDatabase.find((x) => x.id == qid);
+                    if (q) {
+                        solved++;
+                        if (userProgress[qid].correct) {
+                            correct++;
+                        }
+                        secCounts[q.section]++;
+                    }
+                });
+
+                // Update Header values
+                document.getElementById("header-progress").innerText =
+                    `${solved} / ${total}`;
+                const accuracy =
+                    solved > 0 ? Math.round((correct / solved) * 100) : 100;
+                document.getElementById("header-accuracy").innerText =
+                    `${accuracy}%`;
+                document.getElementById("header-score").innerText =
+                    `${correct} Correct`;
+
+                // Update navigation badges
+                document.getElementById("badge-sec-1").innerText =
+                    `${secCounts[1]}/50`;
+                document.getElementById("badge-sec-2").innerText =
+                    `${secCounts[2]}/50`;
+                document.getElementById("badge-sec-3").innerText =
+                    `${secCounts[3]}/50`;
+                document.getElementById("badge-sec-4").innerText =
+                    `${secCounts[4]}/50`;
+                document.getElementById("badge-sec-5").innerText =
+                    `${secCounts[5]}/100`;
+            }
+
+            // Render cards to UI
+            function renderQuestions() {
+                const container = document.getElementById(
+                    "questions-container",
+                );
+                container.innerHTML = "";
+
+                const questions = getSectionQuestions();
+                const startIndex = (currentPage - 1) * questionsPerPage;
+                const endIndex = startIndex + questionsPerPage;
+                const currentBatch = questions.slice(startIndex, endIndex);
+
+                const maxPages = Math.ceil(questions.length / questionsPerPage);
+                document.getElementById("page-indicator").innerText =
+                    `Page ${currentPage} of ${maxPages}`;
+
+                currentBatch.forEach((q) => {
+                    const card = createQuestionCard(q);
+                    container.appendChild(card);
+                });
+            }
+
+            // Create single card element based on type
+            function createQuestionCard(q) {
+                const card = document.createElement("div");
+                card.className =
+                    "bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition duration-200 flex flex-col gap-4";
+                card.id = `q-card-${q.id}`;
+
+                // Card Header: Question Number & Badge
+                let badgeHtml = "";
+                if (userProgress[q.id]) {
+                    if (userProgress[q.id].correct) {
+                        badgeHtml = `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold">✓ Correct</span>`;
+                    } else {
+                        badgeHtml = `<span class="bg-rose-100 text-rose-800 text-xs px-2.5 py-1 rounded-full font-bold">✗ Review needed</span>`;
+                    }
+                } else {
+                    badgeHtml = `<span class="bg-slate-100 text-slate-500 text-xs px-2.5 py-1 rounded-full font-semibold">Unsolved</span>`;
+                }
+
+                const qHeader = `
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <span class="font-bold text-slate-400">Exercise ${q.id}</span>
+          ${badgeHtml}
+        </div>
+      `;
+
+                // Fill in the Blanks render type
+                if (q.type === "fill") {
+                    let savedVal = userProgress[q.id]?.inputVal || "";
+                    let inputFieldHtml = `
+          <div class="flex flex-col gap-3 mt-2">
+            <p class="text-lg font-medium text-slate-800">${q.prompt.replace("______", `<span class="underline text-indigo-600 font-bold px-1">${savedVal || "______"}</span>`)}</p>
+            <p class="text-xs text-slate-400 italic">${q.hint}</p>
+
+            <!-- Quick Options select buttons -->
+            <div class="flex flex-wrap gap-2 mt-2">
+              ${q.options
+                  .map(
+                      (opt) => `
+                <button onclick="submitFillAnswer(${q.id}, '${opt}')" class="px-4 py-2 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 active:scale-95 transition rounded-xl text-sm font-semibold border border-slate-200">
+                  ${opt}
+                </button>
+              `,
+                  )
+                  .join("")}
+            </div>
+          </div>
+        `;
+                    card.innerHTML = qHeader + inputFieldHtml;
+                }
+
+                // Scramble Game Render Type (Extremely touch friendly for iPad!)
+                else if (q.type === "scramble") {
+                    let savedVal = userProgress[q.id]?.inputVal || "";
+                    let isCorrect = userProgress[q.id]?.correct || false;
+
+                    // Current draft words inside user construction
+                    let userWords = savedVal ? savedVal.split(" ") : [];
+
+                    // Generate unselected words pool
+                    let selectedIndices = [];
+                    // Helper to avoid duplicate usage logic if word appears twice
+                    let wordsButtonsHtml = q.words
+                        .map((w, idx) => {
+                            return `
+            <button onclick="tapScrambleWord(${q.id}, '${w}', ${idx})" id="word-${q.id}-${idx}" class="word-pill-btn px-4 py-2.5 bg-slate-100 hover:bg-slate-200 active:scale-95 rounded-xl font-medium text-slate-700 text-sm border border-slate-200 transition">
+              ${w}
+            </button>
+          `;
+                        })
+                        .join("");
+
+                    let feedbackArea = "";
+                    if (userProgress[q.id]) {
+                        if (isCorrect) {
+                            feedbackArea = `<p class="text-xs text-emerald-600 font-bold mt-2">Perfect match: "${q.correctAnswer}"</p>`;
+                        } else {
+                            feedbackArea = `
+              <div class="mt-2 text-xs">
+                <p class="text-rose-600 font-bold">Your answer was close. Let's practice:</p>
+                <p class="text-slate-700 font-semibold italic mt-1">Correct Answer: ${q.correctAnswer}</p>
+              </div>
+            `;
+                        }
+                    }
+
+                    let scrambleHtml = `
+          <div class="flex flex-col gap-3 mt-2">
+            <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100/60">
+              <span class="block text-xs uppercase text-indigo-500 font-bold tracking-wider mb-1">Translate English prompt</span>
+              <p class="text-slate-800 font-semibold">${q.hint}</p>
+            </div>
+
+            <!-- Draft Workspace Area -->
+            <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-4 min-h-[60px] flex flex-wrap gap-2 items-center" id="workspace-${q.id}">
+              ${userWords.length === 0 ? '<span class="text-slate-400 text-sm italic">Tap word chips below to build your sentence...</span>' : ""}
+              ${userWords
+                  .map(
+                      (word, wordIdx) => `
+                <span onclick="removeScrambleWord(${q.id}, ${wordIdx})" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg font-medium text-sm cursor-pointer shadow-sm hover:bg-rose-600 transition flex items-center gap-1.5">
+                  ${word}
+                  <span class="text-xs text-indigo-200 font-bold">&times;</span>
+                </span>
+              `,
+                  )
+                  .join("")}
+            </div>
+
+            <!-- Options Pool -->
+            <div class="flex flex-wrap gap-2 mt-2">
+              ${wordsButtonsHtml}
+            </div>
+
+            <div class="flex items-center gap-2 mt-2">
+              <button onclick="checkScrambleSentence(${q.id})" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition active:scale-95">Check Syntax</button>
+              <button onclick="clearScrambleSentence(${q.id})" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition">Clear</button>
+            </div>
+
+            ${feedbackArea}
+          </div>
+        `;
+
+                    card.innerHTML = qHeader + scrambleHtml;
+                }
+
+                // Translate type: text input with compare engine
+                else if (q.type === "translate") {
+                    let savedVal = userProgress[q.id]?.inputVal || "";
+                    let checked = userProgress[q.id] ? true : false;
+                    let isCorrect = userProgress[q.id]?.correct || false;
+
+                    let translateHtml = `
+          <div class="flex flex-col gap-3 mt-2">
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+              <span class="block text-xs uppercase text-slate-400 font-semibold mb-1">Translate to German</span>
+              <p class="font-bold text-slate-800 text-base">${q.prompt}</p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <input type="text" id="translate-input-${q.id}" value="${savedVal}" placeholder="Type complete German sentence..."
+                class="w-full px-4 py-3 rounded-xl border ${checked ? (isCorrect ? "border-emerald-300 bg-emerald-50/20" : "border-rose-300 bg-rose-50/20") : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium text-sm">
+
+              <div class="flex items-center gap-2 mt-1">
+                <button onclick="checkTranslateAnswer(${q.id})" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition active:scale-95">Verify Translation</button>
+                <button onclick="toggleHint(${q.id})" class="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-bold transition">Toggle Hint</button>
+              </div>
+
+              <!-- Hint Display -->
+              <p id="hint-${q.id}" class="hidden text-xs text-indigo-600 italic bg-indigo-50/50 p-2.5 rounded-lg border border-indigo-100/40 mt-1">
+                <strong>Clue:</strong> ${q.hint}
+              </p>
+
+              <!-- Answer Feedback -->
+              ${
+                  checked
+                      ? `
+                <div class="mt-2 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs flex flex-col gap-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-bold text-slate-500">Correct solution:</span>
+                    <span class="font-bold text-indigo-600 italic">${q.correctAnswer}</span>
+                  </div>
+                  <div class="flex items-center gap-3 mt-1 pt-1.5 border-t border-slate-100">
+                    <span class="text-slate-400 font-medium">Was yours correct? Override if a typo:</span>
+                    <button onclick="overrideGrading(${q.id}, true)" class="text-emerald-600 font-bold hover:underline">Mark Correct</button>
+                    <button onclick="overrideGrading(${q.id}, false)" class="text-rose-600 font-bold hover:underline">Mark Wrong</button>
+                  </div>
+                </div>
+              `
+                      : ""
+              }
+            </div>
+          </div>
+        `;
+                    card.innerHTML = qHeader + translateHtml;
+                }
+
+                // Quick Letter writing response evaluator
+                else if (q.type === "response") {
+                    let savedVal = userProgress[q.id]?.inputVal || "";
+                    let checked = userProgress[q.id] ? true : false;
+
+                    let responseHtml = `
+          <div class="flex flex-col gap-3 mt-2">
+            <div class="bg-amber-50 p-4 rounded-xl border border-amber-100/80">
+              <span class="block text-xs uppercase text-amber-600 font-bold tracking-wider mb-1">A1 Letter Prompt Bullet</span>
+              <p class="font-bold text-amber-900 text-sm">${q.prompt}</p>
+            </div>
+
+            <textarea id="response-input-${q.id}" rows="3" placeholder="Compose your single-sentence German response here..."
+              class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium text-sm text-slate-800">${savedVal}</textarea>
+
+            <div class="flex items-center gap-2 mt-1">
+              <button onclick="showModelAnswer(${q.id})" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition active:scale-95">Compare Model Answer</button>
+              <button onclick="toggleHint(${q.id})" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition">Show Hint</button>
+            </div>
+
+            <!-- Hint display -->
+            <p id="hint-${q.id}" class="hidden text-xs text-slate-500 italic bg-slate-50 p-2.5 rounded-lg border border-slate-200 mt-1">
+              <strong>Clue:</strong> ${q.hint}
+            </p>
+
+            <!-- Self Evaluation panel -->
+            ${
+                checked
+                    ? `
+              <div class="mt-2 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs flex flex-col gap-2">
+                <div>
+                  <span class="block font-bold text-slate-500 mb-1">Model Answer / German Benchmark:</span>
+                  <p class="font-bold text-indigo-600 text-sm italic bg-white p-2.5 rounded-lg border border-slate-200">${q.correctAnswer}</p>
+                </div>
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-200">
+                  <span class="text-slate-500 font-medium">How did you do? Self-rate this response:</span>
+                  <div class="flex gap-2">
+                    <button onclick="overrideGrading(${q.id}, true)" class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-lg hover:bg-emerald-200 transition">Passed</button>
+                    <button onclick="overrideGrading(${q.id}, false)" class="px-3 py-1 bg-rose-100 text-rose-800 font-bold rounded-lg hover:bg-rose-200 transition">Try Again</button>
+                  </div>
+                </div>
+              </div>
+            `
+                    : ""
+            }
+          </div>
+        `;
+                    card.innerHTML = qHeader + responseHtml;
+                }
+
+                return card;
+            }
+
+            // --- GAME ENGINE HANDLERS ---
+
+            // Submit fill-in-the-blank answers
+            window.submitFillAnswer = function (qid, value) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+
+                const isCorrect =
+                    q.correctAnswer.toLowerCase().trim() ===
+                    value.toLowerCase().trim();
+                userProgress[qid] = {
+                    correct: isCorrect,
+                    inputVal: value,
+                };
+
+                saveProgress();
+                renderQuestions();
+            };
+
+            // Scramble logic helpers
+            window.tapScrambleWord = function (qid, word, btnIdx) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+
+                // Disable the button to show it's selected
+                const btn = document.getElementById(`word-${qid}-${btnIdx}`);
+                if (btn && btn.disabled) return;
+                if (btn) {
+                    btn.disabled = true;
+                    btn.classList.add("opacity-40", "bg-slate-200");
+                }
+
+                // Add to draft list
+                let savedVal = userProgress[qid]?.inputVal || "";
+                let draftList = savedVal ? savedVal.split(" ") : [];
+                draftList.push(word);
+
+                userProgress[qid] = {
+                    correct: false,
+                    inputVal: draftList.join(" "),
+                };
+
+                renderQuestions();
+            };
+
+            window.removeScrambleWord = function (qid, wordIdx) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+
+                let savedVal = userProgress[qid]?.inputVal || "";
+                let draftList = savedVal ? savedVal.split(" ") : [];
+                const removedWord = draftList[wordIdx];
+                draftList.splice(wordIdx, 1);
+
+                // Re-enable that word button in the options
+                // Find matches in options to enable one disabled matching button
+                for (let i = 0; i < q.words.length; i++) {
+                    const btn = document.getElementById(`word-${qid}-${i}`);
+                    if (btn && btn.disabled && q.words[i] === removedWord) {
+                        btn.disabled = false;
+                        btn.classList.remove("opacity-40", "bg-slate-200");
+                        break;
+                    }
+                }
+
+                userProgress[qid] = {
+                    correct: false,
+                    inputVal: draftList.join(" "),
+                };
+
+                renderQuestions();
+            };
+
+            window.clearScrambleSentence = function (qid) {
+                delete userProgress[qid];
+                saveProgress();
+                renderQuestions();
+            };
+
+            window.checkScrambleSentence = function (qid) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+
+                let savedVal = userProgress[qid]?.inputVal || "";
+                if (!savedVal) return;
+
+                // Check case-insensitive syntax and strip punctuation discrepancies
+                const formattedUser = savedVal
+                    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+                    .toLowerCase()
+                    .trim();
+                const formattedCorrect = q.correctAnswer
+                    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+                    .toLowerCase()
+                    .trim();
+
+                const isCorrect = formattedUser === formattedCorrect;
+
+                userProgress[qid] = {
+                    correct: isCorrect,
+                    inputVal: savedVal,
+                };
+
+                saveProgress();
+                renderQuestions();
+            };
+
+            // Verification check for standard text translations
+            window.checkTranslateAnswer = function (qid) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+
+                const input = document.getElementById(`translate-input-${qid}`);
+                const val = input ? input.value : "";
+
+                const formattedUser = val
+                    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+                    .toLowerCase()
+                    .trim();
+                const formattedCorrect = q.correctAnswer
+                    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+                    .toLowerCase()
+                    .trim();
+
+                const isCorrect = formattedUser === formattedCorrect;
+
+                userProgress[qid] = {
+                    correct: isCorrect,
+                    inputVal: val,
+                };
+
+                saveProgress();
+                renderQuestions();
+            };
+
+            // Quick Letter comparator toggle
+            window.showModelAnswer = function (qid) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+
+                const input = document.getElementById(`response-input-${qid}`);
+                const val = input ? input.value : "";
+
+                userProgress[qid] = {
+                    correct: true, // Default true on self compare until rated
+                    inputVal: val,
+                };
+
+                saveProgress();
+                renderQuestions();
+            };
+
+            // Toggle help strings on translation boxes
+            window.toggleHint = function (qid) {
+                const hint = document.getElementById(`hint-${qid}`);
+                if (hint) {
+                    hint.classList.toggle("hidden");
+                }
+            };
+
+            // Force/override state on feedback loop
+            window.overrideGrading = function (qid, forceStatus) {
+                if (userProgress[qid]) {
+                    userProgress[qid].correct = forceStatus;
+                    saveProgress();
+                    renderQuestions();
+                }
+            };
+
+            // Initial load
+            window.onload = function () {
+                loadProgress();
+                renderQuestions();
+            };
+        </script>
+    </body>
+</html>
