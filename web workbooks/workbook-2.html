@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>A1 German Exam Prep — 100 Exercises</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .theme-transition {
+                transition:
+                    background-color 0.3s ease,
+                    border-color 0.3s ease,
+                    color 0.3s ease;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-slate-50 text-slate-900 min-h-screen flex flex-col theme-transition"
+    >
+        <header
+            class="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 py-3 md:px-8 shadow-sm"
+        >
+            <div
+                class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+            >
+                <div class="flex items-center gap-3">
+                    <div
+                        class="bg-emerald-600 text-white p-2 rounded-xl shadow-md"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                            />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg md:text-xl text-slate-800">
+                            A1 German Exam Prep
+                        </h1>
+                        <p class="text-xs text-slate-500">
+                            100 focused exercises · Writing practice included
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex items-center gap-6 bg-slate-100 px-4 py-2 rounded-2xl w-full md:w-auto justify-around"
+                >
+                    <div class="text-center">
+                        <span
+                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                            >Progress</span
+                        >
+                        <span
+                            id="header-progress"
+                            class="font-bold text-emerald-600 text-lg"
+                            >0 / 100</span
+                        >
+                    </div>
+                    <div class="h-8 w-px bg-slate-300"></div>
+                    <div class="text-center">
+                        <span
+                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                            >Accuracy</span
+                        >
+                        <span
+                            id="header-accuracy"
+                            class="font-bold text-emerald-600 text-lg"
+                            >100%</span
+                        >
+                    </div>
+                    <div class="h-8 w-px bg-slate-300"></div>
+                    <div class="text-center">
+                        <span
+                            class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                            >Correct</span
+                        >
+                        <span
+                            id="header-score"
+                            class="font-bold text-amber-600 text-lg"
+                            >0</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main
+            class="max-w-7xl mx-auto w-full flex-1 p-4 md:p-8 flex flex-col lg:flex-row gap-8"
+        >
+            <aside class="w-full lg:w-80 flex flex-col gap-4 shrink-0">
+                <div
+                    class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-3"
+                >
+                    <h3
+                        class="font-bold text-sm text-slate-500 uppercase tracking-wider mb-2"
+                    >
+                        Chapters
+                    </h3>
+
+                    <button
+                        onclick="switchSection(1)"
+                        id="btn-sec-1"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between bg-emerald-50 text-emerald-700 border border-emerald-100"
+                    >
+                        <span>1. Nom vs. Akk</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-emerald-200"
+                            id="badge-sec-1"
+                            >0/20</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(2)"
+                        id="btn-sec-2"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>2. Dative Case</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-2"
+                            >0/20</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(3)"
+                        id="btn-sec-3"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>3. Possessives</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-3"
+                            >0/20</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(4)"
+                        id="btn-sec-4"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>4. Mixed Drills</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-4"
+                            >0/20</span
+                        >
+                    </button>
+
+                    <button
+                        onclick="switchSection(5)"
+                        id="btn-sec-5"
+                        class="section-nav-btn w-full text-left px-4 py-3 rounded-xl font-medium transition flex items-center justify-between text-slate-600 hover:bg-slate-50 border border-transparent"
+                    >
+                        <span>5. Writing & Letters</span>
+                        <span
+                            class="text-xs px-2 py-1 rounded-full bg-slate-200 text-slate-600"
+                            id="badge-sec-5"
+                            >0/20</span
+                        >
+                    </button>
+                </div>
+
+                <div
+                    class="bg-slate-100 p-4 rounded-xl border border-slate-200 text-center"
+                >
+                    <p class="text-xs text-slate-500 mb-3">
+                        Progress saves in your browser. Section 5 uses free
+                        writing — type your own German.
+                    </p>
+                    <button
+                        onclick="resetProgress()"
+                        class="text-xs font-semibold text-rose-600 hover:text-rose-800 transition"
+                    >
+                        Reset Progress
+                    </button>
+                </div>
+            </aside>
+
+            <section class="flex-1 flex flex-col gap-6">
+                <div
+                    class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4"
+                >
+                    <div>
+                        <h2
+                            id="current-section-title"
+                            class="font-extrabold text-xl text-slate-800"
+                        >
+                            Section 1: Nominative vs. Accusative
+                        </h2>
+                        <p
+                            id="current-section-desc"
+                            class="text-sm text-slate-500"
+                        >
+                            Tap the correct article for each blank.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button
+                            onclick="prevPage()"
+                            class="p-2 rounded-lg border border-slate-300 hover:bg-slate-50 transition active:scale-95"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 19l-7-7 7-7"
+                                />
+                            </svg>
+                        </button>
+                        <span
+                            id="page-indicator"
+                            class="text-sm font-semibold text-slate-700 bg-slate-100 px-3 py-1 rounded-md"
+                            >Page 1 of 2</span
+                        >
+                        <button
+                            onclick="nextPage()"
+                            class="p-2 rounded-lg border border-slate-300 hover:bg-slate-50 transition active:scale-95"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="questions-container" class="flex flex-col gap-6"></div>
+
+                <div class="flex items-center justify-between mt-4">
+                    <button
+                        onclick="prevPage()"
+                        class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white font-medium hover:bg-slate-50 transition active:scale-95 text-sm text-slate-700"
+                    >
+                        ← Previous
+                    </button>
+                    <button
+                        onclick="nextPage()"
+                        class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white font-medium hover:bg-slate-50 transition active:scale-95 text-sm text-slate-700"
+                    >
+                        Next →
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            const STORAGE_KEY = "german_a1_exam_prep_v2_progress";
+            const questionsDatabase = [];
+
+            function addFill(id, section, prompt, hint, ans, opt) {
+                questionsDatabase.push({
+                    id,
+                    section,
+                    type: "fill",
+                    prompt,
+                    hint,
+                    correctAnswer: ans,
+                    options: opt,
+                });
+            }
+
+            // --- SECTION 1: NOM vs AKK (20) ---
+            addFill(1, 1, "Das ist ______ Kaffee.", "der Kaffee · Nom.", "ein", ["ein", "einen", "eine", "kein"]);
+            addFill(2, 1, "Ich möchte ______ Kaffee.", "der Kaffee · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+            addFill(3, 1, "______ Hund bellt.", "der Hund · Nom.", "Der", ["Der", "Den", "Das", "Ein"]);
+            addFill(4, 1, "Ich sehe ______ Hund.", "der Hund · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+            addFill(5, 1, "Hast du ______ Laptop?", "der Laptop · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+            addFill(6, 1, "______ Laptop ist neu.", "der Laptop · Nom.", "Der", ["Der", "Den", "Ein", "Einen"]);
+            addFill(7, 1, "Er sucht ______ Schlüssel.", "der Schlüssel · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+            addFill(8, 1, "Wo ist ______ Schlüssel?", "der Schlüssel · Akk. (definite)", "den", ["der", "den", "ein", "einen"]);
+            addFill(9, 1, "Wir haben ______ Auto.", "das Auto · Akk.", "ein", ["ein", "einen", "eine", "kein"]);
+            addFill(10, 1, "______ Auto ist rot.", "das Auto · Nom.", "Das", ["Das", "Der", "Ein", "Eine"]);
+            addFill(11, 1, "Sie kauft ______ Buch.", "das Buch · Akk.", "ein", ["ein", "einen", "eine", "kein"]);
+            addFill(12, 1, "Ich finde ______ Buch nicht.", "das Buch · Akk.", "das", ["das", "der", "ein", "eine"]);
+            addFill(13, 1, "Ich trinke ______ Tee.", "der Tee · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+            addFill(14, 1, "Er isst ______ Apfel.", "der Apfel · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+            addFill(15, 1, "Wir mieten ______ Wohnung.", "die Wohnung · Akk.", "eine", ["ein", "einen", "eine", "keine"]);
+            addFill(16, 1, "______ Wohnung ist groß.", "die Wohnung · Nom.", "Die", ["Die", "Der", "Eine", "Ein"]);
+            addFill(17, 1, "Suchst du ______ Handy?", "das Handy · Akk.", "das", ["das", "der", "ein", "eine"]);
+            addFill(18, 1, "Ich brauche ______ Stift.", "der Stift · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+            addFill(19, 1, "Das ist ______ Tisch.", "der Tisch · Nom.", "ein", ["ein", "einen", "eine", "kein"]);
+            addFill(20, 1, "Ich kaufe ______ Tisch.", "der Tisch · Akk.", "einen", ["ein", "einen", "eine", "keinen"]);
+
+            // --- SECTION 2: DATIVE (20) ---
+            addFill(21, 2, "Ich fahre mit ______ Auto.", "mit + das Auto → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(22, 2, "Ich spreche mit ______ Chef.", "mit + der Chef → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(23, 2, "Er geht zu ______ Arzt.", "zu + der Arzt → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(24, 2, "Sie wohnt bei ______ Familie.", "bei + die Familie → Dat.", "der", ["dem", "der", "den", "einer"]);
+            addFill(25, 2, "Nach ______ Arbeit trinke ich Tee.", "nach + die Arbeit → Dat.", "der", ["dem", "der", "den", "einer"]);
+            addFill(26, 2, "Er kommt aus ______ Schweiz.", "aus + die Schweiz → Dat.", "der", ["dem", "der", "den", "einer"]);
+            addFill(27, 2, "Er hilft ______ Kind.", "helfen + das Kind → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(28, 2, "Das Auto gehört ______ Frau.", "gehören + die Frau → Dat.", "der", ["dem", "der", "den", "einer"]);
+            addFill(29, 2, "Wie geht es ______ Bruder?", "gehen + der Bruder → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(30, 2, "Wir danken ______ Lehrer.", "danken + der Lehrer → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(31, 2, "Er wohnt bei ______ Eltern.", "bei + die Eltern → Dat. Pl.", "den", ["dem", "der", "den", "denen"]);
+            addFill(32, 2, "Das Haus gefällt ______ Mann.", "gefallen + der Mann → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(33, 2, "Ich gebe ______ Freundin ein Geschenk.", "geben + die Freundin → Dat.", "der", ["dem", "der", "den", "einer"]);
+            addFill(34, 2, "Wir reisen mit ______ Zug.", "mit + der Zug → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(35, 2, "Sie gratulieren ______ Kollegin.", "gratulieren + die Kollegin → Dat.", "der", ["dem", "der", "den", "einer"]);
+            addFill(36, 2, "Ich wohne gegenüber ______ Park.", "gegenüber + der Park → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(37, 2, "Er antwortet ______ Chef.", "antworten + der Chef → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(38, 2, "Das Buch gehört ______ Student.", "gehören + der Student → Dat.", "dem", ["dem", "der", "den", "einem"]);
+            addFill(39, 2, "Ich bin in ______ Stadt.", "in + die Stadt → Dat. (location)", "der", ["dem", "der", "den", "einer"]);
+            addFill(40, 2, "Wir sind in ______ Kino.", "in + das Kino → Dat.", "dem", ["dem", "der", "den", "einem"]);
+
+            // --- SECTION 3: POSSESSIVES (20) ---
+            addFill(41, 3, "______ Laptop ist kaputt.", "My · Nom. masc.", "Mein", ["Mein", "Meine", "Meinen", "Meinem"]);
+            addFill(42, 3, "______ Frau arbeitet hier.", "His · Nom. fem.", "Seine", ["Sein", "Seine", "Seinen", "Seinem"]);
+            addFill(43, 3, "______ Auto ist blau.", "Her · Nom. neut.", "Ihr", ["Ihr", "Ihre", "Ihren", "Ihrem"]);
+            addFill(44, 3, "______ Kinder schlafen.", "Our · Nom. pl.", "Unsere", ["Unser", "Unsere", "Unseren", "Unserem"]);
+            addFill(45, 3, "______ Kaffee ist fertig.", "Your (du) · Nom. masc.", "Dein", ["Dein", "Deine", "Deinen", "Deinem"]);
+            addFill(46, 3, "______ Tasche ist verloren.", "My · Nom. fem.", "Meine", ["Mein", "Meine", "Meinen", "Meinem"]);
+            addFill(47, 3, "Ich besuche ______ Vater.", "My · Akk. masc.", "meinen", ["mein", "meine", "meinen", "meinem"]);
+            addFill(48, 3, "Er sucht ______ Schlüssel.", "His · Akk. masc.", "seinen", ["sein", "seine", "seinen", "seinem"]);
+            addFill(49, 3, "Wir haben ______ Laptop vergessen.", "Our · Akk. masc.", "unseren", ["unser", "unsere", "unseren", "unserem"]);
+            addFill(50, 3, "Sie liebt ______ Hund.", "Her · Akk. masc.", "ihren", ["ihr", "ihre", "ihren", "ihrem"]);
+            addFill(51, 3, "Ich kaufe ______ Buch.", "Your (du) · Akk. neut.", "dein", ["dein", "deine", "deinen", "deinem"]);
+            addFill(52, 3, "Er liest ______ Zeitung.", "His · Akk. fem.", "seine", ["sein", "seine", "seinen", "seinem"]);
+            addFill(53, 3, "Wir treffen ______ Freunde.", "Our · Akk. pl.", "unsere", ["unser", "unsere", "unseren", "unserem"]);
+            addFill(54, 3, "Ich helfe ______ Mutter.", "My · Dat. fem.", "meiner", ["mein", "meine", "meinen", "meiner"]);
+            addFill(55, 3, "Er gibt ______ Bruder ein Geschenk.", "His · Dat. masc.", "seinem", ["sein", "seine", "seinen", "seinem"]);
+            addFill(56, 3, "Das gehört ______ Eltern.", "Their · Dat. pl.", "ihren", ["ihr", "ihre", "ihren", "ihren"]);
+            addFill(57, 3, "______ Name ist Anna.", "Your (Sie) · Nom. masc.", "Ihr", ["Ihr", "Ihre", "Ihren", "Ihrem"]);
+            addFill(58, 3, "______ Schwester wohnt in Berlin.", "My · Nom. fem.", "Meine", ["Mein", "Meine", "Meinen", "Meinem"]);
+            addFill(59, 3, "Ich trinke ______ Tee.", "Your (du) · Akk. masc.", "deinen", ["dein", "deine", "deinen", "deinem"]);
+            addFill(60, 3, "______ Haus ist sehr alt.", "Their · Nom. neut.", "Ihr", ["Ihr", "Ihre", "Ihren", "Ihrem"]);
+
+            // --- SECTION 4: MIXED (20) ---
+            addFill(61, 4, "Ich habe heute ______ Kaffee getrunken.", "No coffee · Akk. masc.", "keinen", ["kein", "keinen", "keine", "nicht"]);
+            addFill(62, 4, "Das schmeckt mir ______ gut.", "Not good", "nicht", ["kein", "keinen", "keine", "nicht"]);
+            addFill(63, 4, "Kannst du ______ helfen?", "Me · Dat. pronoun", "mir", ["mich", "mir", "ich", "mein"]);
+            addFill(64, 4, "Er besucht ______ nicht oft.", "Us · Akk.", "uns", ["wir", "uns", "euch", "sie"]);
+            addFill(65, 4, "Wo ist mein Laptop? Ich suche ______.", "It · Akk. masc.", "ihn", ["er", "ihn", "ihm", "es"]);
+            addFill(66, 4, "Wir geben ______ ein Geschenk.", "Him · Dat.", "ihm", ["ihn", "ihm", "er", "seinen"]);
+            addFill(67, 4, "Wie geht es ______?", "You (formal) · Dat.", "Ihnen", ["Sie", "Ihnen", "euch", "dir"]);
+            addFill(68, 4, "Ich rufe ______ heute Abend an.", "You (du) · Akk.", "dich", ["du", "dich", "dir", "dein"]);
+            addFill(69, 4, "Ich habe gestern im Supermarkt ______.", "einkaufen · past", "eingekauft", ["gekauft", "eingekauft", "einkaufen", "gekaufe"]);
+            addFill(70, 4, "Er hat ein neues Auto ______.", "kaufen · past", "gekauft", ["gekauft", "eingekauft", "kaufen", "gekaufen"]);
+            addFill(71, 4, "Wir ______ gestern im Kino.", "sein · past", "waren", ["sind", "waren", "sein", "war"]);
+            addFill(72, 4, "Sie ______ gestern krank.", "sein · past", "war", ["ist", "war", "sein", "waren"]);
+            addFill(73, 4, "Ich ______ nach Hause.", "gehen · present", "gehe", ["gehe", "geht", "gehen", "ging"]);
+            addFill(74, 4, "Er kommt ______ Deutschland.", "from", "aus", ["aus", "von", "nach", "in"]);
+            addFill(75, 4, "Wir fahren ______ Berlin.", "to (city)", "nach", ["nach", "zu", "in", "auf"]);
+            addFill(76, 4, "Das Buch liegt ______ dem Tisch.", "on", "auf", ["auf", "in", "an", "unter"]);
+            addFill(77, 4, "Ich wohne ______ München.", "in (city)", "in", ["in", "nach", "zu", "auf"]);
+            addFill(78, 4, "______ Uhr ist es?", "What time", "Wie viel", ["Wie viel", "Wann", "Wo", "Was"]);
+            addFill(79, 4, "Ich trinke ______ Milch.", "No milk · Akk.", "keine", ["kein", "keinen", "keine", "nicht"]);
+            addFill(80, 4, "Er kann morgen ______ kommen.", "not come", "nicht", ["kein", "nicht", "keinen", "keine"]);
+
+            // --- SECTION 5: WRITING (20) — free text only ---
+            const s5Write = [
+                { id: 81, eng: "I drink a coffee in the morning.", correct: "Ich trinke morgen einen Kaffee.", hint: "Ich trinke ... einen Kaffee" },
+                { id: 82, eng: "My laptop is broken.", correct: "Mein Laptop ist kaputt.", hint: "Mein Laptop ist kaputt" },
+                { id: 83, eng: "We want to buy a car.", correct: "Wir wollen ein Auto kaufen.", hint: "wollen ... kaufen" },
+                { id: 84, eng: "I traveled by car.", correct: "Ich fahre mit dem Auto.", hint: "fahre mit dem Auto" },
+                { id: 85, eng: "Can you help me?", correct: "Kannst du mir helfen?", hint: "Kannst du mir helfen?" },
+                { id: 86, eng: "I cannot come tomorrow.", correct: "Ich kann morgen nicht kommen.", hint: "kann morgen nicht kommen" },
+                { id: 87, eng: "We live in Berlin.", correct: "Wir wohnen in Berlin.", hint: "wohnen in Berlin" },
+                { id: 88, eng: "I have no money.", correct: "Ich habe kein Geld.", hint: "habe kein Geld" },
+                { id: 89, eng: "I thank you for the help.", correct: "Ich danke dir für die Hilfe.", hint: "danke dir für die Hilfe" },
+                { id: 90, eng: "We are coming on Saturday.", correct: "Wir kommen am Samstag.", hint: "kommen am Samstag" },
+            ];
+            s5Write.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 5,
+                    type: "write",
+                    prompt: q.eng,
+                    correctAnswer: q.correct,
+                    hint: q.hint,
+                });
+            });
+
+            const s5Translate = [
+                { id: 91, eng: "I am sick today.", correct: "Ich bin heute krank.", hint: "bin heute krank" },
+                { id: 92, eng: "Thank you for your invitation.", correct: "Vielen Dank für Ihre Einladung.", hint: "Danke für Ihre Einladung" },
+                { id: 93, eng: "Unfortunately, I cannot come.", correct: "Leider kann ich nicht kommen.", hint: "Leider kann ich nicht kommen" },
+                { id: 94, eng: "Please write back soon.", correct: "Bitte antworten Sie bald.", hint: "Bitte antworten Sie bald" },
+                { id: 95, eng: "Best regards", correct: "Viele Grüße", hint: "Viele Grüße / Mit freundlichen Grüßen" },
+            ];
+            s5Translate.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 5,
+                    type: "translate",
+                    prompt: q.eng,
+                    correctAnswer: q.correct,
+                    hint: q.hint,
+                });
+            });
+
+            const s5Response = [
+                { id: 96, prompt: "Apologize because you are sick.", model: "Es tut mir leid, aber ich bin heute krank.", hint: "Es tut mir leid + krank" },
+                { id: 97, prompt: "Invite a colleague to your birthday party.", model: "Ich möchte Sie zu meiner Geburtstagsparty einladen.", hint: "möchte Sie einladen" },
+                { id: 98, prompt: "Tell your teacher you cannot come to class tomorrow.", model: "Ich kann morgen leider nicht zum Kurs kommen.", hint: "nicht zum Kurs kommen" },
+                { id: 99, prompt: "Ask what time the German course starts.", model: "Um wie viel Uhr beginnt der Deutschkurs?", hint: "Um wie viel Uhr..." },
+                { id: 100, prompt: "Confirm you will arrive at the train station at 15:00.", model: "Ich komme um 15:00 Uhr am Bahnhof an.", hint: "komme um ... am Bahnhof an" },
+            ];
+            s5Response.forEach((q) => {
+                questionsDatabase.push({
+                    id: q.id,
+                    section: 5,
+                    type: "response",
+                    prompt: q.prompt,
+                    correctAnswer: q.model,
+                    hint: q.hint,
+                });
+            });
+
+            // --- ENGINE ---
+            let currentSection = 1;
+            let currentPage = 1;
+            const questionsPerPage = 10;
+            let userProgress = {};
+
+            function normalizeGerman(str) {
+                return str
+                    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+                    .toLowerCase()
+                    .trim();
+            }
+
+            function loadProgress() {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) userProgress = JSON.parse(saved);
+                updateGlobalHeader();
+            }
+
+            function saveProgress() {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(userProgress));
+                updateGlobalHeader();
+            }
+
+            function resetProgress() {
+                if (confirm("Clear all progress for this workbook?")) {
+                    userProgress = {};
+                    localStorage.removeItem(STORAGE_KEY);
+                    updateGlobalHeader();
+                    renderQuestions();
+                }
+            }
+
+            function switchSection(sectionNum) {
+                currentSection = sectionNum;
+                currentPage = 1;
+
+                document.querySelectorAll(".section-nav-btn").forEach((btn) => {
+                    btn.classList.remove(
+                        "bg-emerald-50",
+                        "text-emerald-700",
+                        "border-emerald-100",
+                    );
+                    btn.classList.add(
+                        "text-slate-600",
+                        "hover:bg-slate-50",
+                        "border-transparent",
+                    );
+                });
+
+                const activeBtn = document.getElementById(`btn-sec-${sectionNum}`);
+                if (activeBtn) {
+                    activeBtn.classList.remove(
+                        "text-slate-600",
+                        "hover:bg-slate-50",
+                        "border-transparent",
+                    );
+                    activeBtn.classList.add(
+                        "bg-emerald-50",
+                        "text-emerald-700",
+                        "border-emerald-100",
+                    );
+                }
+
+                const titles = {
+                    1: ["Section 1: Nominative vs. Accusative", "Tap the correct article for each blank."],
+                    2: ["Section 2: Dative Case", "Prepositions and verbs that take the dative: dem, der, einem…"],
+                    3: ["Section 3: Possessive Articles", "Match my/your/his/her/our with the right ending."],
+                    4: ["Section 4: Mixed Drills", "Pronouns, negation, past tense, and prepositions."],
+                    5: ["Section 5: Writing & Letters", "Type full German sentences and letter responses yourself — no word chips."],
+                };
+
+                document.getElementById("current-section-title").innerText = titles[sectionNum][0];
+                document.getElementById("current-section-desc").innerText = titles[sectionNum][1];
+                renderQuestions();
+            }
+
+            function getSectionQuestions() {
+                return questionsDatabase.filter((q) => q.section === currentSection);
+            }
+
+            function prevPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderQuestions();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+            }
+
+            function nextPage() {
+                const maxPages = Math.ceil(getSectionQuestions().length / questionsPerPage);
+                if (currentPage < maxPages) {
+                    currentPage++;
+                    renderQuestions();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+            }
+
+            function updateGlobalHeader() {
+                let solved = 0;
+                let correct = 0;
+                const total = questionsDatabase.length;
+                const secCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+                Object.keys(userProgress).forEach((qid) => {
+                    const q = questionsDatabase.find((x) => x.id == qid);
+                    if (q) {
+                        solved++;
+                        if (userProgress[qid].correct) correct++;
+                        secCounts[q.section]++;
+                    }
+                });
+
+                document.getElementById("header-progress").innerText = `${solved} / ${total}`;
+                const accuracy = solved > 0 ? Math.round((correct / solved) * 100) : 100;
+                document.getElementById("header-accuracy").innerText = `${accuracy}%`;
+                document.getElementById("header-score").innerText = `${correct}`;
+
+                for (let s = 1; s <= 5; s++) {
+                    document.getElementById(`badge-sec-${s}`).innerText = `${secCounts[s]}/20`;
+                }
+            }
+
+            function renderQuestions() {
+                const container = document.getElementById("questions-container");
+                container.innerHTML = "";
+
+                const questions = getSectionQuestions();
+                const startIndex = (currentPage - 1) * questionsPerPage;
+                const currentBatch = questions.slice(startIndex, startIndex + questionsPerPage);
+                const maxPages = Math.ceil(questions.length / questionsPerPage) || 1;
+
+                document.getElementById("page-indicator").innerText = `Page ${currentPage} of ${maxPages}`;
+
+                currentBatch.forEach((q) => container.appendChild(createQuestionCard(q)));
+            }
+
+            function createQuestionCard(q) {
+                const card = document.createElement("div");
+                card.className =
+                    "bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4";
+                card.id = `q-card-${q.id}`;
+
+                let badgeHtml = userProgress[q.id]
+                    ? userProgress[q.id].correct
+                        ? `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold">✓ Correct</span>`
+                        : `<span class="bg-rose-100 text-rose-800 text-xs px-2.5 py-1 rounded-full font-bold">✗ Review</span>`
+                    : `<span class="bg-slate-100 text-slate-500 text-xs px-2.5 py-1 rounded-full font-semibold">Unsolved</span>`;
+
+                const qHeader = `
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <span class="font-bold text-slate-400">Exercise ${q.id}</span>
+          ${badgeHtml}
+        </div>`;
+
+                if (q.type === "fill") {
+                    const savedVal = userProgress[q.id]?.inputVal || "";
+                    card.innerHTML =
+                        qHeader +
+                        `
+          <div class="flex flex-col gap-3 mt-2">
+            <p class="text-lg font-medium text-slate-800">${q.prompt.replace("______", `<span class="underline text-emerald-600 font-bold px-1">${savedVal || "______"}</span>`)}</p>
+            <p class="text-xs text-slate-400 italic">${q.hint}</p>
+            <div class="flex flex-wrap gap-2 mt-2">
+              ${q.options.map((opt) => `<button onclick="submitFillAnswer(${q.id}, '${opt}')" class="px-4 py-2 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 active:scale-95 transition rounded-xl text-sm font-semibold border border-slate-200">${opt}</button>`).join("")}
+            </div>
+          </div>`;
+                } else if (q.type === "write" || q.type === "translate") {
+                    const savedVal = userProgress[q.id]?.inputVal || "";
+                    const checked = !!userProgress[q.id];
+                    const isCorrect = userProgress[q.id]?.correct || false;
+                    const isWrite = q.type === "write";
+                    const checkFn = isWrite ? "checkWriteAnswer" : "checkTranslateAnswer";
+                    const inputId = `${q.type}-input-${q.id}`;
+                    const rows = isWrite ? 3 : 2;
+                    const placeholder = isWrite
+                        ? "Type your complete German sentence here..."
+                        : "Type the German translation...";
+
+                    card.innerHTML =
+                        qHeader +
+                        `
+          <div class="flex flex-col gap-3 mt-2">
+            <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100/60">
+              <span class="block text-xs uppercase text-emerald-600 font-bold tracking-wider mb-1">${isWrite ? "Write in German" : "Translate to German"}</span>
+              <p class="text-slate-800 font-semibold">${q.prompt}</p>
+            </div>
+            <textarea id="${inputId}" rows="${rows}" placeholder="${placeholder}"
+              class="w-full px-4 py-3 rounded-xl border ${checked ? (isCorrect ? "border-emerald-300 bg-emerald-50/20" : "border-rose-300 bg-rose-50/20") : "border-slate-300"} focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium text-sm">${savedVal}</textarea>
+            <div class="flex items-center gap-2 flex-wrap">
+              <button onclick="${checkFn}(${q.id})" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition active:scale-95">Check Answer</button>
+              <button onclick="toggleHint(${q.id})" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-xs font-bold transition">Hint</button>
+            </div>
+            <p id="hint-${q.id}" class="hidden text-xs text-emerald-600 italic bg-emerald-50/50 p-2.5 rounded-lg border border-emerald-100/40"><strong>Clue:</strong> ${q.hint}</p>
+            ${
+                checked
+                    ? `<div class="mt-2 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs flex flex-col gap-1.5">
+                <div><span class="font-bold text-slate-500">Model answer:</span> <span class="font-bold text-emerald-600 italic">${q.correctAnswer}</span></div>
+                <div class="flex items-center gap-3 mt-1 pt-1.5 border-t border-slate-100">
+                  <span class="text-slate-400">Close enough?</span>
+                  <button onclick="overrideGrading(${q.id}, true)" class="text-emerald-600 font-bold hover:underline">Mark Correct</button>
+                  <button onclick="overrideGrading(${q.id}, false)" class="text-rose-600 font-bold hover:underline">Mark Wrong</button>
+                </div>
+              </div>`
+                    : ""
+            }
+          </div>`;
+                } else if (q.type === "response") {
+                    const savedVal = userProgress[q.id]?.inputVal || "";
+                    const checked = !!userProgress[q.id];
+
+                    card.innerHTML =
+                        qHeader +
+                        `
+          <div class="flex flex-col gap-3 mt-2">
+            <div class="bg-amber-50 p-4 rounded-xl border border-amber-100/80">
+              <span class="block text-xs uppercase text-amber-600 font-bold tracking-wider mb-1">Letter / Email prompt</span>
+              <p class="font-bold text-amber-900 text-sm">${q.prompt}</p>
+            </div>
+            <textarea id="response-input-${q.id}" rows="4" placeholder="Write your German response here (one or more sentences)..."
+              class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium text-sm text-slate-800">${savedVal}</textarea>
+            <div class="flex items-center gap-2 flex-wrap">
+              <button onclick="showModelAnswer(${q.id})" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition active:scale-95">Show Model Answer</button>
+              <button onclick="toggleHint(${q.id})" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition">Hint</button>
+            </div>
+            <p id="hint-${q.id}" class="hidden text-xs text-slate-500 italic bg-slate-50 p-2.5 rounded-lg border border-slate-200"><strong>Clue:</strong> ${q.hint}</p>
+            ${
+                checked
+                    ? `<div class="mt-2 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs flex flex-col gap-2">
+                <div>
+                  <span class="block font-bold text-slate-500 mb-1">Model answer:</span>
+                  <p class="font-bold text-emerald-600 text-sm italic bg-white p-2.5 rounded-lg border border-slate-200">${q.correctAnswer}</p>
+                </div>
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-200">
+                  <span class="text-slate-500 font-medium">Self-rate:</span>
+                  <div class="flex gap-2">
+                    <button onclick="overrideGrading(${q.id}, true)" class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-lg hover:bg-emerald-200 transition">Passed</button>
+                    <button onclick="overrideGrading(${q.id}, false)" class="px-3 py-1 bg-rose-100 text-rose-800 font-bold rounded-lg hover:bg-rose-200 transition">Try Again</button>
+                  </div>
+                </div>
+              </div>`
+                    : ""
+            }
+          </div>`;
+                }
+
+                return card;
+            }
+
+            window.submitFillAnswer = function (qid, value) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+                const isCorrect =
+                    q.correctAnswer.toLowerCase().trim() === value.toLowerCase().trim();
+                userProgress[qid] = { correct: isCorrect, inputVal: value };
+                saveProgress();
+                renderQuestions();
+            };
+
+            function checkTextAnswer(qid, inputId) {
+                const q = questionsDatabase.find((x) => x.id === qid);
+                if (!q) return;
+                const input = document.getElementById(inputId);
+                const val = input ? input.value : "";
+                const isCorrect =
+                    normalizeGerman(val) === normalizeGerman(q.correctAnswer);
+                userProgress[qid] = { correct: isCorrect, inputVal: val };
+                saveProgress();
+                renderQuestions();
+            }
+
+            window.checkWriteAnswer = function (qid) {
+                checkTextAnswer(qid, `write-input-${qid}`);
+            };
+
+            window.checkTranslateAnswer = function (qid) {
+                checkTextAnswer(qid, `translate-input-${qid}`);
+            };
+
+            window.showModelAnswer = function (qid) {
+                const input = document.getElementById(`response-input-${qid}`);
+                const val = input ? input.value : "";
+                userProgress[qid] = { correct: true, inputVal: val };
+                saveProgress();
+                renderQuestions();
+            };
+
+            window.toggleHint = function (qid) {
+                const hint = document.getElementById(`hint-${qid}`);
+                if (hint) hint.classList.toggle("hidden");
+            };
+
+            window.overrideGrading = function (qid, forceStatus) {
+                if (userProgress[qid]) {
+                    userProgress[qid].correct = forceStatus;
+                    saveProgress();
+                    renderQuestions();
+                }
+            };
+
+            window.onload = function () {
+                loadProgress();
+                renderQuestions();
+            };
+        </script>
+    </body>
+</html>

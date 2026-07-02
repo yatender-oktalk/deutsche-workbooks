@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 German Connectors Workbook</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            color: #222;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #111;
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        .cheatsheet {
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fafafa;
+            margin-bottom: 50px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        .instructions {
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercise-section {
+            margin-bottom: 40px;
+        }
+        ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 35px;
+            font-size: 1.15em;
+            line-height: 2.2;
+        }
+        .blank {
+            display: inline-block;
+            width: 180px;
+            border-bottom: 1px solid #000;
+            margin: 0 10px;
+        }
+        .long-blank {
+            display: block;
+            width: 90%;
+            border-bottom: 1px solid #000;
+            margin-top: 10px;
+            height: 30px;
+        }
+        .hint {
+            font-size: 0.85em;
+            color: #666;
+        }
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            body {
+                padding: 0;
+            }
+            .controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button onclick="window.print()">Export to PDF / Print</button>
+    </div>
+
+    <h1>German A2 Connectors Workbook</h1>
+    
+    <div class="cheatsheet">
+        <h2>Cheatsheet: Konjunktionen</h2>
+        
+        <h3>1. Coordinating Conjunctions (Position 0)</h3>
+        <p>These connectors do <strong>not</strong> change the word order. The verb stays in Position 2 in the following clause.</p>
+        <p><em>Structure: Clause 1 + Connector + Subject + Verb + ...</em></p>
+        <table>
+            <tr>
+                <th>Connector</th>
+                <th>Meaning</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>und</strong></td>
+                <td>and</td>
+                <td>Ich lerne Deutsch <strong>und</strong> ich spreche Englisch.</td>
+            </tr>
+            <tr>
+                <td><strong>aber</strong></td>
+                <td>but</td>
+                <td>Ich bin müde, <strong>aber</strong> ich lerne weiter.</td>
+            </tr>
+            <tr>
+                <td><strong>oder</strong></td>
+                <td>or</td>
+                <td>Gehen wir ins Kino <strong>oder</strong> bleiben wir zu Hause?</td>
+            </tr>
+            <tr>
+                <td><strong>denn</strong></td>
+                <td>because (gives a reason)</td>
+                <td>Ich bleibe zu Hause, <strong>denn</strong> ich bin krank.</td>
+            </tr>
+            <tr>
+                <td><strong>sondern</strong></td>
+                <td>but rather (after a negative)</td>
+                <td>Er trinkt keinen Tee, <strong>sondern</strong> er trinkt Kaffee.</td>
+            </tr>
+        </table>
+
+        <h3>2. Subordinating Conjunctions (Verb at the End)</h3>
+        <p>These connectors send the conjugated verb to the <strong>very end</strong> of the clause.</p>
+        <p><em>Structure: Clause 1 + Connector + Subject + ... + Verb.</em></p>
+        <table>
+            <tr>
+                <th>Connector</th>
+                <th>Meaning</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>weil</strong></td>
+                <td>because</td>
+                <td>Ich lerne Deutsch, <strong>weil</strong> ich in Berlin lebe.</td>
+            </tr>
+            <tr>
+                <td><strong>dass</strong></td>
+                <td>that</td>
+                <td>Ich weiß, <strong>dass</strong> Deutsch schwer ist.</td>
+            </tr>
+            <tr>
+                <td><strong>wenn</strong></td>
+                <td>if / when (present/future or repeated past)</td>
+                <td>Ich rufe dich an, <strong>wenn</strong> ich Zeit habe.</td>
+            </tr>
+            <tr>
+                <td><strong>als</strong></td>
+                <td>when (single event in the past)</td>
+                <td><strong>Als</strong> ich ein Kind war, spielte ich Fußball.</td>
+            </tr>
+            <tr>
+                <td><strong>ob</strong></td>
+                <td>whether / if (yes/no questions)</td>
+                <td>Ich weiß nicht, <strong>ob</strong> er heute kommt.</td>
+            </tr>
+            <tr>
+                <td><strong>obwohl</strong></td>
+                <td>although / even though</td>
+                <td>Er geht spazieren, <strong>obwohl</strong> es regnet.</td>
+            </tr>
+            <tr>
+                <td><strong>damit</strong></td>
+                <td>so that / in order to</td>
+                <td>Ich lerne viel, <strong>damit</strong> ich die Prüfung bestehe.</td>
+            </tr>
+        </table>
+        
+        <h3>3. Adverbial Conjunctions (Position 1)</h3>
+        <p>These connectors take Position 1 in the new clause. The <strong>verb comes immediately after</strong> (Position 2), followed by the subject.</p>
+        <p><em>Structure: Clause 1. + Connector + Verb + Subject + ...</em></p>
+        <table>
+            <tr>
+                <th>Connector</th>
+                <th>Meaning</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>deshalb / darum</strong></td>
+                <td>therefore / that's why</td>
+                <td>Ich bin krank. <strong>Deshalb</strong> bleibe ich zu Hause.</td>
+            </tr>
+            <tr>
+                <td><strong>dann</strong></td>
+                <td>then</td>
+                <td>Ich esse Frühstück. <strong>Dann</strong> gehe ich zur Arbeit.</td>
+            </tr>
+            <tr>
+                <td><strong>danach</strong></td>
+                <td>after that</td>
+                <td>Wir essen. <strong>Danach</strong> trinken wir Kaffee.</td>
+            </tr>
+            <tr>
+                <td><strong>außerdem</strong></td>
+                <td>besides / furthermore</td>
+                <td>Das Auto ist schön. <strong>Außerdem</strong> ist es billig.</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <p class="instructions">Use the cheatsheet above to complete the exercises. Take your time and pay close attention to word order!</p>
+
+    <div class="exercise-section">
+        <h2>Part 1: Coordinating Conjunctions (Position 0) (1-20)</h2>
+        <p class="hint">Fill in the blank with: und, aber, oder, denn, sondern.</p>
+        <ol>
+            <li>Ich möchte ein Auto kaufen, <span class="blank"></span> ich habe kein Geld.</li>
+            <li>Trinkst du lieber Kaffee, <span class="blank"></span> trinkst du lieber Tee?</li>
+            <li>Er geht heute nicht zur Arbeit, <span class="blank"></span> er hat Urlaub.</li>
+            <li>Wir fahren nicht nach Spanien, <span class="blank"></span> wir fliegen nach Italien.</li>
+            <li>Maria lernt Deutsch <span class="blank"></span> sie lernt auch Englisch.</li>
+            <li>Das Wetter ist schlecht, <span class="blank"></span> wir gehen trotzdem spazieren.</li>
+            <li>Ich esse jetzt eine Pizza, <span class="blank"></span> ich habe großen Hunger.</li>
+            <li>Möchtest du ins Kino gehen, <span class="blank"></span> bleibst du zu Hause?</li>
+            <li>Er ist nicht mein Bruder, <span class="blank"></span> er ist mein Cousin.</li>
+            <li>Ich stehe um 7 Uhr auf <span class="blank"></span> ich dusche sofort.</li>
+            <li>Das Buch ist teuer, <span class="blank"></span> es ist sehr gut.</li>
+            <li>Wir müssen uns beeilen, <span class="blank"></span> der Zug fährt gleich ab.</li>
+            <li>Ist das dein Hund, <span class="blank"></span> gehört er deinem Nachbarn?</li>
+            <li>Sie isst kein Fleisch, <span class="blank"></span> sie ist Vegetarierin.</li>
+            <li>Er spricht nicht Englisch, <span class="blank"></span> er spricht fließend Französisch.</li>
+            <li>Ich lade Lisa ein, <span class="blank"></span> ich lade auch Max ein.</li>
+            <li>Der Film war lang, <span class="blank"></span> er war nicht langweilig.</li>
+            <li>Kaufst du das rote Hemd, <span class="blank"></span> kaufst du das blaue Hemd?</li>
+            <li>Ich kann nicht kommen, <span class="blank"></span> ich muss arbeiten.</li>
+            <li>Wir wohnen nicht in Berlin, <span class="blank"></span> wir wohnen in München.</li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 2: Subordinating Conjunctions (Verb at the End) (21-45)</h2>
+        <p class="hint">Fill in the blank with: weil, dass, wenn, als, ob, obwohl, damit.</p>
+        <ol start="21">
+            <li>Ich lerne jeden Tag, <span class="blank"></span> ich die Prüfung bestehen will.</li>
+            <li>Er weiß nicht, <span class="blank"></span> der Zug pünktlich ankommt.</li>
+            <li><span class="blank"></span> ich ein Kind war, habe ich viel ferngesehen.</li>
+            <li>Ich rufe dich an, <span class="blank"></span> ich zu Hause bin.</li>
+            <li>Er geht schwimmen, <span class="blank"></span> das Wasser kalt ist.</li>
+            <li>Ich hoffe, <span class="blank"></span> das Wetter morgen besser wird.</li>
+            <li>Ich gebe dir das Geld, <span class="blank"></span> du das Ticket kaufen kannst.</li>
+            <li>Sie bleibt im Bett, <span class="blank"></span> sie Fieber hat.</li>
+            <li>Können Sie mir sagen, <span class="blank"></span> dieser Bus zum Bahnhof fährt?</li>
+            <li><span class="blank"></span> es regnet, bleiben wir zu Hause.</li>
+            <li><span class="blank"></span> er nach Deutschland kam, sprach er kein Wort Deutsch.</li>
+            <li>Ich glaube, <span class="blank"></span> er heute nicht kommt.</li>
+            <li>Wir machen ein Picknick, <span class="blank"></span> wir keine Zeit haben. <em>(Wait, this makes no sense! Read the context.)</em> Wir machen ein Picknick, <span class="blank"></span> die Sonne scheint.</li>
+            <li>Ich frage den Lehrer, <span class="blank"></span> wir Hausaufgaben haben.</li>
+            <li>Er kauft ein großes Auto, <span class="blank"></span> seine Familie viel Platz hat.</li>
+            <li><span class="blank"></span> ich Kopfschmerzen habe, nehme ich eine Tablette.</li>
+            <li>Sie trägt eine Jacke, <span class="blank"></span> es draußen warm ist.</li>
+            <li>Ich bin sicher, <span class="blank"></span> du die Prüfung bestehst.</li>
+            <li><span class="blank"></span> ich 18 Jahre alt wurde, kaufte ich mein erstes Auto.</li>
+            <li>Er lernt Deutsch, <span class="blank"></span> er in Berlin arbeiten kann.</li>
+            <li>Ich freue mich, <span class="blank"></span> du mich besuchst.</li>
+            <li>Wir wissen nicht, <span class="blank"></span> das Restaurant heute geöffnet ist.</li>
+            <li><span class="blank"></span> er sehr müde ist, kann er nicht schlafen.</li>
+            <li><span class="blank"></span> ich Zeit habe, helfe ich dir gerne.</li>
+            <li>Ich trinke Kaffee, <span class="blank"></span> ich wach bleibe.</li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 3: Adverbial Conjunctions (Position 1 -> Verb -> Subject) (46-65)</h2>
+        <p class="hint">Fill in the blank with: deshalb, dann, danach, außerdem.</p>
+        <ol start="46">
+            <li>Ich bin sehr müde. <span class="blank"></span> gehe ich früh ins Bett.</li>
+            <li>Wir kochen das Abendessen. <span class="blank"></span> essen wir zusammen.</li>
+            <li>Zuerst mache ich Hausaufgaben. <span class="blank"></span> treffe ich meine Freunde.</li>
+            <li>Das Sofa ist sehr bequem. <span class="blank"></span> ist es sehr günstig.</li>
+            <li>Er hat morgen eine Prüfung. <span class="blank"></span> muss er heute viel lernen.</li>
+            <li>Ich stehe um 6 Uhr auf. <span class="blank"></span> trinke ich einen Kaffee.</li>
+            <li>Wir gehen ins Kino. <span class="blank"></span> gehen wir noch etwas trinken.</li>
+            <li>Die Wohnung ist groß und hell. <span class="blank"></span> hat sie einen Balkon.</li>
+            <li>Mein Auto ist kaputt. <span class="blank"></span> fahre ich heute mit dem Bus.</li>
+            <li>Wir waschen das Gemüse. <span class="blank"></span> schneiden wir es klein.</li>
+            <li>Er hat kein Geld. <span class="blank"></span> kann er nicht in den Urlaub fahren.</li>
+            <li>Zuerst lese ich den Text. <span class="blank"></span> beantworte ich die Fragen.</li>
+            <li>Die Arbeit macht mir Spaß. <span class="blank"></span> sind meine Kollegen sehr nett.</li>
+            <li>Es regnet stark. <span class="blank"></span> bleiben wir im Haus.</li>
+            <li>Ich packe meinen Koffer. <span class="blank"></span> fahre ich zum Flughafen.</li>
+            <li>Sie lernt Deutsch und Französisch. <span class="blank"></span> spricht sie fließend Spanisch.</li>
+            <li>Wir haben den Bus verpasst. <span class="blank"></span> kommen wir zu spät.</li>
+            <li>Wir räumen die Küche auf. <span class="blank"></span> sehen wir fern.</li>
+            <li>Der Kuchen schmeckt lecker. <span class="blank"></span> sieht er fantastisch aus.</li>
+            <li>Ich habe meinen Schlüssel verloren. <span class="blank"></span> komme ich nicht in die Wohnung.</li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 4: Sentence Reordering (66-85)</h2>
+        <p class="hint">Reorder the words to make a correct sentence. Pay close attention to the verb position based on the connector used.</p>
+        <ol start="66">
+            <li>(ich / ins Kino / gehe / weil / den Film / sehen / ich / möchte)
+                <span class="long-blank"></span>
+            </li>
+            <li>(das Wetter / ist / schön / deshalb / wir / spazieren / gehen)
+                <span class="long-blank"></span>
+            </li>
+            <li>(er / kommt / nicht / denn / er / krank / ist)
+                <span class="long-blank"></span>
+            </li>
+            <li>(ich / weiß / dass / Berlin / die Hauptstadt / ist / von Deutschland)
+                <span class="long-blank"></span>
+            </li>
+            <li>(wenn / regnet / es / bleibe / zu Hause / ich)
+                <span class="long-blank"></span>
+            </li>
+            <li>(ich / trinke / keinen Kaffee / sondern / trinke / Tee / ich)
+                <span class="long-blank"></span>
+            </li>
+            <li>(obwohl / müde / ich / bin / lerne / ich / weiter)
+                <span class="long-blank"></span>
+            </li>
+            <li>(wir / essen / zuerst / danach / wir / ins Kino / gehen)
+                <span class="long-blank"></span>
+            </li>
+            <li>(als / in Berlin / ich / wohnte / ging / oft / ich / ins Theater)
+                <span class="long-blank"></span>
+            </li>
+            <li>(ich / lerne / Deutsch / damit / in Deutschland / arbeiten / ich / kann)
+                <span class="long-blank"></span>
+            </li>
+            <li>(kaufst / ein Auto / du / oder / fährst / du / mit dem Fahrrad)
+                <span class="long-blank"></span>
+            </li>
+            <li>(kannst / du / mir / sagen / ob / der Zug / pünktlich / ankommt)
+                <span class="long-blank"></span>
+            </li>
+            <li>(er / hat / viel Geld / aber / er / ist / nicht glücklich)
+                <span class="long-blank"></span>
+            </li>
+            <li>(die Wohnung / ist / teuer / außerdem / ist / sie / klein / sehr)
+                <span class="long-blank"></span>
+            </li>
+            <li>(ich / rufe / dich / an / wenn / ich / ankomme)
+                <span class="long-blank"></span>
+            </li>
+            <li>(wir / fliegen / nicht / nach Paris / sondern / fahren / wir / nach Rom)
+                <span class="long-blank"></span>
+            </li>
+            <li>(weil / ich / Hunger / habe / esse / ich / eine Pizza)
+                <span class="long-blank"></span>
+            </li>
+            <li>(er / steht / früh / auf / dann / frühstückt / er)
+                <span class="long-blank"></span>
+            </li>
+            <li>(ich / hoffe / dass / du / mich / besuchst / bald)
+                <span class="long-blank"></span>
+            </li>
+            <li>(obwohl / er / viel / lernt / versteht / er / die Grammatik / nicht)
+                <span class="long-blank"></span>
+            </li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 5: Translation (86-100)</h2>
+        <p class="hint">Translate the English sentences into German using the correct connectors. Remember word order rules!</p>
+        <ol start="86">
+            <li>I am staying at home because it is raining. (weil)
+                <span class="long-blank"></span>
+            </li>
+            <li>I am learning German, but it is difficult. (aber)
+                <span class="long-blank"></span>
+            </li>
+            <li>If I have time, I will read a book. (wenn)
+                <span class="long-blank"></span>
+            </li>
+            <li>I know that he lives in Berlin. (dass)
+                <span class="long-blank"></span>
+            </li>
+            <li>I have no money, therefore I am not buying a car. (deshalb)
+                <span class="long-blank"></span>
+            </li>
+            <li>Although she is tired, she goes to work. (obwohl)
+                <span class="long-blank"></span>
+            </li>
+            <li>We eat dinner, then we watch TV. (dann)
+                <span class="long-blank"></span>
+            </li>
+            <li>I don't know whether he is coming today. (ob)
+                <span class="long-blank"></span>
+            </li>
+            <li>When I was a child, I played outside. (als)
+                <span class="long-blank"></span>
+            </li>
+            <li>He is learning German so that he can study in Germany. (damit)
+                <span class="long-blank"></span>
+            </li>
+            <li>I am drinking water, for I am thirsty. (denn)
+                <span class="long-blank"></span>
+            </li>
+            <li>Are we going to the park, or are we staying here? (oder)
+                <span class="long-blank"></span>
+            </li>
+            <li>The jacket is beautiful. Furthermore, it is cheap. (außerdem)
+                <span class="long-blank"></span>
+            </li>
+            <li>First I work, after that I sleep. (danach)
+                <span class="long-blank"></span>
+            </li>
+            <li>He is not drinking tea, but rather he is drinking coffee. (sondern)
+                <span class="long-blank"></span>
+            </li>
+        </ol>
+    </div>
+
+</body>
+</html>
+```eof

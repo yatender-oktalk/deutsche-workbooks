@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 German Perfekt Workbook</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            color: #222;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #111;
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        .cheatsheet {
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fafafa;
+            margin-bottom: 50px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        .instructions {
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .exercise-section {
+            margin-bottom: 40px;
+        }
+        ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 35px;
+            font-size: 1.15em;
+            line-height: 2.2;
+        }
+        .blank {
+            display: inline-block;
+            width: 180px;
+            border-bottom: 1px solid #000;
+            margin: 0 10px;
+        }
+        .long-blank {
+            display: block;
+            width: 90%;
+            border-bottom: 1px solid #000;
+            margin-top: 10px;
+            height: 30px;
+        }
+        .hint {
+            font-size: 0.85em;
+            color: #666;
+        }
+        .example-box {
+            background-color: #e8f4f8;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #0056b3;
+        }
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            body {
+                padding: 0;
+            }
+            .controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button onclick="window.print()">Export to PDF / Print</button>
+    </div>
+
+    <h1>German A2 Perfekt (Present Perfect) Workbook</h1>
+    
+    <div class="cheatsheet">
+        <h2>Cheatsheet: Das Perfekt</h2>
+        
+        <h3>1. Structure of Perfekt</h3>
+        <p><strong>haben/sein (conjugated) + Partizip II (past participle)</strong></p>
+        
+        <div class="example-box">
+            <strong>Examples:</strong><br>
+            Ich <strong>habe</strong> Deutsch <strong>gelernt</strong>. (I learned German.)<br>
+            Er <strong>ist</strong> nach Berlin <strong>gefahren</strong>. (He went to Berlin.)
+        </div>
+
+        <h3>2. Partizip II Formation</h3>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Formation</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>Regular verbs</strong></td>
+                <td>ge- + stem + -t</td>
+                <td>machen → <strong>gemacht</strong><br>lernen → <strong>gelernt</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Irregular verbs</strong></td>
+                <td>ge- + stem (changed) + -en</td>
+                <td>gehen → <strong>gegangen</strong><br>fahren → <strong>gefahren</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Mixed verbs</strong></td>
+                <td>ge- + stem (changed) + -t</td>
+                <td>bringen → <strong>gebracht</strong><br>denken → <strong>gedacht</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Separable verbs</strong></td>
+                <td>prefix + ge + stem + t/en</td>
+                <td>aufstehen → <strong>aufgestanden</strong><br>einkaufen → <strong>eingekauft</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Inseparable verbs</strong><br>(be-, emp-, ent-, er-, ge-, miss-, ver-, zer-)</td>
+                <td>NO ge-! stem + t/en</td>
+                <td>besuchen → <strong>besucht</strong><br>verstehen → <strong>verstanden</strong></td>
+            </tr>
+            <tr>
+                <td><strong>-ieren verbs</strong></td>
+                <td>NO ge-! stem + -t</td>
+                <td>studieren → <strong>studiert</strong><br>telefonieren → <strong>telefoniert</strong></td>
+            </tr>
+        </table>
+
+        <h3>3. haben or sein?</h3>
+        <table>
+            <tr>
+                <th>Use SEIN when:</th>
+                <th>Examples</th>
+            </tr>
+            <tr>
+                <td>Movement from A to B</td>
+                <td>gehen, fahren, fliegen, kommen, laufen, rennen</td>
+            </tr>
+            <tr>
+                <td>Change of state</td>
+                <td>aufstehen, einschlafen, sterben, wachsen, werden</td>
+            </tr>
+            <tr>
+                <td>Special verbs</td>
+                <td>sein, bleiben, passieren, geschehen</td>
+            </tr>
+        </table>
+        <p><strong>Use HABEN for everything else!</strong> (most verbs, all transitive verbs)</p>
+
+        <h3>4. Common Irregular Partizip II</h3>
+        <table>
+            <tr>
+                <th>Infinitive</th>
+                <th>Partizip II</th>
+                <th>Infinitive</th>
+                <th>Partizip II</th>
+            </tr>
+            <tr>
+                <td>essen</td><td>gegessen</td>
+                <td>trinken</td><td>getrunken</td>
+            </tr>
+            <tr>
+                <td>lesen</td><td>gelesen</td>
+                <td>schreiben</td><td>geschrieben</td>
+            </tr>
+            <tr>
+                <td>sehen</td><td>gesehen</td>
+                <td>nehmen</td><td>genommen</td>
+            </tr>
+            <tr>
+                <td>sprechen</td><td>gesprochen</td>
+                <td>helfen</td><td>geholfen</td>
+            </tr>
+            <tr>
+                <td>finden</td><td>gefunden</td>
+                <td>singen</td><td>gesungen</td>
+            </tr>
+            <tr>
+                <td>beginnen</td><td>begonnen</td>
+                <td>gewinnen</td><td>gewonnen</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <p class="instructions">Use the cheatsheet above to complete the exercises. Pay attention to haben vs. sein and the correct Partizip II form!</p>
+
+    <div class="exercise-section">
+        <h2>Part 1: Form the Partizip II (1-25)</h2>
+        <p class="hint">Write the correct Partizip II (past participle) for each verb.</p>
+        <ol>
+            <li>machen → <span class="blank"></span></li>
+            <li>gehen → <span class="blank"></span></li>
+            <li>essen → <span class="blank"></span></li>
+            <li>kaufen → <span class="blank"></span></li>
+            <li>besuchen → <span class="blank"></span></li>
+            <li>fahren → <span class="blank"></span></li>
+            <li>studieren → <span class="blank"></span></li>
+            <li>aufstehen → <span class="blank"></span></li>
+            <li>verstehen → <span class="blank"></span></li>
+            <li>schlafen → <span class="blank"></span></li>
+            <li>einkaufen → <span class="blank"></span></li>
+            <li>trinken → <span class="blank"></span></li>
+            <li>bringen → <span class="blank"></span></li>
+            <li>sehen → <span class="blank"></span></li>
+            <li>verkaufen → <span class="blank"></span></li>
+            <li>kommen → <span class="blank"></span></li>
+            <li>erklären → <span class="blank"></span></li>
+            <li>schreiben → <span class="blank"></span></li>
+            <li>anrufen → <span class="blank"></span></li>
+            <li>fliegen → <span class="blank"></span></li>
+            <li>passieren → <span class="blank"></span></li>
+            <li>lesen → <span class="blank"></span></li>
+            <li>bezahlen → <span class="blank"></span></li>
+            <li>anfangen → <span class="blank"></span></li>
+            <li>denken → <span class="blank"></span></li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 2: haben or sein? (26-45)</h2>
+        <p class="hint">Choose the correct auxiliary verb: haben or sein.</p>
+        <ol start="26">
+            <li>Ich <span class="blank"></span> gestern einen Film gesehen.</li>
+            <li>Er <span class="blank"></span> nach Berlin gefahren.</li>
+            <li>Wir <span class="blank"></span> Pizza gegessen.</li>
+            <li>Sie <span class="blank"></span> ins Kino gegangen.</li>
+            <li>Du <span class="blank"></span> viel Wasser getrunken.</li>
+            <li>Ihr <span class="blank"></span> um 7 Uhr aufgestanden.</li>
+            <li>Maria <span class="blank"></span> ein Buch gelesen.</li>
+            <li>Die Kinder <span class="blank"></span> im Park gespielt.</li>
+            <li>Ich <span class="blank"></span> meine Freundin besucht.</li>
+            <li>Wir <span class="blank"></span> nach Spanien geflogen.</li>
+            <li>Er <span class="blank"></span> sehr schnell gelaufen.</li>
+            <li>Sie <span class="blank"></span> Deutsch studiert.</li>
+            <li>Du <span class="blank"></span> zu Hause geblieben.</li>
+            <li>Ich <span class="blank"></span> einen Brief geschrieben.</li>
+            <li>Was <span class="blank"></span> hier passiert?</li>
+            <li>Ihr <span class="blank"></span> im Supermarkt eingekauft.</li>
+            <li>Er <span class="blank"></span> sehr groß geworden.</li>
+            <li>Wir <span class="blank"></span> das Buch nicht verstanden.</li>
+            <li>Sie <span class="blank"></span> pünktlich angekommen.</li>
+            <li>Du <span class="blank"></span> mir nicht geholfen.</li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 3: Complete Perfekt Sentences (46-70)</h2>
+        <p class="hint">Fill in the blanks with the correct auxiliary verb (haben/sein) and Partizip II.</p>
+        <ol start="46">
+            <li>Ich <span class="blank"></span> gestern Fußball <span class="blank"></span>. (spielen)</li>
+            <li>Sie <span class="blank"></span> nach Italien <span class="blank"></span>. (reisen)</li>
+            <li>Wir <span class="blank"></span> einen Kuchen <span class="blank"></span>. (backen)</li>
+            <li>Er <span class="blank"></span> den ganzen Tag zu Hause <span class="blank"></span>. (bleiben)</li>
+            <li>Du <span class="blank"></span> sehr gut <span class="blank"></span>. (singen)</li>
+            <li>Ihr <span class="blank"></span> eure Hausaufgaben <span class="blank"></span>. (machen)</li>
+            <li>Maria <span class="blank"></span> ein neues Auto <span class="blank"></span>. (kaufen)</li>
+            <li>Die Kinder <span class="blank"></span> im Garten <span class="blank"></span>. (laufen)</li>
+            <li>Ich <span class="blank"></span> meinen Freund <span class="blank"></span>. (anrufen)</li>
+            <li>Wir <span class="blank"></span> um 6 Uhr <span class="blank"></span>. (aufstehen)</li>
+            <li>Er <span class="blank"></span> die Rechnung <span class="blank"></span>. (bezahlen)</li>
+            <li>Sie <span class="blank"></span> mit dem Zug <span class="blank"></span>. (fahren)</li>
+            <li>Du <span class="blank"></span> viel <span class="blank"></span>. (arbeiten)</li>
+            <li>Ihr <span class="blank"></span> zu spät <span class="blank"></span>. (kommen)</li>
+            <li>Ich <span class="blank"></span> einen neuen Job <span class="blank"></span>. (finden)</li>
+            <li>Sie (pl.) <span class="blank"></span> die Prüfung <span class="blank"></span>. (bestehen)</li>
+            <li>Er <span class="blank"></span> schnell <span class="blank"></span>. (einschlafen)</li>
+            <li>Wir <span class="blank"></span> eine E-Mail <span class="blank"></span>. (schreiben)</li>
+            <li>Du <span class="blank"></span> deine Jacke <span class="blank"></span>. (vergessen)</li>
+            <li>Ihr <span class="blank"></span> eine Party <span class="blank"></span>. (feiern)</li>
+            <li>Ich <span class="blank"></span> im Restaurant <span class="blank"></span>. (essen)</li>
+            <li>Sie <span class="blank"></span> mit dem Bus <span class="blank"></span>. (kommen)</li>
+            <li>Er <span class="blank"></span> den Film schon <span class="blank"></span>. (sehen)</li>
+            <li>Wir <span class="blank"></span> im Urlaub viel <span class="blank"></span>. (schwimmen)</li>
+            <li>Du <span class="blank"></span> mir sehr <span class="blank"></span>. (helfen)</li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 4: Sentence Building (71-85)</h2>
+        <p class="hint">Reorder the words to make correct Perfekt sentences.</p>
+        <ol start="71">
+            <li>(ich / habe / eine Pizza / gegessen / gestern)
+                <span class="long-blank"></span>
+            </li>
+            <li>(nach Berlin / gefahren / sie / ist / letztes Jahr)
+                <span class="long-blank"></span>
+            </li>
+            <li>(wir / haben / im Park / gespielt / Fußball)
+                <span class="long-blank"></span>
+            </li>
+            <li>(bist / du / aufgestanden / um 7 Uhr)
+                <span class="long-blank"></span>
+            </li>
+            <li>(er / hat / ein Buch / gelesen / interessantes)
+                <span class="long-blank"></span>
+            </li>
+            <li>(sind / nach Hause / wir / spät / gekommen / sehr)
+                <span class="long-blank"></span>
+            </li>
+            <li>(habt / was / gemacht / ihr / am Wochenende)
+                <span class="long-blank"></span>
+            </li>
+            <li>(Maria / ist / geblieben / den ganzen Tag / zu Hause)
+                <span class="long-blank"></span>
+            </li>
+            <li>(hast / deinen Freund / du / angerufen)
+                <span class="long-blank"></span>
+            </li>
+            <li>(haben / wir / eingekauft / im Supermarkt)
+                <span class="long-blank"></span>
+            </li>
+            <li>(ist / sie / geflogen / nach New York)
+                <span class="long-blank"></span>
+            </li>
+            <li>(hat / nicht / er / verstanden / die Aufgabe)
+                <span class="long-blank"></span>
+            </li>
+            <li>(seid / zu spät / ihr / gekommen / warum)
+                <span class="long-blank"></span>
+            </li>
+            <li>(habe / ich / bezahlt / die Rechnung)
+                <span class="long-blank"></span>
+            </li>
+            <li>(ist / geworden / er / Lehrer)
+                <span class="long-blank"></span>
+            </li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="exercise-section">
+        <h2>Part 5: Translation (86-100)</h2>
+        <p class="hint">Translate the English sentences into German using Perfekt.</p>
+        <ol start="86">
+            <li>I ate a sandwich.
+                <span class="long-blank"></span>
+            </li>
+            <li>She went to the cinema.
+                <span class="long-blank"></span>
+            </li>
+            <li>We learned German.
+                <span class="long-blank"></span>
+            </li>
+            <li>He drove to Berlin.
+                <span class="long-blank"></span>
+            </li>
+            <li>Did you (du) see the film?
+                <span class="long-blank"></span>
+            </li>
+            <li>They bought a new house.
+                <span class="long-blank"></span>
+            </li>
+            <li>I got up at 6 o'clock.
+                <span class="long-blank"></span>
+            </li>
+            <li>She stayed at home.
+                <span class="long-blank"></span>
+            </li>
+            <li>We drank coffee.
+                <span class="long-blank"></span>
+            </li>
+            <li>He wrote a letter.
+                <span class="long-blank"></span>
+            </li>
+            <li>Did you (ihr) do your homework?
+                <span class="long-blank"></span>
+            </li>
+            <li>Maria came too late.
+                <span class="long-blank"></span>
+            </li>
+            <li>I called my mother.
+                <span class="long-blank"></span>
+            </li>
+            <li>They flew to Spain.
+                <span class="long-blank"></span>
+            </li>
+            <li>He forgot his keys.
+                <span class="long-blank"></span>
+            </li>
+        </ol>
+    </div>
+
+</body>
+</html>
