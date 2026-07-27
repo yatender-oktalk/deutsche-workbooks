@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German B1 Connectors Workbook</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- html2pdf.js for Client-Side PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Custom print classes to avoid breaking elements across pages in the PDF */
+        .page-break-avoid {
+            page-break-inside: avoid;
+        }
+        .page-break-before {
+            page-break-before: always;
+        }
+        /* Hide UI elements during print/PDF generation if needed */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: white;
+            }
+            #pdf-content {
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        }
+        /* Styling for the tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased relative">
+
+    <!-- Sticky Header with Download Button (iPad friendly) -->
+    <div class="no-print sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200 px-4 py-3 sm:px-6 flex justify-between items-center">
+        <div>
+            <h1 class="text-lg font-bold text-blue-600">🇩🇪 B1 Connectors</h1>
+            <p class="text-xs text-gray-500">Cheatsheet & 100 Exercises</p>
+        </div>
+        <button id="download-btn" onclick="generatePDF()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition-colors duration-200 flex items-center space-x-2 touch-manipulation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Save as PDF</span>
+        </button>
+    </div>
+
+    <!-- Main Content Container (This is what gets converted to PDF) -->
+    <div class="max-w-4xl mx-auto my-8 px-4 sm:px-8 lg:px-12">
+        <div id="pdf-content" class="bg-white p-8 sm:p-12 rounded-xl shadow-lg">
+            
+            <!-- Cover / Title Section -->
+            <div class="text-center mb-10 pb-6 border-b-2 border-blue-100">
+                <h1 class="text-4xl font-bold text-gray-900 mb-3">German B1 Connectors</h1>
+                <h2 class="text-xl text-blue-600 font-medium">Complete Cheatsheet & 100 Exercises</h2>
+                <p class="text-gray-500 mt-4">Mastering word order and sentence structure.</p>
+            </div>
+
+            <!-- CHEATSHEET SECTION -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">📜</span> 
+                    The 3 Golden Rules of Sentence Structure
+                </h2>
+                
+                <div class="overflow-x-auto page-break-avoid">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Position</th>
+                                <th>Sentence Formula</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-red-600">1. Subordinating</td>
+                                <td>Verb to End</td>
+                                <td class="font-mono text-sm bg-gray-50">[Clause 1], CONN + Subj + ... + VERB.</td>
+                                <td>..., <b>weil</b> ich Deutsch <b>lerne</b>.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-blue-600">2. Coordinating (ADUSO)</td>
+                                <td>Position 0</td>
+                                <td class="font-mono text-sm bg-gray-50">[Clause 1], CONN + Subj + VERB + ...</td>
+                                <td>..., <b>denn</b> ich <b>lerne</b> Deutsch.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-green-600">3. Adverbial</td>
+                                <td>Position 1</td>
+                                <td class="font-mono text-sm bg-gray-50">[Clause 1]. CONN + VERB + Subj + ...</td>
+                                <td>... <b>deshalb</b> <b>lerne</b> ich Deutsch.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <!-- Subordinating -->
+                    <div class="bg-red-50 p-5 rounded-lg border border-red-100 page-break-avoid">
+                        <h3 class="font-bold text-red-800 mb-3 text-lg">1. Subordinating (Verb END 🔻)</h3>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li><b>weil</b> (because) / <b>da</b> (since)</li>
+                            <li><b>damit</b> (so that - diff subjects)</li>
+                            <li><b>um...zu</b> (in order to - same subject)</li>
+                            <li><b>wenn</b> (if/when) / <b>als</b> (when past)</li>
+                            <li><b>bevor</b> (before) / <b>nachdem</b> (after)</li>
+                            <li><b>während</b> (while) / <b>seitdem</b> (since)</li>
+                            <li><b>obwohl</b> (although)</li>
+                            <li><b>dass</b> (that) / <b>ob</b> (whether)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Coordinating -->
+                    <div class="bg-blue-50 p-5 rounded-lg border border-blue-100 page-break-avoid">
+                        <h3 class="font-bold text-blue-800 mb-3 text-lg">2. Coordinating (Pos 0 ➡️)</h3>
+                        <p class="text-sm text-gray-700 mb-2"><b>Mnemonic: ADUSO</b></p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li><b>A</b>ber (but)</li>
+                            <li><b>D</b>enn (because/for)</li>
+                            <li><b>U</b>nd (and)</li>
+                            <li><b>S</b>ondern (but rather)</li>
+                            <li><b>O</b>der (or)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Adverbial -->
+                    <div class="bg-green-50 p-5 rounded-lg border border-green-100 page-break-avoid">
+                        <h3 class="font-bold text-green-800 mb-3 text-lg">3. Adverbial (Pos 1 🔀)</h3>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li><b>deshalb / darum / deswegen</b> (therefore)</li>
+                            <li><b>trotzdem</b> (nevertheless)</li>
+                            <li><b>dann / danach</b> (then/after that)</li>
+                            <li><b>außerdem</b> (besides/furthermore)</li>
+                            <li><b>sonst</b> (otherwise)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Two-Part -->
+                    <div class="bg-purple-50 p-5 rounded-lg border border-purple-100 page-break-avoid">
+                        <h3 class="font-bold text-purple-800 mb-3 text-lg">4. Two-Part 🔗</h3>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li><b>sowohl ... als auch</b> (both... and)</li>
+                            <li><b>weder ... noch</b> (neither... nor)</li>
+                            <li><b>nicht nur ... sondern auch</b> (not only...)</li>
+                            <li><b>entweder ... oder</b> (either... or)</li>
+                            <li><b>zwar ... aber</b> (indeed... but)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-break-before pt-8 border-t-2 border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">🏋️</span> 
+                    100 Practice Exercises
+                </h2>
+                
+                <p class="mb-6 text-gray-600">Write your answers directly on this printed sheet or in a separate notebook.</p>
+
+                <!-- Part 1: Translations -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 bg-gray-100 p-2 rounded">Part 1: English to German Translations</h3>
+                    <p class="text-sm text-gray-500 mb-4 italic">Translate the following sentences into German using the connector specified in brackets. Pay close attention to verb positioning!</p>
+                    
+                    <div id="exercise-part-1" class="space-y-4 text-sm">
+                        <!-- Content will be injected by JS to keep the file clean and ensure fast rendering -->
+                    </div>
+                </div>
+
+                <!-- Part 2: Combinations -->
+                <div class="mb-8 page-break-before">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 bg-gray-100 p-2 rounded">Part 2: Word Order & Clause Combinations</h3>
+                    <p class="text-sm text-gray-500 mb-4 italic">Combine the two given sentences into ONE sentence using the connector provided in brackets.</p>
+                    
+                    <div id="exercise-part-2" class="space-y-5 text-sm">
+                        <!-- Content will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANSWER KEY -->
+            <div class="page-break-before pt-8 border-t-2 border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="bg-green-100 text-green-600 p-2 rounded-lg mr-3">🔑</span> 
+                    Answer Key
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs text-gray-700">
+                    <div id="answer-key-1">
+                        <h4 class="font-bold text-base mb-3 border-b pb-1">Part 1 (1-50)</h4>
+                        <!-- JS injected -->
+                    </div>
+                    <div id="answer-key-2">
+                        <h4 class="font-bold text-base mb-3 border-b pb-1">Part 2 (51-100)</h4>
+                        <!-- JS injected -->
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- End of PDF Content -->
+    </div>
+
+    <script>
+        // Data Arrays for Exercises to keep HTML concise and render cleanly
+        const part1Exercises = [
+            { en: "I am staying home because I am sick.", conn: "weil" },
+            { en: "I cannot come because I have an exam.", conn: "denn" },
+            { en: "The weather was bad; therefore, we stayed at home.", conn: "deshalb" },
+            { en: "Since it is raining, I am taking an umbrella.", conn: "da" },
+            { en: "He went to the doctor because his head hurt.", conn: "weil" },
+            { en: "She is studying hard because she wants to pass the exam.", conn: "denn" },
+            { en: "I missed the bus; that's why I am coming late.", conn: "deswegen" },
+            { en: "I don't eat meat because I am a vegetarian.", conn: "weil" },
+            { en: "We have no bread left; therefore, I must go to the supermarket.", conn: "darum" },
+            { en: "Since you are already here, you can help me.", conn: "da" },
+            { en: "He goes to work although he is sick.", conn: "obwohl" },
+            { en: "It was raining; nevertheless, we went for a walk.", conn: "trotzdem" },
+            { en: "The exam was difficult, but I passed.", conn: "aber" },
+            { en: "That is not a dog, but rather a cat.", conn: "sondern" },
+            { en: "She bought the dress although it was very expensive.", conn: "obwohl" },
+            { en: "I am tired; nevertheless, I am reading a book.", conn: "trotzdem" },
+            { en: "I wanted to call you, but I had no network.", conn: "aber" },
+            { en: "We are not traveling to Berlin, but rather to Munich.", conn: "sondern" },
+            { en: "Although he lives in Germany, he speaks little German.", conn: "obwohl" },
+            { en: "The restaurant is expensive; nevertheless, many people eat there.", conn: "trotzdem" },
+            { en: "I am learning German in order to work in Vienna.", conn: "um...zu" },
+            { en: "I am explaining the rule so that you understand it.", conn: "damit" },
+            { en: "If I have time, I will visit you tomorrow.", conn: "wenn" },
+            { en: "Please call me in case you need help.", conn: "falls" },
+            { en: "She works a lot in order to earn money.", conn: "um...zu" },
+            { en: "The teacher speaks slowly so that the students understand everything.", conn: "damit" },
+            { en: "When it snows, we stay at home.", conn: "wenn" },
+            { en: "In case it rains, take a jacket.", conn: "falls" },
+            { en: "He bought a car in order to drive to work.", conn: "um...zu" },
+            { en: "I give my son money so that he can buy a book.", conn: "damit" },
+            { en: "When I was a child, I lived in Hamburg.", conn: "als" },
+            { en: "Whenever I go to Berlin, I visit my friend.", conn: "wenn" },
+            { en: "Brush your teeth before you sleep.", conn: "bevor" },
+            { en: "After I had eaten, I went to bed.", conn: "nachdem" },
+            { en: "I listen to music while I cook.", conn: "während" },
+            { en: "I have lived here since I got married.", conn: "seitdem" },
+            { en: "Wait here until I come back.", conn: "bis" },
+            { en: "Before he left the house, he locked the door.", conn: "bevor" },
+            { en: "While she was reading, he was sleeping.", conn: "während" },
+            { en: "After we had finished the work, we drank a coffee.", conn: "nachdem" },
+            { en: "I speak both English and German.", conn: "sowohl...als auch" },
+            { en: "He has neither time nor money.", conn: "weder...noch" },
+            { en: "She is not only smart, but also friendly.", conn: "nicht nur...sondern auch" },
+            { en: "We will drive either to Munich or to Frankfurt.", conn: "entweder...oder" },
+            { en: "The apartment is indeed small, but it is cozy.", conn: "zwar...aber" },
+            { en: "The hotel is beautiful; besides, it is cheap.", conn: "außerdem" },
+            { en: "You must study, otherwise you won't pass the exam.", conn: "sonst" },
+            { en: "First I take a shower, then I eat breakfast.", conn: "dann" },
+            { en: "On one hand I want to travel, on the other hand I must save money.", conn: "einerseits...andererseits" },
+            { en: "I don't know whether he is coming tomorrow.", conn: "ob" }
+        ];
+
+        const part2Exercises = [
+            { c: "weil", s1: "Ich kann nicht kommen.", s2: "Ich bin krank." },
+            { c: "denn", s1: "Ich bleibe zu Hause.", s2: "Es regnet stark." },
+            { c: "deshalb", s1: "Er hat keinen Ausweis.", s2: "Er darf nicht eintreten." },
+            { c: "obwohl", s1: "Anna geht spazieren.", s2: "Es ist sehr kalt." },
+            { c: "trotzdem", s1: "Der Mann ist alt.", s2: "Er macht jeden Tag Sport." },
+            { c: "damit", s1: "Ich gebe dir den Schlüssel.", s2: "Du kannst die Tür öffnen." },
+            { c: "um...zu", s1: "Er spart viel Geld.", s2: "Er möchte eine Reise machen." },
+            { c: "bevor", s1: "Du musst deine Hände waschen.", s2: "Du isst." },
+            { c: "nachdem", s1: "Er hatte die Prüfung bestanden.", s2: "Er feierte eine Party." },
+            { c: "während", s1: "Ich lerne Deutsch.", s2: "Mein Bruder hört Musik." },
+            { c: "sowohl...als auch", s1: "Markus mag Äpfel.", s2: "Markus mag Birnen." },
+            { c: "weder...noch", s1: "Ich trinke keinen Kaffee.", s2: "Ich trinke keinen Tee." },
+            { c: "nicht nur...sondern auch", s1: "Er spricht Spanisch.", s2: "Er spricht Französisch." },
+            { c: "entweder...oder", s1: "Wir gehen ins Restaurant.", s2: "Wir kochen zu Hause." },
+            { c: "zwar...aber", s1: "Das Auto ist alt.", s2: "Das Auto fährt sehr gut." },
+            { c: "außerdem", s1: "Die Wohnung ist groß.", s2: "Die Wohnung hat einen Balkon." },
+            { c: "sonst", s1: "Beeil dich!", s2: "Wir verpassen den Zug." },
+            { c: "dass", s1: "Ich weiß.", s2: "Du hast recht." },
+            { c: "ob", s1: "Kannst du mir sagen?", s2: "Kommt der Bus pünktlich?" },
+            { c: "als", s1: "Ich war in Berlin.", s2: "Ich habe das Brandenburger Tor besucht." },
+            { c: "wenn", s1: "Die Sonne scheint.", s2: "Wir gehen an den Strand." },
+            { c: "da", s1: "Ich habe keinen Hunger.", s2: "Ich esse nichts." },
+            { c: "deswegen", s1: "Sie hat viel gearbeitet.", s2: "Sie ist müde." },
+            { c: "sondern", s1: "Er wohnt nicht in Köln.", s2: "Er wohnt in Bonn." },
+            { c: "aber", s1: "Ich wollte den Film sehen.", s2: "Ich bin eingeschlafen." },
+            { c: "obwohl", s1: "Wir haben wenig Zeit.", s2: "Wir helfen dir." },
+            { c: "trotzdem", s1: "Es war dunkel.", s2: "Wir haben den Weg gefunden." },
+            { c: "damit", s1: "Der Vater kauft ein Fahrrad.", s2: "Das Kind kann zur Schule fahren." },
+            { c: "um...zu", s1: "Sie macht einen Deutschkurs.", s2: "Sie möchte ihr B1-Zertifikat bekommen." },
+            { c: "seitdem", s1: "Er lebt in München.", s2: "Er arbeitet bei Siemens." },
+            { c: "bis", s1: "Bleib im Haus!", s2: "Der Regen hört auf." },
+            { c: "falls", s1: "Du hast Zeit.", s2: "Ruf mich bitte an." },
+            { c: "darum", s1: "Der Zug hatte Verspätung.", s2: "Ich bin zu spät gekommen." },
+            { c: "infolgedessen", s1: "Der Fluss ist übergetreten.", s2: "Die Straße wurde gesperrt." },
+            { c: "dann", s1: "Ich trinke zuerst einen Kaffee.", s2: "Ich fange mit der Arbeit an." },
+            { c: "einerseits...andererseits", s1: "Ich möchte ein Handy kaufen.", s2: "Ich habe nicht genug Geld." },
+            { c: "weil", s1: "Er hat nicht bestanden.", s2: "Er hat nicht genug gelernt." },
+            { c: "denn", s1: "Wir kaufen kein neues Auto.", s2: "Es ist zu teuer." },
+            { c: "während", s1: "Die Kinder spielten im Garten.", s2: "Die Mutter kochte das Essen." },
+            { c: "bevor", s1: "Schalte das Licht aus!", s2: "Du gehst raus." },
+            { c: "nachdem", s1: "Sie hatte den Brief geschrieben.", s2: "Sie brachte ihn zur Post." },
+            { c: "sowohl...als auch", s1: "Ich habe den Schlüssel vergessen.", s2: "Ich habe das Handy vergessen." },
+            { c: "weder...noch", s1: "Er spricht kein Englisch.", s2: "Er spricht kein Französisch." },
+            { c: "nicht nur...sondern auch", s1: "Das Buch ist interessant.", s2: "Das Buch ist günstig." },
+            { c: "entweder...oder", s1: "Du hilfst mir jetzt.", s2: "Ich mache es allein." },
+            { c: "zwar...aber", s1: "Das Essen schmeckte gut.", s2: "Es war etwas zu kalt." },
+            { c: "außerdem", s1: "Er ist pünktlich.", s2: "Er arbeitet sehr gründlich." },
+            { c: "sonst", s1: "Zieh eine Jacke an!", s2: "Du frierst." },
+            { c: "dass", s1: "Es ist wichtig.", s2: "Man lernt regelmäßig." },
+            { c: "obwohl", s1: "Er versteht alles.", s2: "Er lernt erst seit zwei Monaten Deutsch." }
+        ];
+
+        const answers1 = [
+            "Ich bleibe zu Hause, weil ich krank bin.", "Ich kann nicht kommen, denn ich habe eine Prüfung.",
+            "Das Wetter war schlecht; deshalb sind wir zu Hause geblieben.", "Da es regnet, nehme ich einen Regenschirm.",
+            "Er ging zum Arzt, weil ihm der Kopf wehtat.", "Sie lernt viel, denn sie möchte die Prüfung bestehen.",
+            "Ich habe den Bus verpasst; deswegen komme ich zu spät.", "Ich esse kein Fleisch, weil ich Vegetarier bin.",
+            "Wir haben kein Brot mehr; darum muss ich in den Supermarkt gehen.", "Da du schon hier bist, kannst du mir helfen.",
+            "Er geht zur Arbeit, obwohl er krank ist.", "Es hat geregnet; trotzdem sind wir spazieren gegangen.",
+            "Die Prüfung war schwer, aber ich habe bestanden.", "Das ist kein Hund, sondern eine Katze.",
+            "Sie hat das Kleid gekauft, obwohl es sehr teuer war.", "Ich bin müde; trotzdem lese ich ein Buch.",
+            "Ich wollte dich anrufen, aber ich hatte kein Netz.", "Wir reisen nicht nach Berlin, sondern nach München.",
+            "Obwohl er in Deutschland wohnt, spricht er wenig Deutsch.", "Das Restaurant ist teuer; trotzdem essen dort viele Leute.",
+            "Ich lerne Deutsch, um in Wien zu arbeiten.", "Ich erkläre die Regel, damit du sie verstehst.",
+            "Wenn ich Zeit habe, besuche ich dich morgen.", "Bitte ruf mich an, falls du Hilfe brauchst.",
+            "Sie arbeitet viel, um Geld zu verdienen.", "Die Lehrerin spricht langsam, damit die Studenten alles verstehen.",
+            "Wenn es schneit, bleiben wir zu Hause.", "Falls es regnet, nimm eine Jacke mit.",
+            "Er hat ein Auto gekauft, um zur Arbeit zu fahren.", "Ich gebe meinem Sohn Geld, damit er ein Buch kaufen kann.",
+            "Als ich ein Kind war, wohnte ich in Hamburg.", "Wenn ich nach Berlin fahre, besuche ich meinen Freund.",
+            "Putz die Zähne, bevor du schläfst.", "Nachdem ich gegessen hatte, ging ich ins Bett.",
+            "Ich höre Musik, während ich koche.", "Ich wohne hier, seitdem ich verheiratet bin.",
+            "Warte hier, bis ich zurückkomme.", "Bevor er das Haus verließ, schloss er die Tür ab.",
+            "Während sie las, schlief er.", "Nachdem wir die Arbeit beendet hatten, tranken wir einen Kaffee.",
+            "Ich spreche sowohl Englisch als auch Deutsch.", "Er hat weder Zeit noch Geld.",
+            "Sie ist nicht nur klug, sondern auch freundlich.", "Wir fahren entweder nach München oder nach Frankfurt.",
+            "Das Apartment ist zwar klein, aber es ist gemütlich.", "Das Hotel ist schön; außerdem ist es billig.",
+            "Du musst lernen, sonst bestehst du die Prüfung nicht.", "Zuerst dusche ich, dann frühstücke ich.",
+            "Einerseits möchte ich reisen, andererseits muss ich Geld sparen.", "Ich weiß nicht, ob er morgen kommt."
+        ];
+
+        const answers2 = [
+            "Ich kann nicht kommen, weil ich krank bin.", "Ich bleibe zu Hause, denn es regnet stark.",
+            "Er hat keinen Ausweis dabei, deshalb darf er nicht eintreten.", "Anna geht spazieren, obwohl es sehr kalt ist.",
+            "Der Mann ist alt, trotzdem macht er jeden Tag Sport.", "Ich gebe dir den Schlüssel, damit du die Tür öffnen kannst.",
+            "Er spart viel Geld, um eine Reise zu machen.", "Du musst deine Hände waschen, bevor du isst.",
+            "Nachdem er die Prüfung bestanden hatte, feierte er eine Party.", "Ich lerne Deutsch, während mein Bruder Musik hört.",
+            "Markus mag sowohl Äpfel als auch Birnen.", "Ich trinke weder Kaffee noch Tee.",
+            "Er spricht nicht nur Spanisch, sondern auch Französisch.", "Wir gehen entweder ins Restaurant oder wir kochen zu Hause.",
+            "Das Auto ist zwar alt, aber es fährt sehr gut.", "Die Wohnung ist groß; außerdem hat sie einen Balkon.",
+            "Beeil dich, sonst verpassen wir den Zug!", "Ich weiß, dass du recht hast.",
+            "Kannst du mir sagen, ob der Bus pünktlich kommt?", "Als ich in Berlin war, habe ich das Brandenburger Tor besucht.",
+            "Wenn die Sonne scheint, gehen wir an den Strand.", "Da ich keinen Hunger habe, esse ich nichts.",
+            "Sie hat viel gearbeitet, deswegen ist sie müde.", "Er wohnt nicht in Köln, sondern in Bonn.",
+            "Ich wollte den Film sehen, aber ich bin eingeschlafen.", "Obwohl wir wenig Zeit haben, helfen wir dir.",
+            "Es war dunkel, trotzdem haben wir den Weg gefunden.", "Der Vater kauft ein Fahrrad, damit das Kind zur Schule fahren kann.",
+            "Sie macht einen Deutschkurs, um ihr B1-Zertifikat zu bekommen.", "Er lebt in München, seitdem er bei Siemens arbeitet.",
+            "Bleib im Haus, bis der Regen aufhört!", "Falls du Zeit hast, ruf mich bitte an.",
+            "Der Zug hatte Verspätung, darum bin ich zu spät gekommen.", "Der Fluss ist übergetreten; infolgedessen wurde die Straße gesperrt.",
+            "Ich trinke zuerst einen Kaffee, dann fange ich mit der Arbeit an.", "Einerseits möchte ich ein Handy kaufen, andererseits habe ich nicht genug Geld.",
+            "Er hat nicht bestanden, weil er nicht genug gelernt hat.", "Wir kaufen kein neues Auto, denn es ist zu teuer.",
+            "Während die Kinder im Garten spielten, kochte die Mutter das Essen.", "Schalte das Licht aus, bevor du rausgehst!",
+            "Nachdem sie den Brief geschrieben hatte, brachte sie ihn zur Post.", "Ich habe sowohl den Schlüssel als auch das Handy vergessen.",
+            "Er spricht weder Englisch noch Französisch.", "Das Buch ist nicht nur interessant, sondern auch günstig.",
+            "Entweder hilfst du mir jetzt oder ich mache es allein.", "Das Essen schmeckte zwar gut, aber es war etwas zu kalt.",
+            "Er ist pünktlich; außerdem arbeitet er sehr gründlich.", "Zieh eine Jacke an, sonst frierst du!",
+            "Es ist wichtig, dass man regelmäßig lernt.", "Er versteht alles, obwohl er erst seit zwei Monaten Deutsch lernt."
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Render Part 1
+            const p1Container = document.getElementById('exercise-part-1');
+            part1Exercises.forEach((ex, index) => {
+                const el = document.createElement('div');
+                el.className = "flex items-start mb-3 page-break-avoid";
+                el.innerHTML = `
+                    <span class="font-bold text-gray-500 w-6 mt-1 flex-shrink-0">${index + 1}.</span>
+                    <div class="flex-grow border-b border-gray-300 pb-1">
+                        <span>${ex.en}</span>
+                        <span class="font-bold text-blue-600 ml-2">[${ex.conn}]</span>
+                        <div class="h-6 w-full"></div> <!-- Space for writing -->
+                    </div>
+                `;
+                p1Container.appendChild(el);
+            });
+
+            // Render Part 2
+            const p2Container = document.getElementById('exercise-part-2');
+            part2Exercises.forEach((ex, index) => {
+                const el = document.createElement('div');
+                el.className = "flex items-start mb-4 page-break-avoid bg-gray-50 p-3 rounded border border-gray-100";
+                el.innerHTML = `
+                    <span class="font-bold text-gray-500 w-8 flex-shrink-0">${index + 51}.</span>
+                    <div class="flex-grow">
+                        <span class="font-bold text-blue-600 mb-1 block">[${ex.c}]</span>
+                        <ul class="list-disc pl-5 text-gray-700 italic mb-2">
+                            <li>${ex.s1}</li>
+                            <li>${ex.s2}</li>
+                        </ul>
+                        <div class="border-b border-gray-400 h-6 w-full mt-2"></div> <!-- Space for writing -->
+                    </div>
+                `;
+                p2Container.appendChild(el);
+            });
+
+            // Render Answer Key 1
+            const ans1Container = document.getElementById('answer-key-1');
+            const ul1 = document.createElement('ol');
+            ul1.className = "list-decimal pl-5 space-y-1";
+            answers1.forEach(ans => {
+                const li = document.createElement('li');
+                li.innerHTML = ans;
+                ul1.appendChild(li);
+            });
+            ans1Container.appendChild(ul1);
+
+            // Render Answer Key 2
+            const ans2Container = document.getElementById('answer-key-2');
+            const ul2 = document.createElement('ol');
+            ul2.className = "list-decimal pl-5 space-y-1";
+            ul2.start = 51;
+            answers2.forEach(ans => {
+                const li = document.createElement('li');
+                li.innerHTML = ans;
+                ul2.appendChild(li);
+            });
+            ans2Container.appendChild(ul2);
+        });
+
+        function generatePDF() {
+            const element = document.getElementById('pdf-content');
+            const button = document.getElementById('download-btn');
+            const originalText = button.innerHTML;
+
+            // Update UI to show progress
+            button.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Creating PDF...
+            `;
+            button.disabled = true;
+            button.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // html2pdf configuration for optimal A4 output
+            const opt = {
+                margin:       10, // 10mm margins
+                filename:     'German_B1_Connectors_Workbook.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                // Prevent elements from breaking across pages awkwardly
+                pagebreak:    { mode: ['css', 'legacy'] }
+            };
+
+            // Generate and save
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Reset UI
+                button.innerHTML = originalText;
+                button.disabled = false;
+                button.classList.remove('opacity-75', 'cursor-not-allowed');
+            }).catch(err => {
+                console.error("PDF Generation Error: ", err);
+                button.innerHTML = "Error! Please try again.";
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    button.classList.remove('opacity-75', 'cursor-not-allowed');
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+</html>
