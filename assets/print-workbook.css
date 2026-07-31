@@ -1,0 +1,343 @@
+/* ==========================================================================
+   Shared print-friendly workbook stylesheet — telc B2 prep track
+   Used by: workbooks/A2 (bridge), workbooks/B1, workbooks/B2, exam-prep/
+   Design goals: A4-print-clean, no external dependencies, generous
+   handwriting space, answer key printed directly below each exercise.
+   ========================================================================== */
+
+:root {
+  --ink: #1c1c1c;
+  --muted: #5b5b5b;
+  --rule: #cfcfcf;
+  --paper: #fdfdfb;
+  --accent: #1d4e89;      /* default / A2-bridge blue */
+  --accent-bg: #eaf1fa;
+  --answer-bg: #eef6ee;
+  --answer-border: #3f8f5c;
+  --tip-bg: #fff8e6;
+  --tip-border: #d8b23a;
+}
+
+body.level-b1 { --accent: #1d4e89; --accent-bg: #eaf1fa; }
+body.level-b2 { --accent: #7a2048; --accent-bg: #f6e9ee; }
+body.level-exam { --accent: #0f6f6a; --accent-bg: #e6f3f2; }
+body.level-a2 { --accent: #4a6fa5; --accent-bg: #eaf1fa; }
+
+* { box-sizing: border-box; }
+
+html { background: #e9e9e6; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+  background: var(--paper);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.12);
+}
+
+h1, h2, h3, h4 { color: var(--ink); font-weight: 700; }
+h1 { font-size: 1.7em; margin-bottom: 0.2em; }
+h2 { font-size: 1.3em; margin-top: 1.8em; border-bottom: 2px solid var(--accent); padding-bottom: 0.25em; }
+h3 { font-size: 1.05em; margin-top: 1.2em; }
+
+a { color: var(--accent); }
+
+/* ---------- Header / meta ---------- */
+
+.doc-header { text-align: center; margin-bottom: 1.6em; }
+
+.level-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 999px;
+  margin-bottom: 0.6em;
+}
+
+.doc-meta {
+  font-size: 0.85em;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.controls { text-align: center; margin: 1em 0 1.6em; }
+
+button.print-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  font-size: 0.95em;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button.print-btn:hover { opacity: 0.88; }
+
+.back-link { display: inline-block; margin: 0 0.8em; font-size: 0.85em; }
+
+/* ---------- Tip / instructions ---------- */
+
+.tip-box {
+  background: var(--tip-bg);
+  border: 1px solid var(--tip-border);
+  border-radius: 8px;
+  padding: 0.7em 1em;
+  font-size: 0.88em;
+  margin-bottom: 1.6em;
+}
+
+.tip-box strong { color: #8a6d1a; }
+
+.instructions { font-style: italic; color: var(--muted); text-align: center; margin-bottom: 1.4em; }
+
+/* ---------- Grammar cheatsheet box ---------- */
+
+.cheatsheet {
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 18px 20px;
+  background: var(--accent-bg);
+  margin-bottom: 2em;
+}
+
+.cheatsheet h3 { margin-top: 1em; }
+.cheatsheet h3:first-child { margin-top: 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8em 0;
+  font-size: 0.92em;
+  background: var(--paper);
+}
+
+th, td {
+  border: 1px solid #a9a9a9;
+  padding: 7px 9px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th { background: rgba(0, 0, 0, 0.06); font-weight: 700; }
+
+/* ---------- Sections & exercises ---------- */
+
+.section { margin-bottom: 2.4em; }
+
+.section-title {
+  font-weight: 700;
+  font-size: 1.05em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.3em;
+  margin-bottom: 0.2em;
+}
+
+.section-note { font-size: 0.85em; color: var(--muted); font-style: italic; margin-bottom: 1em; }
+
+.exercise {
+  margin-bottom: 1.5em;
+  padding-bottom: 1.1em;
+  border-bottom: 1px dashed var(--rule);
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.exercise:last-child { border-bottom: none; }
+
+.qnum { font-weight: 700; margin-right: 0.35em; }
+
+.prompt { font-size: 1.02em; }
+
+.prompt .de { }
+.prompt .en { color: var(--muted); font-size: 0.9em; }
+
+.gap {
+  display: inline-block;
+  min-width: 110px;
+  border-bottom: 1px solid #333;
+  margin: 0 4px;
+}
+
+/* Single ruled line, for one-word/short-phrase answers */
+.write-line {
+  height: 1.9em;
+  margin: 0.6em 0 0.5em;
+  border-bottom: 1px solid #333;
+}
+
+/* Ruled handwriting box (2+ lines), mimics notebook lines for pencil/pen answers */
+.write-area {
+  min-height: 4.75em;
+  margin: 0.6em 0 0.5em;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 1.55em,
+    var(--rule) 1.55em,
+    var(--rule) calc(1.55em + 1px)
+  );
+}
+
+.write-area.tall { min-height: 7.85em; }
+
+.answer-block {
+  margin-top: 0.4em;
+  padding: 0.5em 0.85em;
+  background: var(--answer-bg);
+  border-left: 4px solid var(--answer-border);
+  border-radius: 5px;
+  font-size: 0.92em;
+}
+
+.answer-block .label {
+  font-weight: 700;
+  color: var(--answer-border);
+  text-transform: uppercase;
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+  margin-right: 0.5em;
+}
+
+.answer-block .why {
+  display: block;
+  margin-top: 0.25em;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.94em;
+}
+
+.hint { font-size: 0.82em; color: var(--muted); }
+
+/* Model-answer variant used for free-writing / speaking practice, where there
+   is no single fixed correct answer */
+.model-answer-block {
+  margin-top: 0.4em;
+  padding: 0.6em 0.9em;
+  background: var(--accent-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 5px;
+  font-size: 0.92em;
+}
+
+.model-answer-block .label {
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+  margin-right: 0.5em;
+}
+
+/* ---------- Nav footer ---------- */
+
+.doc-footer {
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.88em;
+  color: var(--muted);
+}
+
+/* ---------- Listening (Hörverstehen) — browser text-to-speech ---------- */
+
+.audio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 0.8em;
+}
+
+button.play-btn, button.stop-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 0.9em;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button.play-btn { background: var(--accent); color: #fff; }
+button.play-btn:hover { opacity: 0.88; }
+button.stop-btn { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+
+select.speed-select {
+  font-family: inherit;
+  font-size: 0.85em;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+}
+
+.listen-status { font-size: 0.82em; color: var(--muted); font-style: italic; }
+
+button.transcript-btn {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.82em;
+  font-family: inherit;
+  color: var(--muted);
+  cursor: pointer;
+  margin: 0.5em 0;
+}
+
+.hoertext-block {
+  margin: 0.4em 0 0.8em;
+  padding: 0.6em 0.9em;
+  background: #f3f3f0;
+  border-left: 4px solid var(--muted);
+  border-radius: 5px;
+  font-size: 0.92em;
+  font-style: italic;
+  color: #333;
+}
+
+.hoertext-block .label {
+  display: block;
+  font-weight: 700;
+  font-style: normal;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3em;
+}
+
+/* ---------- Print ---------- */
+
+@media print {
+  @page { size: A4; margin: 16mm 14mm 18mm; }
+
+  html, body {
+    background: #fff;
+    box-shadow: none;
+    max-width: none;
+    padding: 0;
+  }
+
+  .no-print { display: none !important; }
+
+  .exercise, .cheatsheet, .tip-box { page-break-inside: avoid; break-inside: avoid; }
+
+  h2 { break-after: avoid; }
+
+  a { color: inherit; text-decoration: none; }
+}
