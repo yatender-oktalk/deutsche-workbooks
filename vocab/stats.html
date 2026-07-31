@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vokabeltrainer &ndash; Statistik</title>
+<link rel="stylesheet" href="vocab.css">
+</head>
+<body class="level-mixed" id="body">
+
+<div class="controls topbar">
+  <a href="index.html">&larr; Übung</a>
+  <span id="profile-indicator" class="profile-name"></span>
+</div>
+
+<div class="doc-header">
+  <span class="level-badge">Statistik</span>
+  <h1>Dein Fortschritt</h1>
+</div>
+
+<div id="loading" class="empty-state">Lade Statistik&hellip;</div>
+
+<div id="stats-content" hidden>
+
+  <div class="summary-stats">
+    <div class="stat-tile"><div class="num" id="stat-total">0</div><div class="label">Wiederholungen</div></div>
+    <div class="stat-tile"><div class="num" id="stat-accuracy">0%</div><div class="label">Trefferquote</div></div>
+    <div class="stat-tile"><div class="num" id="stat-streak">0</div><div class="label">Tage in Folge</div></div>
+  </div>
+
+  <h2>Letzte 14 Tage</h2>
+  <div class="bars" id="bars"></div>
+  <div class="heatmap-legend">
+    <span style="display:inline-block;width:10px;height:10px;background:var(--good);border-radius:2px;"></span> richtig
+    <span style="display:inline-block;width:10px;height:10px;background:var(--again);border-radius:2px;margin-left:8px;"></span> falsch
+  </div>
+
+  <h2>Aktivität (letzte 15 Wochen)</h2>
+  <div class="heatmap-wrap">
+    <div class="heatmap" id="heatmap"></div>
+  </div>
+
+  <h2>Nach Niveau</h2>
+  <div id="level-breakdown"></div>
+
+</div>
+
+<div id="empty-state" class="empty-state" hidden>
+  Noch keine Übungsdaten für dieses Profil. <a href="index.html">Jetzt loslegen &rarr;</a>
+</div>
+
+<div class="doc-footer">
+  <a href="index.html">&larr; Zur Übung</a>
+</div>
+
+<script src="js/db.js"></script>
+<script src="js/srs.js"></script>
+<script src="js/data.js"></script>
+<script src="js/stats.js"></script>
+</body>
+</html>

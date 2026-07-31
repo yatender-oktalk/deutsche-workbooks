@@ -21,6 +21,7 @@ Yatender's personal German-learning workbook repo. He passed telc A1 with 91% an
 - `workbooks/B1/workbook-1..6`, `workbooks/B2/workbook-1..6` — grammar workbooks, one file per topic, print-first format, chained via prev/next nav links inside each file.
 - `exam-prep/B1/`, `exam-prep/B2/` — telc exam-task practice by skill: `leseverstehen-practice.html` (reading), `hoerverstehen-practice.html` (listening, TTS-based), `sprachbausteine-practice.html` (language-elements cloze), `schriftlicher-ausdruck-guide.html` (writing, with model answers + self-assessment checklist). **Mündliche Prüfung (speaking) is not yet covered** — a natural future addition here, only if asked.
 - `cheatsheets/`, `web workbooks/` — older reference material, unrelated to the current system.
+- `vocab/` — interactive vocabulary trainer, A1–B2, separate system from the print-first workbooks below (see "Vocabulary trainer" section).
 
 ## The print-first workbook format (core convention — apply to every new page)
 
@@ -40,6 +41,18 @@ Every current-format page (`workbooks/A2/workbook-7-*`, all of `workbooks/B1/`, 
 ## Listening content
 
 No audio files, ever — Hörverstehen pages read a hidden German transcript aloud via `assets/listening.js`, triggered by a `.play-btn`. Copy the exact pattern from `exam-prep/B1/hoerverstehen-practice.html` (audio-controls block, hidden transcript div, transcript-toggle button, script include at the end of body).
+
+## Vocabulary trainer (`vocab/`)
+
+A separate, fully interactive app (not print-first) — spaced-repetition vocab practice across A1–B2, ~5,860 words. No backend, no build step: plain HTML/CSS/JS, static-hostable like the rest of the repo.
+
+- **Source of truth**: `vocab/data/{a1,a2,b1,b2}.json`, one flat array per level. Schema per entry: `{id, word, article, plural, forms, full, translation_en, examples: [{de, en?}], level}` (`plural` is for nouns, `forms` holds verb principal parts — e.g. "gibt ab, hat abgegeben" — mutually exclusive with `plural`). Regenerating these files requires re-running the one-off extraction scripts (not checked into the repo) against: the official Goethe A1 (Start Deutsch 1) and A2 wordlist PDFs (word + German example only, no English — English was backfilled from the B1 set where the same word recurs there), a B1 Anki deck (`B1_Wortliste_DTZ_Goethe...apkg`, richest source: word + article + plural + English + up to 9 example sentence pairs), and the "B2 Der-Die-Das" 1,479-noun sub-deck of a TELC B2 grammar Anki deck (word + article + English, no example sentences). None of these source files are checked into the repo — treat `vocab/data/*.json` as the durable artifact.
+- **No hosted audio** — same rule as the rest of the repo. `vocab/practice.html` includes `assets/listening.js` directly and reuses `speakText(id)` for the listening practice mode (writes the current word/sentence into a hidden `#tts-source` span, then calls `speakText('tts-source')`).
+- **Storage**: IndexedDB only (`vocab/js/db.js`), no server. Three object stores: `profiles` (name-based, no auth), `cards` (per-profile SRS state keyed by `${profile}::${entryId}`), `reviews` (append-only log used for the stats page). Multiple profiles can coexist on one device; the active profile is remembered in `localStorage` under `vocab.activeProfile`.
+- **Scheduler**: simplified day-granularity SM-2 in `vocab/js/srs.js` (Again/Hard/Good/Easy grading, same family of algorithm Anki uses — not a literal port).
+- **Practice modes** (`vocab/js/practice.js`): flashcard self-grade, multiple choice, fill-in-the-blank (cloze, built from a real example sentence), type-the-German-word, and listening. "Gemischt" (mixed) picks a random mode per card, falling back to flashcard when an entry lacks the data a mode needs (e.g. no `translation_en` → skip MCQ/type; no usable example → skip cloze).
+- **Pages**: `vocab/index.html` (profile picker + level/mode/session-length setup), `vocab/practice.html` (session runner), `vocab/stats.html` (14-day bar chart, 15-week activity heatmap, streak, per-level accuracy — all computed client-side from the `reviews` store). Styling lives in `vocab/vocab.css`, a sibling to `assets/print-workbook.css` but intentionally separate since this isn't a print page (same `--accent` per-level convention, different components).
+- Content-accuracy requirements below apply here too, but note the A1/A2 example sentences and B2 nouns come from official/curated third-party lists rather than being generated — if you add new levels or regenerate data, keep flagging provenance (official wordlist vs. generated) rather than presenting everything as equally authoritative.
 
 ## Content-accuracy requirements
 

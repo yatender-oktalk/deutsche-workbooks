@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Vocabulary trainer — interactive app stylesheet.
+   Companion to assets/print-workbook.css but NOT print-first: this is a
+   click-driven practice tool (profiles, SRS review, stats), so it gets its
+   own stylesheet rather than reusing the print components.
+   ========================================================================== */
+
+:root {
+  --ink: #1c1c1c;
+  --muted: #5b5b5b;
+  --rule: #cfcfcf;
+  --paper: #fdfdfb;
+  --accent: #1d4e89;
+  --accent-bg: #eaf1fa;
+  --card-bg: #ffffff;
+  --again: #b3401f;
+  --hard: #c07a17;
+  --good: #2f7d4f;
+  --easy: #1d6fa5;
+}
+
+body.level-a1 { --accent: #2f7d4f; --accent-bg: #e9f4ee; }
+body.level-a2 { --accent: #4a6fa5; --accent-bg: #eaf1fa; }
+body.level-b1 { --accent: #1d4e89; --accent-bg: #eaf1fa; }
+body.level-b2 { --accent: #7a2048; --accent-bg: #f6e9ee; }
+body.level-mixed { --accent: #5a4a8a; --accent-bg: #efeaf6; }
+
+* { box-sizing: border-box; }
+
+html { background: #e9e9e6; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 28px 24px 70px;
+  background: var(--paper);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.12);
+  min-height: 100vh;
+}
+
+h1, h2, h3 { color: var(--ink); font-weight: 700; }
+h1 { font-size: 1.6em; margin-bottom: 0.15em; }
+h2 { font-size: 1.2em; margin-top: 1.4em; }
+
+a { color: var(--accent); }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+  margin-bottom: 1.4em;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.topbar .profile-name { font-weight: 700; color: var(--accent); }
+
+.level-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
+.doc-header { text-align: center; margin-bottom: 1.6em; }
+.doc-meta { font-size: 0.88em; color: var(--muted); font-style: italic; }
+
+/* ---------- Buttons ---------- */
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.95em;
+  border-radius: 8px;
+}
+.btn:hover { opacity: 0.9; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-outline {
+  background: #fff;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.95em;
+}
+
+.btn-block { width: 100%; }
+
+/* ---------- Profile picker ---------- */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 1.2em 0;
+}
+
+.profile-tile {
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 16px 10px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--ink);
+}
+.profile-tile:hover { border-color: var(--accent); }
+
+.new-profile-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 1.2em;
+}
+.new-profile-row input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 9px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+
+/* ---------- Chips (level / mode selectors) ---------- */
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0.6em 0 1.4em;
+}
+
+.chip {
+  background: #fff;
+  border: 1.5px solid var(--rule);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 0.9em;
+  color: var(--muted);
+}
+
+.chip.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.field-label {
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 0.3em;
+}
+
+/* ---------- Session progress ---------- */
+
+.progress-bar-track {
+  background: var(--rule);
+  border-radius: 999px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: 1.4em;
+}
+.progress-bar-fill {
+  background: var(--accent);
+  height: 100%;
+  transition: width 0.25s ease;
+}
+
+.session-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82em;
+  color: var(--muted);
+  margin-bottom: 0.4em;
+}
+
+/* ---------- Card ---------- */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 32px 26px;
+  text-align: center;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 1.2em;
+}
+
+.card .mode-tag {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.card .headword {
+  font-size: 1.9em;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.card .article-tag {
+  color: var(--accent);
+  margin-right: 0.2em;
+}
+
+.card .subtext {
+  font-size: 1em;
+  color: var(--muted);
+}
+
+.card .example-de { font-size: 1.05em; margin-top: 0.4em; }
+.card .example-en { font-size: 0.88em; color: var(--muted); font-style: italic; }
+
+.reveal-block {
+  border-top: 1px dashed var(--rule);
+  padding-top: 14px;
+  margin-top: 4px;
+}
+
+/* ---------- Audio ---------- */
+
+.audio-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+button.play-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  font-size: 1.1em;
+}
+
+/* ---------- Answer inputs ---------- */
+
+.mcq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 480px) { .mcq-grid { grid-template-columns: 1fr; } }
+
+.mcq-option {
+  background: var(--accent-bg);
+  border: 1.5px solid var(--rule);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.98em;
+  text-align: left;
+}
+.mcq-option:hover { border-color: var(--accent); }
+.mcq-option.correct { background: #e6f4ea; border-color: var(--good); color: var(--good); font-weight: 700; }
+.mcq-option.incorrect { background: #fbeae5; border-color: var(--again); color: var(--again); font-weight: 700; }
+
+.text-answer-row { display: flex; gap: 8px; margin-top: 0.4em; }
+.text-answer-row input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 1.1em;
+  padding: 10px 14px;
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  text-align: center;
+}
+.text-answer-row input.correct { border-color: var(--good); background: #f2fbf5; }
+.text-answer-row input.incorrect { border-color: var(--again); background: #fdf1ee; }
+
+.answer-feedback { font-size: 0.92em; margin-top: 0.5em; }
+.answer-feedback.correct { color: var(--good); font-weight: 700; }
+.answer-feedback.incorrect { color: var(--again); font-weight: 700; }
+
+/* ---------- Grade buttons (Again / Hard / Good / Easy) ---------- */
+
+.grade-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 1em;
+}
+
+.grade-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 6px;
+  color: #fff;
+  font-size: 0.88em;
+  font-weight: 700;
+}
+.grade-btn .key-hint { display: block; font-size: 0.75em; font-weight: 400; opacity: 0.85; }
+.grade-btn.again { background: var(--again); }
+.grade-btn.hard { background: var(--hard); }
+.grade-btn.good { background: var(--good); }
+.grade-btn.easy { background: var(--easy); }
+
+/* ---------- Session summary ---------- */
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 1.4em 0;
+  text-align: center;
+}
+.stat-tile {
+  background: var(--accent-bg);
+  border-radius: 10px;
+  padding: 14px 8px;
+}
+.stat-tile .num { font-size: 1.6em; font-weight: 700; color: var(--accent); }
+.stat-tile .label { font-size: 0.78em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ---------- Stats page ---------- */
+
+.heatmap-wrap { overflow-x: auto; padding-bottom: 6px; }
+.heatmap {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 13px);
+  gap: 3px;
+  width: max-content;
+}
+.heatmap-cell {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  background: #e9e9e6;
+}
+.heatmap-legend { display: flex; align-items: center; gap: 4px; font-size: 0.75em; color: var(--muted); margin-top: 6px; }
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 140px;
+  margin: 1em 0;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 2px;
+}
+.bar {
+  flex: 1;
+  background: var(--good);
+  border-radius: 3px 3px 0 0;
+  min-height: 2px;
+  position: relative;
+}
+.bar .bar-wrong {
+  background: var(--again);
+  border-radius: 3px 3px 0 0;
+}
+
+.level-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.92em;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 2em 1em;
+  font-style: italic;
+}
+
+.doc-footer {
+  margin-top: 2.4em;
+  padding-top: 1em;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--muted);
+}
