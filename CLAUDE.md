@@ -17,7 +17,7 @@ Yatender's personal German-learning workbook repo. He passed telc A1 with 91% an
 - `assets/print-workbook.css` — the ONE shared stylesheet for every printable workbook/exam-prep page. Reuse its existing classes (`doc-header`, `level-badge`, `tip-box`, `cheatsheet`, `section`, `exercise`, `write-line`, `write-area`/`write-area.tall`, `answer-block`, `model-answer-block`, `audio-controls`, etc.) — do not invent new ones or add inline `<style>` blocks. If a genuinely new reusable component is needed, add it here so every page benefits.
 - `assets/listening.js` — Web Speech API (`speechSynthesis`)-based text-to-speech for Hörverstehen pages: `speakText(id)`, `stopSpeaking(id)`, `toggleTranscript(id, btnEl)`. There is no hosted audio anywhere in this repo and none should be added — this is the mechanism, permanently.
 - `workbooks/A1/` and `workbooks/A2/workbook-1..6` — **pre-existing, older interactive/Tailwind-CDN workbooks. Leave these untouched.** They predate the print-first system below and intentionally use a different technical approach (in-browser click/localStorage progress tracking instead of print-and-write).
-- `workbooks/A2/workbook-7-*` — the one A2→B1 bridge workbook, already in the current print-first format.
+- `workbooks/A2/workbook-7-*`, `workbook-8-*` — the A2→B1 bridge workbooks (Adjektivendungen & Vergleich, Reflexive Verben), in the current print-first format, chained to each other and on to `workbooks/B1/workbook-1`.
 - `workbooks/B1/workbook-1..6`, `workbooks/B2/workbook-1..6` — grammar workbooks, one file per topic, print-first format, chained via prev/next nav links inside each file.
 - `exam-prep/B1/`, `exam-prep/B2/` — telc exam-task practice by skill: `leseverstehen-practice.html` (reading), `hoerverstehen-practice.html` (listening, TTS-based), `sprachbausteine-practice.html` (language-elements cloze), `schriftlicher-ausdruck-guide.html` (writing, with model answers + self-assessment checklist). **Mündliche Prüfung (speaking) is not yet covered** — a natural future addition here, only if asked.
 - `cheatsheets/`, `web workbooks/` — older reference material, unrelated to the current system.
@@ -25,7 +25,7 @@ Yatender's personal German-learning workbook repo. He passed telc A1 with 91% an
 
 ## The print-first workbook format (core convention — apply to every new page)
 
-Every current-format page (`workbooks/A2/workbook-7-*`, all of `workbooks/B1/`, `workbooks/B2/`, all of `exam-prep/`) follows this exact pattern. When adding a new one, copy an existing file of the same type as the literal structural template rather than inventing markup from scratch:
+Every current-format page (`workbooks/A2/workbook-7-*`, `workbook-8-*`, all of `workbooks/B1/`, `workbooks/B2/`, all of `exam-prep/`) follows this exact pattern. When adding a new one, copy an existing file of the same type as the literal structural template rather than inventing markup from scratch:
 
 - Links `assets/print-workbook.css` via a relative path; `<body class="level-a2|level-b1|level-b2|level-exam">` sets the accent color.
 - `.controls` (no-print): Index link, Print button, Prev/Next links. `.doc-header`: `.level-badge` + `<h1>` + `.doc-meta`.
