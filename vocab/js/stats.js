@@ -105,6 +105,55 @@ function el(tag, className, html) {
   return e;
 }
 
+function escapeHtml(s) {
+  const div = document.createElement('div');
+  div.textContent = s == null ? '' : s;
+  return div.innerHTML;
+}
+
+function computeWeakWords(reviews) {
+  const byEntry = new Map();
+  reviews.forEach((r) => {
+    if (!byEntry.has(r.entryId)) byEntry.set(r.entryId, { entryId: r.entryId, total: 0, wrong: 0 });
+    const rec = byEntry.get(r.entryId);
+    rec.total++;
+    if (!r.correct) rec.wrong++;
+  });
+  return [...byEntry.values()]
+    .filter((r) => r.wrong > 0)
+    .sort((a, b) => b.wrong - a.wrong || (b.wrong / b.total) - (a.wrong / a.total))
+    .slice(0, 20);
+}
+
+function renderWeakWords(reviews, profile) {
+  const section = document.getElementById('weak-words-section');
+  const container = document.getElementById('weak-words');
+  const weak = computeWeakWords(reviews)
+    .map((w) => ({ ...w, entry: VocabData.get(w.entryId) }))
+    .filter((w) => w.entry);
+
+  if (weak.length === 0) {
+    section.hidden = true;
+    return;
+  }
+  section.hidden = false;
+  container.innerHTML = '';
+  weak.forEach((w) => {
+    const row = el('div', 'weak-word-row');
+    const info = el('div', 'weak-word-info');
+    const headword = (w.entry.article ? `${w.entry.article} ` : '') + w.entry.word;
+    info.appendChild(el('div', 'weak-word-word', escapeHtml(headword)));
+    if (w.entry.translation_en) info.appendChild(el('div', 'weak-word-en', escapeHtml(w.entry.translation_en)));
+    row.appendChild(info);
+    row.appendChild(el('div', 'weak-word-stat', `${w.wrong}&times; falsch von ${w.total}`));
+    container.appendChild(row);
+  });
+
+  const ids = weak.map((w) => w.entryId).join(',');
+  document.getElementById('weak-words-practice-link').href =
+    `practice.html?profile=${encodeURIComponent(profile)}&mode=mixed&ids=${encodeURIComponent(ids)}`;
+}
+
 (async function init() {
   const profile = qsParam('profile') || localStorage.getItem('vocab.activeProfile');
   if (!profile) {
@@ -112,6 +161,7 @@ function el(tag, className, html) {
     return;
   }
   document.getElementById('profile-indicator').textContent = profile;
+  await VocabData.load();
 
   const reviews = await VocabDB.getReviews(profile);
   document.getElementById('loading').hidden = true;
@@ -144,4 +194,5 @@ function el(tag, className, html) {
     cardsByLevel[lvl] = await VocabDB.getCardsForProfile(profile, lvl);
   }
   renderLevelBreakdown(reviews, cardsByLevel);
+  renderWeakWords(reviews, profile);
 })();

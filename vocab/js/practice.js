@@ -7,8 +7,9 @@ const MODE_LABEL = {
   cloze: 'Lückentext',
   type: 'Wort tippen',
   listening: 'Hören',
+  dictation: 'Diktat',
 };
-const ALL_MODES = ['flashcard', 'mcq', 'cloze', 'type', 'listening'];
+const ALL_MODES = ['flashcard', 'mcq', 'cloze', 'type', 'listening', 'dictation'];
 
 let session = {
   profile: null,
@@ -30,6 +31,17 @@ function normalize(s) {
     .replace(/\s+/g, ' ');
 }
 
+/* Looser than normalize(): strips punctuation anywhere in the string, not
+   just trailing, so dictation grading isn't tripped up by comma placement. */
+function normalizeSentence(s) {
+  return (s || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[„“"'’.,;:!?]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function pickModeForEntry(requestedMode, entry, pool) {
   const candidates = requestedMode === 'mixed'
     ? shuffle([...ALL_MODES])
@@ -39,6 +51,8 @@ function pickModeForEntry(requestedMode, entry, pool) {
       if (entry.translation_en && VocabData.randomDistractors(entry, 3, pool).length >= 3) return m;
     } else if (m === 'cloze') {
       if (findClozeExample(entry)) return m;
+    } else if (m === 'dictation') {
+      if (entry.examples && entry.examples.length > 0) return m;
     } else {
       return m; // flashcard / listening always work
     }
@@ -82,6 +96,13 @@ async function buildQueue(profile, levels, mode, count) {
   if (chosen.length < count) chosen.push(...fresh.slice(0, count - chosen.length));
 
   return chosen.map((entry) => ({ entry, mode: pickModeForEntry(mode, entry, entries) }));
+}
+
+/* Explicit-id queue for "practice just these words" (e.g. from the weak-words
+   list on the stats page) — bypasses the due/fresh selection entirely. */
+function buildQueueFromIds(ids, mode, pool) {
+  const chosen = ids.map((id) => VocabData.get(id)).filter(Boolean);
+  return chosen.map((entry) => ({ entry, mode: pickModeForEntry(mode, entry, pool) }));
 }
 
 function el(tag, className, html) {
@@ -205,6 +226,69 @@ function renderListening(container, entry) {
   };
 
   setTimeout(() => speak(speakTarget), 300);
+}
+
+function renderDictation(container, entry) {
+  container.innerHTML = '';
+  const example = entry.examples[0];
+  const target = example.de;
+
+  const card = el('div', 'card');
+  card.appendChild(el('div', 'mode-tag', MODE_LABEL.dictation));
+  card.appendChild(el('div', 'subtext', 'Hör dir den Satz an und tippe genau, was du hörst.'));
+  const audioRow = el('div', 'audio-row');
+  const playBtn = el('button', 'play-btn', '&#9658;');
+  playBtn.onclick = () => speak(target);
+  audioRow.appendChild(playBtn);
+  card.appendChild(audioRow);
+  container.appendChild(card);
+
+  const row = el('div', 'text-answer-row');
+  const input = el('input');
+  input.type = 'text';
+  input.placeholder = 'Satz eingeben';
+  input.autocomplete = 'off';
+  const checkBtn = el('button', 'btn', 'Prüfen');
+  row.appendChild(input);
+  row.appendChild(checkBtn);
+  container.appendChild(row);
+  const feedback = el('div', 'answer-feedback');
+  container.appendChild(feedback);
+  const diffBlock = el('div', 'dictation-diff');
+  container.appendChild(diffBlock);
+  input.focus();
+
+  function check() {
+    const expectedWords = normalizeSentence(target).split(' ').filter(Boolean);
+    const typedWords = normalizeSentence(input.value).split(' ').filter(Boolean);
+    const correct = expectedWords.join(' ') === typedWords.join(' ');
+
+    input.classList.add(correct ? 'correct' : 'incorrect');
+    input.disabled = true;
+    checkBtn.disabled = true;
+    feedback.classList.add(correct ? 'correct' : 'incorrect');
+    feedback.textContent = correct ? 'Richtig!' : 'Nicht ganz – so war der Satz:';
+
+    if (!correct) {
+      const maxLen = Math.max(expectedWords.length, typedWords.length);
+      for (let i = 0; i < maxLen; i++) {
+        const exp = expectedWords[i];
+        const got = typedWords[i];
+        const ok = exp !== undefined && exp === got;
+        const span = el('span', `diff-word ${ok ? 'diff-ok' : 'diff-bad'}`,
+          escapeHtml(exp !== undefined ? exp : `(${got})`));
+        diffBlock.appendChild(span);
+        diffBlock.appendChild(document.createTextNode(' '));
+      }
+      if (example.en) diffBlock.appendChild(el('div', 'example-en', escapeHtml(example.en)));
+    }
+
+    setTimeout(() => finishCard(entry, 'dictation', correct ? 'good' : 'again', correct), correct ? 900 : 2400);
+  }
+  checkBtn.onclick = check;
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
+
+  setTimeout(() => speak(target), 300);
 }
 
 function renderMCQ(container, entry) {
@@ -350,6 +434,7 @@ function renderCurrentCard() {
   else if (mode === 'cloze') renderCloze(container, entry);
   else if (mode === 'type') renderType(container, entry);
   else if (mode === 'listening') renderListening(container, entry);
+  else if (mode === 'dictation') renderDictation(container, entry);
 }
 
 function showSummary() {
@@ -369,6 +454,7 @@ function showSummary() {
   const levels = (qs('levels') || 'a1,a2,b1,b2').split(',');
   const mode = qs('mode') || 'mixed';
   const count = parseInt(qs('count') || '20', 10);
+  const ids = qs('ids');
 
   if (!profile) {
     window.location.href = 'index.html';
@@ -380,7 +466,9 @@ function showSummary() {
   session.levels = levels;
 
   await VocabData.load();
-  session.queue = await buildQueue(profile, levels, mode, count);
+  session.queue = ids
+    ? buildQueueFromIds(ids.split(',').filter(Boolean), mode, VocabData.entriesFor(levels))
+    : await buildQueue(profile, levels, mode, count);
 
   document.getElementById('loading').hidden = true;
   if (session.queue.length === 0) {
