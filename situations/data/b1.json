@@ -1,0 +1,386 @@
+[
+  {
+    "id": "b1-beim-arzt-1",
+    "level": "b1",
+    "category": "beim-arzt",
+    "category_label": "Beim Arzt",
+    "situation_de": "Sie haben seit zwei Tagen eine Erkältung und gehen zum Arzt. Beschreiben Sie Ihre Symptome und was Sie bisher dagegen unternommen haben.",
+    "situation_en": "You've had a cold for two days and go to the doctor. Describe your symptoms and what you've done about it so far.",
+    "model_response": "Guten Tag, ich fühle mich seit zwei Tagen nicht gut. Ich habe Husten, Schnupfen und ein bisschen Fieber. Ich habe schon viel Tee getrunken und mich ausgeruht, aber es ist nicht besser geworden. Deshalb wollte ich mal nachsehen lassen, ob es etwas Ernsteres ist.",
+    "phrase_bank": [
+      { "de": "Ich fühle mich seit ... nicht gut.", "en": "I haven't been feeling well since ..." },
+      { "de": "Ich habe Husten/Schnupfen/Fieber/Kopfschmerzen.", "en": "I have a cough/runny nose/fever/headache." },
+      { "de": "Es tut hier weh.", "en": "It hurts here." },
+      { "de": "Ich habe schon ... genommen/gemacht.", "en": "I've already taken/done ..." },
+      { "de": "Können Sie mir etwas dagegen verschreiben?", "en": "Can you prescribe me something for it?" }
+    ]
+  },
+  {
+    "id": "b1-beim-arzt-2",
+    "level": "b1",
+    "category": "beim-arzt",
+    "category_label": "Beim Arzt",
+    "situation_de": "Der Arzt möchte einen Termin für eine Nachuntersuchung vereinbaren. Vereinbaren Sie einen passenden Termin und fragen Sie, was Sie mitbringen müssen.",
+    "situation_en": "The doctor wants to schedule a follow-up appointment. Arrange a suitable time and ask what you need to bring.",
+    "model_response": "Passt es Ihnen nächste Woche Dienstag um 10 Uhr? Ja, das würde mir gut passen. Muss ich etwas Bestimmtes mitbringen, zum Beispiel die Ergebnisse vom letzten Test? Und sollte ich nüchtern zur Untersuchung kommen?",
+    "phrase_bank": [
+      { "de": "Passt es Ihnen ...?", "en": "Does ... work for you?" },
+      { "de": "Das würde mir gut passen.", "en": "That would work well for me." },
+      { "de": "Muss ich etwas mitbringen?", "en": "Do I need to bring anything?" },
+      { "de": "Könnten wir einen anderen Termin finden?", "en": "Could we find another appointment?" },
+      { "de": "Wie lange dauert die Untersuchung ungefähr?", "en": "About how long does the exam take?" }
+    ]
+  },
+  {
+    "id": "b1-beim-arzt-3",
+    "level": "b1",
+    "category": "beim-arzt",
+    "category_label": "Beim Arzt",
+    "situation_de": "Sie rufen in der Arztpraxis an, um einen Termin abzusagen, weil Sie krank sind und nicht kommen können. Erklären Sie den Grund und bitten Sie um einen neuen Termin.",
+    "situation_en": "You call the doctor's office to cancel an appointment because you're sick and can't come. Explain why and ask for a new appointment.",
+    "model_response": "Guten Tag, ich müsste leider meinen Termin morgen um 9 Uhr absagen, da ich selbst krank geworden bin und das Haus nicht verlassen sollte. Könnten wir stattdessen einen Termin für nächste Woche ausmachen? Am liebsten wäre mir ein Vormittagstermin.",
+    "phrase_bank": [
+      { "de": "Ich müsste leider ... absagen.", "en": "I'm afraid I need to cancel ..." },
+      { "de": "..., da ich ...", "en": "..., since I ..." },
+      { "de": "Könnten wir stattdessen ... ausmachen?", "en": "Could we arrange ... instead?" },
+      { "de": "Am liebsten wäre mir ...", "en": "I'd prefer ..." },
+      { "de": "Tut mir leid für die kurzfristige Absage.", "en": "Sorry for the short-notice cancellation." }
+    ]
+  },
+  {
+    "id": "b1-im-restaurant-1",
+    "level": "b1",
+    "category": "im-restaurant",
+    "category_label": "Im Restaurant",
+    "situation_de": "Sie reservieren telefonisch einen Tisch für vier Personen am Samstagabend. Nennen Sie Anzahl der Personen, Uhrzeit und einen besonderen Wunsch (z. B. Tisch am Fenster).",
+    "situation_en": "You reserve a table for four on the phone for Saturday evening. State the number of people, the time, and a special request (e.g. a table by the window).",
+    "model_response": "Guten Tag, ich würde gern für Samstagabend einen Tisch reservieren, für vier Personen, am liebsten um 19 Uhr. Hätten Sie vielleicht einen Tisch am Fenster frei? Und wie lautet der Name für die Reservierung — ach so, unter Schmidt, bitte.",
+    "phrase_bank": [
+      { "de": "Ich würde gern einen Tisch reservieren.", "en": "I'd like to reserve a table." },
+      { "de": "für [Zahl] Personen, am [Tag] um [Uhrzeit]", "en": "for [number] people, on [day] at [time]" },
+      { "de": "Hätten Sie einen Tisch ... frei?", "en": "Would you have a table ... available?" },
+      { "de": "Unter welchem Namen?", "en": "Under what name?" },
+      { "de": "Können wir kurzfristig absagen, falls nötig?", "en": "Can we cancel on short notice if needed?" }
+    ]
+  },
+  {
+    "id": "b1-im-restaurant-2",
+    "level": "b1",
+    "category": "im-restaurant",
+    "category_label": "Im Restaurant",
+    "situation_de": "Sie bestellen im Restaurant, haben aber eine Lebensmittelunverträglichkeit. Fragen Sie nach den Zutaten und bestellen Sie ein passendes Gericht.",
+    "situation_en": "You're ordering at a restaurant but have a food intolerance. Ask about the ingredients and order a suitable dish.",
+    "model_response": "Entschuldigung, ich vertrage leider keine Milchprodukte — könnten Sie mir sagen, ob im Risotto Sahne oder Käse enthalten ist? Ah, gut zu wissen. Dann nehme ich lieber den gegrillten Fisch mit Gemüse, und dazu ein Glas Weißwein, bitte.",
+    "phrase_bank": [
+      { "de": "Ich vertrage leider kein/keine ...", "en": "Unfortunately I can't tolerate ..." },
+      { "de": "Ist im/in der ... enthalten?", "en": "Does the ... contain ...?" },
+      { "de": "Gibt es eine vegetarische/glutenfreie Option?", "en": "Is there a vegetarian/gluten-free option?" },
+      { "de": "Dann nehme ich lieber ...", "en": "Then I'll have ... instead." },
+      { "de": "Könnten Sie das ohne ... zubereiten?", "en": "Could you prepare that without ...?" }
+    ]
+  },
+  {
+    "id": "b1-im-restaurant-3",
+    "level": "b1",
+    "category": "im-restaurant",
+    "category_label": "Im Restaurant",
+    "situation_de": "Sie bemerken, dass die Rechnung im Restaurant nicht stimmt — Sie wurden für ein Gericht berechnet, das Sie nicht bestellt haben. Sprechen Sie den Kellner höflich darauf an.",
+    "situation_en": "You notice the restaurant bill is wrong — you've been charged for a dish you didn't order. Politely raise it with the waiter.",
+    "model_response": "Entschuldigung, ich glaube, auf der Rechnung ist ein Fehler. Wir haben keine Suppe bestellt, aber sie steht hier mit sieben Euro drauf. Könnten Sie das bitte noch einmal überprüfen?",
+    "phrase_bank": [
+      { "de": "Ich glaube, hier ist ein Fehler.", "en": "I think there's a mistake here." },
+      { "de": "Wir haben ... nicht bestellt.", "en": "We didn't order ..." },
+      { "de": "Könnten Sie das noch einmal überprüfen?", "en": "Could you check that again?" },
+      { "de": "Das stimmt so nicht ganz.", "en": "That's not quite right." },
+      { "de": "Vielen Dank fürs Korrigieren.", "en": "Thanks for fixing that." }
+    ]
+  },
+  {
+    "id": "b1-am-arbeitsplatz-1",
+    "level": "b1",
+    "category": "am-arbeitsplatz",
+    "category_label": "Am Arbeitsplatz",
+    "situation_de": "Sie sind krank und können nicht zur Arbeit kommen. Rufen Sie Ihren Chef an oder schreiben Sie eine Nachricht.",
+    "situation_en": "You're sick and can't come to work. Call your boss or write a message.",
+    "model_response": "Guten Morgen, ich fühle mich heute leider nicht gut und werde nicht ins Büro kommen können. Ich glaube, es ist eine Erkältung. Ich melde mich, sobald ich weiß, wie lange ich ausfalle, und bin bis dahin per E-Mail erreichbar, falls dringend etwas ist.",
+    "phrase_bank": [
+      { "de": "Ich fühle mich nicht gut und werde nicht kommen können.", "en": "I'm not feeling well and won't be able to come." },
+      { "de": "Ich melde mich, sobald ich mehr weiß.", "en": "I'll let you know as soon as I know more." },
+      { "de": "Ich bin per E-Mail erreichbar.", "en": "I'm reachable by email." },
+      { "de": "Können Sie das bitte an [Name] weitergeben?", "en": "Could you pass that on to [name]?" },
+      { "de": "Ich melde mich morgen wieder.", "en": "I'll check back in tomorrow." }
+    ]
+  },
+  {
+    "id": "b1-am-arbeitsplatz-2",
+    "level": "b1",
+    "category": "am-arbeitsplatz",
+    "category_label": "Am Arbeitsplatz",
+    "situation_de": "Sie bitten Ihren Chef um einen freien Tag für einen privaten Termin. Erklären Sie kurz den Grund und schlagen Sie vor, wie Ihre Arbeit währenddessen erledigt wird.",
+    "situation_en": "You ask your boss for a day off for a personal appointment. Briefly explain why and suggest how your work will be covered.",
+    "model_response": "Könnte ich am Donnerstag einen Tag frei nehmen? Ich habe einen wichtigen privaten Termin, den ich leider nicht verschieben kann. Meine laufenden Aufgaben habe ich bis Mittwoch fertig, und für dringende Fälle kann mich Julia vertreten.",
+    "phrase_bank": [
+      { "de": "Könnte ich am ... einen Tag frei nehmen?", "en": "Could I take a day off on ...?" },
+      { "de": "..., den ich leider nicht verschieben kann.", "en": "..., which I unfortunately can't reschedule." },
+      { "de": "Meine Aufgaben habe ich bis ... fertig.", "en": "I'll have my tasks done by ..." },
+      { "de": "... kann mich vertreten.", "en": "... can cover for me." },
+      { "de": "Wäre das in Ordnung für Sie?", "en": "Would that be okay with you?" }
+    ]
+  },
+  {
+    "id": "b1-am-arbeitsplatz-3",
+    "level": "b1",
+    "category": "am-arbeitsplatz",
+    "category_label": "Am Arbeitsplatz",
+    "situation_de": "Ein Kollege bittet Sie um Hilfe bei einer Aufgabe, aber Sie haben selbst gerade viel zu tun. Lehnen Sie höflich ab und schlagen Sie eine Alternative vor.",
+    "situation_en": "A colleague asks for your help with a task, but you're swamped yourself right now. Politely decline and suggest an alternative.",
+    "model_response": "Ich würde dir wirklich gern helfen, aber ich stecke gerade selbst mitten in einem Projekt mit knapper Frist. Vielleicht kann ich morgen Nachmittag eine halbe Stunde einplanen — würde das reichen, oder ist es dringender?",
+    "phrase_bank": [
+      { "de": "Ich würde dir gern helfen, aber ...", "en": "I'd love to help you, but ..." },
+      { "de": "Ich stecke gerade mitten in ...", "en": "I'm right in the middle of ..." },
+      { "de": "Vielleicht kann ich ... einplanen.", "en": "Maybe I can schedule ..." },
+      { "de": "Würde das reichen?", "en": "Would that be enough?" },
+      { "de": "Frag doch mal [Name], vielleicht hat er/sie Zeit.", "en": "Why don't you ask [name], maybe they have time." }
+    ]
+  },
+  {
+    "id": "b1-reisen-planen-1",
+    "level": "b1",
+    "category": "reisen-planen",
+    "category_label": "Reisen & Planen",
+    "situation_de": "Sie planen mit einem Freund eine Wochenendreise. Schlagen Sie ein Ziel vor und fragen Sie nach seiner Meinung zu Datum und Budget.",
+    "situation_en": "You're planning a weekend trip with a friend. Suggest a destination and ask their opinion on the date and budget.",
+    "model_response": "Ich hätte Lust, am nächsten Wochenende nach Hamburg zu fahren — wie findest du die Idee? Wir könnten mit dem Zug fahren, das wäre günstiger als fliegen. Was denkst du, wie viel sollten wir für die zwei Tage einplanen?",
+    "phrase_bank": [
+      { "de": "Ich hätte Lust, ... zu ...", "en": "I'd feel like ..." },
+      { "de": "Wie findest du die Idee?", "en": "What do you think of the idea?" },
+      { "de": "Wir könnten mit ... fahren.", "en": "We could go by ..." },
+      { "de": "Was denkst du, wie viel sollten wir einplanen?", "en": "What do you think, how much should we budget?" },
+      { "de": "Passt dir das Datum?", "en": "Does the date work for you?" }
+    ]
+  },
+  {
+    "id": "b1-reisen-planen-2",
+    "level": "b1",
+    "category": "reisen-planen",
+    "category_label": "Reisen & Planen",
+    "situation_de": "Sie buchen ein Hotelzimmer telefonisch und müssen Ihre Wünsche mitteilen (Doppelzimmer, Nichtraucher, Frühstück inklusive).",
+    "situation_en": "You're booking a hotel room by phone and need to state your preferences (double room, non-smoking, breakfast included).",
+    "model_response": "Ich würde gern ein Doppelzimmer für zwei Nächte buchen, vom 12. bis zum 14. Juli. Ein Nichtraucherzimmer wäre mir lieber, und ist Frühstück im Preis inbegriffen? Gut, dann nehme ich das Zimmer.",
+    "phrase_bank": [
+      { "de": "Ich würde gern ein Zimmer buchen.", "en": "I'd like to book a room." },
+      { "de": "vom [Datum] bis zum [Datum]", "en": "from [date] to [date]" },
+      { "de": "Ein ... Zimmer wäre mir lieber.", "en": "I'd prefer a ... room." },
+      { "de": "Ist ... im Preis inbegriffen?", "en": "Is ... included in the price?" },
+      { "de": "Gibt es kostenloses WLAN?", "en": "Is there free WiFi?" }
+    ]
+  },
+  {
+    "id": "b1-reisen-planen-3",
+    "level": "b1",
+    "category": "reisen-planen",
+    "category_label": "Reisen & Planen",
+    "situation_de": "Ihr Zug hat Verspätung und Sie müssen einem Freund erklären, dass Sie später ankommen. Entschuldigen Sie sich und schlagen Sie vor, was er/sie in der Zwischenzeit machen könnte.",
+    "situation_en": "Your train is delayed and you need to tell a friend you'll arrive later. Apologize and suggest what they could do in the meantime.",
+    "model_response": "Tut mir leid, mein Zug hat eine Stunde Verspätung, ich komme also erst gegen 18 Uhr an. Warte doch nicht am Bahnhof — geh ruhig schon mal einen Kaffee trinken, ich schreibe dir, sobald ich losfahre.",
+    "phrase_bank": [
+      { "de": "Mein Zug hat Verspätung.", "en": "My train is delayed." },
+      { "de": "Ich komme erst gegen ... an.", "en": "I won't arrive until around ..." },
+      { "de": "Geh ruhig schon mal ...", "en": "Go ahead and ..." },
+      { "de": "Ich schreibe dir, sobald ich ...", "en": "I'll text you as soon as I ..." },
+      { "de": "Entschuldige die Verzögerung.", "en": "Sorry for the delay." }
+    ]
+  },
+  {
+    "id": "b1-wohnen-beschwerden-1",
+    "level": "b1",
+    "category": "wohnen-beschwerden",
+    "category_label": "Wohnen & Beschwerden",
+    "situation_de": "Ihr Nachbar spielt spät abends laut Musik. Sprechen Sie ihn höflich darauf an.",
+    "situation_en": "Your neighbor is playing loud music late at night. Politely raise it with them.",
+    "model_response": "Entschuldigung, könnten Sie die Musik vielleicht etwas leiser machen? Es ist schon nach 22 Uhr, und ich muss morgen früh raus. Ich wollte nicht unhöflich sein, aber ich kann so leider nicht einschlafen.",
+    "phrase_bank": [
+      { "de": "Könnten Sie ... vielleicht etwas leiser machen?", "en": "Could you turn ... down a bit?" },
+      { "de": "Es ist schon nach ...", "en": "It's already past ..." },
+      { "de": "Ich wollte nicht unhöflich sein, aber ...", "en": "I didn't mean to be rude, but ..." },
+      { "de": "Ich kann so nicht einschlafen.", "en": "I can't fall asleep like this." },
+      { "de": "Vielen Dank fürs Verständnis.", "en": "Thanks for understanding." }
+    ]
+  },
+  {
+    "id": "b1-wohnen-beschwerden-2",
+    "level": "b1",
+    "category": "wohnen-beschwerden",
+    "category_label": "Wohnen & Beschwerden",
+    "situation_de": "In Ihrer Wohnung funktioniert die Heizung nicht. Rufen Sie den Vermieter an und beschreiben Sie das Problem.",
+    "situation_en": "The heating in your apartment isn't working. Call the landlord and describe the problem.",
+    "model_response": "Guten Tag, ich rufe an, weil die Heizung in meiner Wohnung seit gestern nicht mehr funktioniert. Es ist im Wohnzimmer schon richtig kalt geworden. Könnten Sie jemanden schicken, der sich das anschaut, am besten diese Woche noch?",
+    "phrase_bank": [
+      { "de": "Die ... funktioniert seit ... nicht mehr.", "en": "The ... has stopped working since ..." },
+      { "de": "Es ist schon richtig kalt geworden.", "en": "It's gotten really cold." },
+      { "de": "Könnten Sie jemanden schicken?", "en": "Could you send someone?" },
+      { "de": "am besten diese Woche noch", "en": "ideally this week" },
+      { "de": "Wie schnell kann das repariert werden?", "en": "How quickly can that be fixed?" }
+    ]
+  },
+  {
+    "id": "b1-wohnen-beschwerden-3",
+    "level": "b1",
+    "category": "wohnen-beschwerden",
+    "category_label": "Wohnen & Beschwerden",
+    "situation_de": "Sie ziehen aus und müssen dem Vermieter kündigen. Formulieren Sie die Kündigung mündlich mit dem gewünschten Auszugsdatum.",
+    "situation_en": "You're moving out and need to give notice to your landlord. State your notice with the desired move-out date.",
+    "model_response": "Ich wollte Ihnen mitteilen, dass ich meine Wohnung zum Ende des Monats kündigen möchte. Der letzte Tag wäre dann der 31. August. Wann können wir einen Termin für die Wohnungsübergabe vereinbaren?",
+    "phrase_bank": [
+      { "de": "Ich wollte Ihnen mitteilen, dass ich ... kündigen möchte.", "en": "I wanted to let you know I'd like to give notice on ..." },
+      { "de": "zum Ende des Monats", "en": "at the end of the month" },
+      { "de": "Der letzte Tag wäre dann ...", "en": "The last day would then be ..." },
+      { "de": "Wann können wir einen Termin vereinbaren?", "en": "When can we arrange a date?" },
+      { "de": "die Wohnungsübergabe", "en": "the handover of the apartment" }
+    ]
+  },
+  {
+    "id": "b1-behoerden-termine-1",
+    "level": "b1",
+    "category": "behoerden-termine",
+    "category_label": "Behörden & Termine",
+    "situation_de": "Sie rufen beim Bürgeramt an, um einen Termin für die Ummeldung Ihrer Adresse zu vereinbaren.",
+    "situation_en": "You call the registration office to arrange an appointment to register your new address.",
+    "model_response": "Guten Tag, ich bin kürzlich umgezogen und müsste meine neue Adresse anmelden. Haben Sie in den nächsten zwei Wochen einen freien Termin? Am liebsten wäre mir ein Vormittagstermin, wenn möglich.",
+    "phrase_bank": [
+      { "de": "Ich müsste meine Adresse anmelden.", "en": "I need to register my address." },
+      { "de": "Haben Sie einen freien Termin?", "en": "Do you have an available appointment?" },
+      { "de": "Am liebsten wäre mir ...", "en": "I'd prefer ..." },
+      { "de": "Welche Unterlagen brauche ich dafür?", "en": "What documents do I need for that?" },
+      { "de": "Kann ich das auch online erledigen?", "en": "Can I also do this online?" }
+    ]
+  },
+  {
+    "id": "b1-behoerden-termine-2",
+    "level": "b1",
+    "category": "behoerden-termine",
+    "category_label": "Behörden & Termine",
+    "situation_de": "Sie beantragen einen neuen Personalausweis und müssen dem Beamten erklären, dass Ihr alter Ausweis verloren gegangen ist.",
+    "situation_en": "You're applying for a new ID card and need to explain to the clerk that your old one was lost.",
+    "model_response": "Ich möchte gern einen neuen Personalausweis beantragen, da mir mein alter leider verloren gegangen ist. Ich habe den Verlust schon bei der Polizei gemeldet — hier ist die Bestätigung. Wie lange dauert es ungefähr, bis der neue Ausweis fertig ist?",
+    "phrase_bank": [
+      { "de": "Ich möchte einen neuen ... beantragen.", "en": "I'd like to apply for a new ..." },
+      { "de": "..., da mir ... verloren gegangen ist.", "en": "..., since I lost ..." },
+      { "de": "Ich habe den Verlust bereits gemeldet.", "en": "I've already reported the loss." },
+      { "de": "Wie lange dauert es, bis ...?", "en": "How long does it take until ...?" },
+      { "de": "Was kostet die Ausstellung?", "en": "How much does the issuance cost?" }
+    ]
+  },
+  {
+    "id": "b1-behoerden-termine-3",
+    "level": "b1",
+    "category": "behoerden-termine",
+    "category_label": "Behörden & Termine",
+    "situation_de": "Sie haben ein amtliches Schreiben nicht verstanden und rufen an, um es sich erklären zu lassen.",
+    "situation_en": "You didn't understand an official letter and call to have it explained.",
+    "model_response": "Ich habe ein Schreiben von Ihnen bekommen, verstehe aber nicht ganz, was genau ich jetzt tun muss. Könnten Sie mir kurz erklären, welche Frist ich einhalten muss und welche Unterlagen noch fehlen?",
+    "phrase_bank": [
+      { "de": "Ich verstehe nicht ganz, was ich tun muss.", "en": "I don't quite understand what I need to do." },
+      { "de": "Könnten Sie mir das kurz erklären?", "en": "Could you briefly explain that to me?" },
+      { "de": "Welche Frist muss ich einhalten?", "en": "What deadline do I need to meet?" },
+      { "de": "Welche Unterlagen fehlen noch?", "en": "What documents are still missing?" },
+      { "de": "Kann ich Ihnen das nachreichen?", "en": "Can I send that to you afterward?" }
+    ]
+  },
+  {
+    "id": "b1-soziales-einladungen-1",
+    "level": "b1",
+    "category": "soziales-einladungen",
+    "category_label": "Soziales & Einladungen",
+    "situation_de": "Sie laden einen Freund zu Ihrer Geburtstagsfeier ein und geben ihm die wichtigsten Informationen.",
+    "situation_en": "You invite a friend to your birthday party and give them the key details.",
+    "model_response": "Ich feiere am Samstag meinen Geburtstag und wollte fragen, ob du Lust hast vorbeizukommen. Es fängt so gegen 19 Uhr bei mir zu Hause an, und es gibt Kuchen und Grillen im Garten. Bring gern noch jemanden mit, wenn du magst!",
+    "phrase_bank": [
+      { "de": "Ich wollte fragen, ob du Lust hast, ... zu ...", "en": "I wanted to ask if you feel like ..." },
+      { "de": "Es fängt so gegen ... an.", "en": "It starts around ..." },
+      { "de": "Bring gern noch jemanden mit.", "en": "Feel free to bring someone else along." },
+      { "de": "Gibst du mir kurz Bescheid, ob du kommst?", "en": "Let me know briefly if you're coming?" },
+      { "de": "Ich freue mich, wenn du kommst!", "en": "I'd be happy if you came!" }
+    ]
+  },
+  {
+    "id": "b1-soziales-einladungen-2",
+    "level": "b1",
+    "category": "soziales-einladungen",
+    "category_label": "Soziales & Einladungen",
+    "situation_de": "Sie sagen eine Einladung zu einer Party höflich ab, weil Sie bereits etwas anderes vorhaben.",
+    "situation_en": "You politely decline a party invitation because you already have other plans.",
+    "model_response": "Vielen Dank für die Einladung, das klingt richtig schön! Leider habe ich an dem Abend schon etwas anderes geplant und kann deshalb nicht kommen. Vielleicht ein anderes Mal — lass uns bald mal wieder etwas zusammen unternehmen.",
+    "phrase_bank": [
+      { "de": "Vielen Dank für die Einladung!", "en": "Thanks so much for the invitation!" },
+      { "de": "Leider habe ich schon etwas anderes vor.", "en": "Unfortunately I already have other plans." },
+      { "de": "Vielleicht ein anderes Mal.", "en": "Maybe another time." },
+      { "de": "Lass uns bald mal wieder etwas zusammen unternehmen.", "en": "Let's do something together again soon." },
+      { "de": "Ich hoffe, es wird ein schöner Abend!", "en": "I hope it's a lovely evening!" }
+    ]
+  },
+  {
+    "id": "b1-soziales-einladungen-3",
+    "level": "b1",
+    "category": "soziales-einladungen",
+    "category_label": "Soziales & Einladungen",
+    "situation_de": "Sie stellen sich bei einer neuen Bekanntschaft vor und erzählen kurz etwas über sich (Herkunft, Beruf, Hobbys).",
+    "situation_en": "You introduce yourself to a new acquaintance and briefly talk about yourself (background, job, hobbies).",
+    "model_response": "Hallo, ich bin Maria, ich komme ursprünglich aus Spanien, lebe aber schon seit drei Jahren hier. Ich arbeite als Ingenieurin, und in meiner Freizeit gehe ich am liebsten wandern oder lese viel. Und du, was machst du beruflich?",
+    "phrase_bank": [
+      { "de": "Ich komme ursprünglich aus ...", "en": "I originally come from ..." },
+      { "de": "Ich lebe schon seit ... hier.", "en": "I've lived here for ... already." },
+      { "de": "Ich arbeite als ...", "en": "I work as ..." },
+      { "de": "In meiner Freizeit gehe ich am liebsten ...", "en": "In my free time I like to ..." },
+      { "de": "Und du, was machst du beruflich?", "en": "And you, what do you do for work?" }
+    ]
+  },
+  {
+    "id": "b1-meinungen-diskussion-1",
+    "level": "b1",
+    "category": "meinungen-diskussion",
+    "category_label": "Meinungen & Diskussion",
+    "situation_de": "Ein Freund fragt nach Ihrer Meinung zu einem aktuellen Film oder Buch. Geben Sie Ihre Meinung mit einer kurzen Begründung.",
+    "situation_en": "A friend asks your opinion on a recent film or book. Give your opinion with a brief reason.",
+    "model_response": "Ich fand den Film wirklich gut, vor allem die Schauspieler haben mir gefallen. Die Geschichte war zwar an manchen Stellen etwas vorhersehbar, aber insgesamt hat er mir viel Spaß gemacht. Ich würde ihn auf jeden Fall weiterempfehlen.",
+    "phrase_bank": [
+      { "de": "Ich fand ... wirklich gut.", "en": "I thought ... was really good." },
+      { "de": "..., vor allem ... hat mir gefallen.", "en": "..., especially ... I liked." },
+      { "de": "... war zwar ..., aber insgesamt ...", "en": "... was ..., but overall ..." },
+      { "de": "Ich würde es auf jeden Fall weiterempfehlen.", "en": "I'd definitely recommend it." },
+      { "de": "Wie fandest du es?", "en": "What did you think of it?" }
+    ]
+  },
+  {
+    "id": "b1-meinungen-diskussion-2",
+    "level": "b1",
+    "category": "meinungen-diskussion",
+    "category_label": "Meinungen & Diskussion",
+    "situation_de": "Sie diskutieren mit einem Freund, ob man lieber in der Stadt oder auf dem Land leben sollte.",
+    "situation_en": "You're discussing with a friend whether it's better to live in the city or in the countryside.",
+    "model_response": "Ich persönlich würde lieber in der Stadt wohnen, weil dort einfach mehr los ist und ich alles gut zu Fuß erreichen kann. Auf dem Land ist es zwar ruhiger, aber mir würde es dort zu langweilig werden. Wie siehst du das?",
+    "phrase_bank": [
+      { "de": "Ich würde lieber ...", "en": "I'd rather ..." },
+      { "de": "..., weil dort einfach mehr los ist.", "en": "..., because there's just more going on there." },
+      { "de": "... ist zwar ..., aber ...", "en": "... is ..., but ..." },
+      { "de": "Mir würde es dort zu langweilig werden.", "en": "It would get too boring for me there." },
+      { "de": "Wie siehst du das?", "en": "What's your take on it?" }
+    ]
+  },
+  {
+    "id": "b1-meinungen-diskussion-3",
+    "level": "b1",
+    "category": "meinungen-diskussion",
+    "category_label": "Meinungen & Diskussion",
+    "situation_de": "Sie erklären einem Freund, warum Sie mit einer bestimmten Entscheidung nicht einverstanden sind (z. B. eine neue Regel am Arbeitsplatz).",
+    "situation_en": "You explain to a friend why you disagree with a certain decision (e.g. a new rule at work).",
+    "model_response": "Ehrlich gesagt bin ich mit der neuen Regel nicht ganz einverstanden. Ich verstehe zwar, warum die Firma das macht, aber ich finde, es schränkt uns zu sehr ein. Ich hoffe, dass sich das nach ein paar Monaten wieder ändert.",
+    "phrase_bank": [
+      { "de": "Ehrlich gesagt bin ich mit ... nicht einverstanden.", "en": "Honestly, I don't agree with ..." },
+      { "de": "Ich verstehe zwar, warum ..., aber ...", "en": "I do understand why ..., but ..." },
+      { "de": "Ich finde, es schränkt uns zu sehr ein.", "en": "I find it restricts us too much." },
+      { "de": "Ich hoffe, dass sich das ändert.", "en": "I hope that changes." },
+      { "de": "Siehst du das anders?", "en": "Do you see it differently?" }
+    ]
+  }
+]

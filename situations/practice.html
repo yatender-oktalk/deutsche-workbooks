@@ -3,15 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vokabeltrainer &ndash; Übung</title>
+<title>Gesprächstrainer &ndash; Übung</title>
 <link rel="stylesheet" href="../assets/app-shell.css">
-<link rel="stylesheet" href="vocab.css">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1d4e89">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Vokabeln">
+<link rel="stylesheet" href="situations.css">
 </head>
 <body class="level-mixed" id="body" data-dw-nosplash>
 
@@ -21,15 +15,14 @@
 </div>
 
 <div class="session-meta">
-  <span id="progress-label">Karte 1 von 20</span>
-  <span id="score-label">&#10003; 0 &nbsp; &#10007; 0</span>
+  <span id="progress-label">Situation 1 von 8</span>
 </div>
 <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
 
-<div id="loading" class="empty-state">Lade Vokabeln&hellip;</div>
+<div id="loading" class="empty-state">Lade Situationen&hellip;</div>
 
 <div id="session-empty" class="empty-state" hidden>
-  Für die gewählten Niveaus sind gerade keine Karten fällig oder verfügbar.<br>
+  Für die gewählte Auswahl sind gerade keine Situationen fällig oder verfügbar.<br>
   <a href="index.html">Zurück zur Auswahl</a>
 </div>
 
@@ -38,13 +31,11 @@
 <div id="summary-screen" hidden>
   <h2 style="text-align:center;">Sitzung beendet</h2>
   <div class="summary-stats">
-    <div class="stat-tile"><div class="num" id="sum-total">0</div><div class="label">Karten</div></div>
-    <div class="stat-tile"><div class="num" id="sum-correct">0</div><div class="label">Richtig</div></div>
-    <div class="stat-tile"><div class="num" id="sum-wrong">0</div><div class="label">Falsch</div></div>
+    <div class="stat-tile"><div class="num" id="sum-total">0</div><div class="label">Situationen geübt</div></div>
   </div>
   <button class="btn btn-block" id="again-btn">Neue Runde</button>
   <div style="text-align:center; margin-top:1em;">
-    <a href="index.html">Zur Auswahl</a> &nbsp;&middot;&nbsp; <a href="stats.html" id="summary-stats-link">Statistik ansehen</a>
+    <a href="index.html">Zur Auswahl</a>
   </div>
 </div>
 
@@ -55,15 +46,12 @@
 </div>
 
 <script src="../assets/listening.js"></script>
-<script src="data/a1.js"></script>
-<script src="data/a2.js"></script>
 <script src="data/b1.js"></script>
 <script src="data/b2.js"></script>
 <script src="js/db.js"></script>
 <script src="js/srs.js"></script>
 <script src="js/data.js"></script>
 <script src="js/practice.js"></script>
-<script src="js/register-sw.js"></script>
 <script defer src="../assets/app-shell.js"></script>
 </body>
 </html>

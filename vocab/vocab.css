@@ -5,13 +5,10 @@
    own stylesheet rather than reusing the print components.
    ========================================================================== */
 
+/* Palette tokens (--ink, --muted, --rule, --paper, --accent, --accent-bg) and
+   the body.level-* accent overrides come from assets/app-shell.css, which every
+   vocab page now loads first. Only the trainer-specific tokens live here. */
 :root {
-  --ink: #1c1c1c;
-  --muted: #5b5b5b;
-  --rule: #cfcfcf;
-  --paper: #fdfdfb;
-  --accent: #1d4e89;
-  --accent-bg: #eaf1fa;
   --card-bg: #ffffff;
   --again: #b3401f;
   --hard: #c07a17;
@@ -19,15 +16,9 @@
   --easy: #1d6fa5;
 }
 
-body.level-a1 { --accent: #2f7d4f; --accent-bg: #e9f4ee; }
-body.level-a2 { --accent: #4a6fa5; --accent-bg: #eaf1fa; }
-body.level-b1 { --accent: #1d4e89; --accent-bg: #eaf1fa; }
-body.level-b2 { --accent: #7a2048; --accent-bg: #f6e9ee; }
-body.level-mixed { --accent: #5a4a8a; --accent-bg: #efeaf6; }
-
 * { box-sizing: border-box; }
 
-html { background: #e9e9e6; }
+html { background: #e6e2d6; }
 
 body {
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;

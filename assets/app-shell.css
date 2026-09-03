@@ -1,0 +1,564 @@
+/* ==========================================================================
+   app-shell.css  —  the "Register" design system + app chrome
+   --------------------------------------------------------------------------
+   Loaded FIRST on every current-format page (before print-workbook.css /
+   vocab.css / situations.css). This file is the single source of truth for
+   the design tokens on :root and the body.level-* accent overrides.
+
+   Design language ("Register" — a grammar reference, as an app):
+     · typographic, zero web fonts — system serif for display, system sans
+       for UI labels/navigation
+     · ruled, not shadowed — hairline rules, border-radius 0–2px; the only
+       shadow in the system is on the slide-over index
+     · numbered like chapters — sections carry ordinals (01, 02, 03…)
+     · colour is a coding system, not paint — a level's colour appears only
+       as a 3px side-rule, a badge, or a link hover, never as a fill
+     · one warm signal colour (ochre) is reserved for *live* things only:
+       the exam countdown, "du bist hier", today's date
+
+   Everything defined here is screen-only chrome and is suppressed in print
+   (see the @media print block at the end). It never touches the printable
+   worksheet body.
+   ========================================================================== */
+
+:root {
+  /* ---- ground & ink ---- */
+  --paper:        #f4f1ea;   /* warm off-white — page ground */
+  --paper-2:      #ebe7dc;   /* deeper paper — topbar, insets */
+  --ink:          #211d18;   /* near-black, warm — primary text */
+  --ink-2:        #4a443a;   /* secondary text */
+  --muted:        #726b5e;   /* captions, tertiary */
+  --rule:         #d8d2c4;   /* hairline on paper */
+  --rule-strong:  #b7ae9b;   /* stronger hairline / borders */
+
+  /* ---- the one live-signal colour (ochre) ---- */
+  --signal:       #b9740b;
+  --signal-bg:    #f3e6cf;
+
+  /* ---- level coding system ---- */
+  --lv-a1:  #2f6b46;   /* forest   */
+  --lv-a2:  #3f6089;   /* slate    */
+  --lv-b1:  #1d4e89;   /* cobalt   */
+  --lv-b2:  #7a2048;   /* oxblood  */
+  --lv-exam:#0f6f6a;   /* teal — Prüfung / exam-prep */
+  --lv-ref: #55545a;   /* neutral grey — cross-level */
+
+  /* ---- consumed by print-workbook.css / vocab.css / situations.css ---- */
+  --accent:        var(--lv-b1);
+  --accent-bg:     #eaf1fa;
+  --answer-bg:     #edf3ea;
+  --answer-border: #3f8f5c;
+  --tip-bg:        #fbf3df;
+  --tip-border:    #cda94a;
+
+  /* ---- type stacks ---- */
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono:  ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  /* ---- shell metrics ---- */
+  --shell-col: 820px;   /* aligns with the paper column */
+  --topbar-h:  46px;
+}
+
+body.level-a1   { --accent: var(--lv-a1);  --accent-bg: #e8f2ec; }
+body.level-a2   { --accent: var(--lv-a2);  --accent-bg: #e9eff7; }
+body.level-b1   { --accent: var(--lv-b1);  --accent-bg: #e7eef8; }
+body.level-b2   { --accent: var(--lv-b2);  --accent-bg: #f6e9ee; }
+body.level-exam { --accent: var(--lv-exam);--accent-bg: #e4f1f0; }
+body.level-ref  { --accent: var(--lv-ref); --accent-bg: #ececea; }
+body.level-mixed{ --accent: #5a4a8a;       --accent-bg: #efeaf6; }
+
+html { background: #e6e2d6; }
+
+/* ==========================================================================
+   Top bar  (fixed, full-bleed; a spacer of equal height is inserted by JS)
+   ========================================================================== */
+
+.dw-topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 90;
+  height: var(--topbar-h);
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule-strong);
+  font-family: var(--sans);
+}
+
+.dw-topbar-inner {
+  max-width: var(--shell-col);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dw-topbar-spacer { height: var(--topbar-h); }
+
+.dw-menu-btn {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--ink);
+  background: none;
+  border: 1px solid transparent;
+  padding: 6px 8px;
+  margin-left: -8px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+.dw-menu-btn:hover { border-color: var(--rule-strong); }
+.dw-menu-btn .dw-menu-word { margin-left: 7px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.13em; }
+
+.dw-crumb {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dw-crumb b { color: var(--ink); font-weight: 700; }
+
+.dw-topbar-spring { flex: 1; }
+
+.dw-countdown {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: none;
+  border: 1px solid transparent;
+  padding: 6px 9px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dw-countdown:hover { border-color: var(--rule-strong); }
+.dw-countdown[data-live] { color: var(--signal); font-weight: 700; }
+.dw-countdown[data-live]::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin-right: 7px;
+  background: var(--signal);
+  vertical-align: 1px;
+}
+
+@media (max-width: 560px) {
+  .dw-menu-btn .dw-menu-word { display: none; }
+  .dw-crumb { display: none; }
+}
+
+/* ==========================================================================
+   Scrim shared by the slide-over index, the splash's mini editor, etc.
+   ========================================================================== */
+
+.dw-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(24, 21, 17, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.dw-scrim.is-open { opacity: 1; pointer-events: auto; }
+
+/* ==========================================================================
+   Slide-over index  ("jump anywhere")
+   ========================================================================== */
+
+.dw-index {
+  position: fixed;
+  top: 0; right: 0;
+  z-index: 101;
+  width: min(400px, 90vw);
+  height: 100%;
+  background: var(--paper);
+  border-left: 1px solid var(--rule-strong);
+  box-shadow: -18px 0 40px -12px rgba(24, 21, 17, 0.28);
+  transform: translateX(100%);
+  transition: transform 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--sans);
+}
+.dw-index.is-open { transform: translateX(0); }
+
+.dw-index-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px 22px 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.dw-index-head h2 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+.dw-index-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+}
+.dw-index-close:hover { color: var(--ink); }
+
+.dw-index-filter {
+  margin: 12px 22px 6px;
+  padding: 9px 11px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--rule-strong);
+  border-radius: 2px;
+}
+.dw-index-filter:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+.dw-index-scroll { overflow-y: auto; padding: 8px 22px 40px; flex: 1; }
+
+/* ==========================================================================
+   Register list  —  shared by the slide-over index AND the hub
+   ========================================================================== */
+
+.dw-group { margin-top: 18px; }
+.dw-group:first-child { margin-top: 6px; }
+
+.dw-group-head {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--rule-strong);
+  margin-bottom: 3px;
+}
+.dw-group-head .dw-ord { color: var(--ink); font-weight: 700; margin-right: 8px; }
+
+.dw-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+}
+.dw-row:last-child { border-bottom: none; }
+.dw-row:hover .dw-row-title { color: var(--accent); }
+
+.dw-row-title {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.3;
+}
+.dw-row-lead {
+  flex: 1;
+  align-self: center;
+  margin: 0 9px;
+  border-bottom: 1px dotted var(--rule-strong);
+}
+.dw-row-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.dw-row-tag.lv-a1 { color: var(--lv-a1); }
+.dw-row-tag.lv-a2 { color: var(--lv-a2); }
+.dw-row-tag.lv-b1 { color: var(--lv-b1); }
+.dw-row-tag.lv-b2 { color: var(--lv-b2); }
+.dw-row-tag.lv-exam { color: var(--lv-exam); }
+.dw-row-tag.lv-ref { color: var(--lv-ref); }
+
+.dw-row[aria-current] {
+  padding-left: 10px;
+  border-left: 3px solid var(--signal);
+  margin-left: -13px;
+}
+.dw-row[aria-current] .dw-row-title { color: var(--signal); font-weight: 700; }
+
+.dw-group.is-empty { display: none; }
+.dw-row.is-hidden { display: none; }
+
+/* ==========================================================================
+   Splash / onboarding  (full-screen, paper ground, three quiet steps)
+   ========================================================================== */
+
+.dw-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--paper);
+  font-family: var(--sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  overflow-y: auto;
+}
+.dw-splash-inner { width: 100%; max-width: 460px; }
+
+.dw-splash-kicker {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+.dw-splash-kicker::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin-right: 9px;
+  background: var(--signal);
+  vertical-align: 1px;
+}
+
+.dw-step[hidden] { display: none; }
+
+.dw-step h1 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+.dw-step p.dw-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 22px;
+}
+
+.dw-field {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--rule-strong);
+  border-radius: 2px;
+  padding: 11px 13px;
+}
+.dw-field:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+.dw-level-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+  gap: 9px;
+  margin-bottom: 6px;
+}
+.dw-level-opt {
+  font-family: var(--sans);
+  background: #fff;
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--rule-strong);
+  border-radius: 2px;
+  padding: 12px 8px 10px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink-2);
+}
+.dw-level-opt .dw-lv-ord {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+.dw-level-opt .dw-lv-cap {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  margin-top: 5px;
+}
+.dw-level-opt:hover { border-color: var(--ink-2); }
+.dw-level-opt.is-sel { border-left-color: var(--accent); background: var(--accent-bg); }
+.dw-level-opt.is-sel .dw-lv-cap { color: var(--ink-2); }
+
+.dw-splash-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+}
+.dw-dots { display: flex; gap: 6px; margin-right: auto; }
+.dw-dots i {
+  width: 6px; height: 6px;
+  background: var(--rule-strong);
+  display: block;
+}
+.dw-dots i.on { background: var(--signal); }
+
+/* ==========================================================================
+   Buttons  (shell only — flat, hairline, sharp)
+   ========================================================================== */
+
+.dw-btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 2px;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+.dw-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.dw-btn--primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.dw-btn--primary:hover { background: var(--signal); border-color: var(--signal); }
+.dw-btn--ghost { border-color: transparent; padding-left: 6px; padding-right: 6px; }
+.dw-btn--ghost:hover { background: none; color: var(--signal); }
+.dw-btn--danger:hover { background: #7a2020; border-color: #7a2020; }
+
+/* ==========================================================================
+   Mini profile / exam editor  (small modal on the scrim)
+   ========================================================================== */
+
+.dw-mini {
+  position: fixed;
+  z-index: 201;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.98);
+  width: min(420px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  box-shadow: 0 24px 60px -18px rgba(24, 21, 17, 0.4);
+  padding: 22px 24px 24px;
+  font-family: var(--sans);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+.dw-mini.is-open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+.dw-mini h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.dw-mini .dw-mini-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin: 14px 0 6px;
+}
+.dw-mini .dw-mini-label:first-of-type { margin-top: 0; }
+.dw-mini-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.dw-mini-actions .dw-btn:first-child { margin-right: auto; }
+
+/* ==========================================================================
+   Hub  (index.html)
+   ========================================================================== */
+
+.dw-masthead { margin: 8px 0 6px; }
+.dw-masthead .dw-wordmark {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 6vw, 2.7rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin: 0;
+  line-height: 1.05;
+}
+.dw-masthead .dw-tagline {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+.dw-today {
+  font-family: var(--sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--muted);
+  margin-top: 14px;
+}
+.dw-today::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin-right: 8px;
+  background: var(--signal);
+  vertical-align: 1px;
+}
+
+.dw-week {
+  font-family: var(--sans);
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--signal);
+  padding: 16px 20px 18px;
+  margin: 22px 0 30px;
+}
+.dw-week-kicker {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+.dw-week-phase {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 5px 0 3px;
+}
+.dw-week-note { font-size: 12.5px; color: var(--ink-2); margin: 0 0 12px; }
+.dw-week-links { list-style: none; padding: 0; margin: 0; }
+.dw-week-links li { padding: 6px 0; border-top: 1px solid var(--rule); }
+.dw-week-links a { font-family: var(--serif); font-size: 15px; color: var(--ink); text-decoration: none; }
+.dw-week-links a:hover { color: var(--signal); }
+.dw-week-links .dw-wl-meta { font-family: var(--sans); font-size: 11px; color: var(--muted); margin-left: 8px; }
+
+.dw-register { margin-top: 8px; }
+
+/* ==========================================================================
+   Generated timeline  (study-plan.html)
+   ========================================================================== */
+
+.dw-timeline { font-family: var(--sans); margin: 6px 0 24px; }
+.dw-timeline table { font-family: var(--sans); }
+.dw-timeline .dw-tl-now td { background: var(--signal-bg); }
+.dw-timeline .dw-tl-now td:first-child { border-left: 3px solid var(--signal); }
+.dw-tl-caption { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 6px; }
+.dw-tl-flag { color: var(--signal); font-weight: 700; font-style: normal; }
+
+/* ==========================================================================
+   Print — the shell simply does not exist on paper
+   ========================================================================== */
+
+@media print {
+  .dw-topbar,
+  .dw-topbar-spacer,
+  .dw-scrim,
+  .dw-index,
+  .dw-splash,
+  .dw-mini,
+  .dw-today { display: none !important; }
+
+  .dw-week { border: none; border-left: 2px solid #999; padding: 0 0 0 12px; }
+  html { background: #fff; }
+}

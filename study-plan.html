@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>telc B2 Study Plan &amp; Timeline</title>
+<link rel="stylesheet" href="assets/app-shell.css">
 <link rel="stylesheet" href="assets/print-workbook.css">
 </head>
 <body>
@@ -22,6 +23,8 @@
 <div class="tip-box no-print">
   <strong>How to use this page:</strong> this is your map, not your workbook — no write-in exercises here. Print it and pin it somewhere visible, or keep it open as a tab. Re-check it every couple of weeks and adjust the dates if life gets in the way; the phases matter more than the exact calendar dates.
 </div>
+
+<div class="dw-timeline" id="dw-timeline"></div>
 
 <h2>Where you are right now</h2>
 <div class="cheatsheet">
@@ -138,5 +141,55 @@
   <a href="index.html">&larr; Back to index</a> · <a href="workbooks/A2/workbook-7-adjektivendungen-vergleich.html">Start: A2 Bridge Workbook &rarr;</a>
 </div>
 
+<script defer src="assets/app-shell.js"></script>
+<script>
+(function () {
+  function start() {
+    if (!window.DW) { return void setTimeout(start, 40); }
+    render();
+    DW.onProfileChange = render;
+  }
+
+  function d(iso) { var a = iso.split("-"); return new Date(+a[0], +a[1] - 1, +a[2]); }
+  function short(iso) { return d(iso).toLocaleDateString("de-DE", { day: "numeric", month: "short" }); }
+
+  function render() {
+    var mount = document.getElementById("dw-timeline");
+    var p = DW.readProfile();
+
+    if (!p || !p.examDate) {
+      mount.innerHTML =
+        '<p class="dw-tl-caption">Kein Prüfungstermin gesetzt — die Tabelle unten ist ein <em>Beispiel-Zeitplan</em>. ' +
+        '<a href="#" id="dw-set-date">Termin eintragen</a>, dann wird hier ein Plan mit echten Daten aus deinem Datum rückwärts berechnet.</p>';
+      var a = document.getElementById("dw-set-date");
+      if (a) a.addEventListener("click", function (e) { e.preventDefault(); DW.openProfileEditor(); });
+      return;
+    }
+
+    var tl = DW.buildTimeline(p.examDate);
+    var rows = tl.phases.map(function (ph) {
+      return '<tr class="' + (ph.isNow ? "dw-tl-now" : "") + '">' +
+        '<td><strong>' + ph.title + '</strong>' + (ph.isNow ? ' <span class="dw-tl-flag">‹ du bist hier</span>' : '') + '</td>' +
+        '<td>' + short(ph.startISO) + ' – ' + short(ph.endISO) + '</td>' +
+        '<td>' + ph.weeks + '</td>' +
+        '<td>' + ph.note + '</td>' +
+      '</tr>';
+    }).join("");
+
+    var examStr = d(p.examDate).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" });
+    mount.innerHTML =
+      '<h2>Dein Zeitplan</h2>' +
+      '<p class="dw-tl-caption">Rückwärts gerechnet von <strong>' + examStr + '</strong> — noch ' + tl.weeksLeft + ' Wochen' +
+        (tl.compressed ? ' &nbsp;·&nbsp; <span class="dw-tl-flag">verdichteter Plan</span>, Phasenlängen proportional gekürzt' : '') +
+        '. <a href="#" id="dw-edit-date">Termin ändern</a></p>' +
+      '<table><tr><th>Phase</th><th>Zeitraum</th><th>Wochen</th><th>Fokus</th></tr>' + rows + '</table>' +
+      '<p class="dw-tl-caption">Der ausformulierte Plan darunter erklärt die Logik hinter den Phasen — die Reihenfolge und die relativen Längen bleiben gleich, nur die Kalenderdaten sind auf deinen Termin gerechnet.</p>';
+    var e2 = document.getElementById("dw-edit-date");
+    if (e2) e2.addEventListener("click", function (e) { e.preventDefault(); DW.openProfileEditor(); });
+  }
+
+  start();
+})();
+</script>
 </body>
 </html>

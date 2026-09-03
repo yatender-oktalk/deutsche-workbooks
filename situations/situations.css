@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Situations trainer — interactive app stylesheet.
+   Sibling to vocab/vocab.css: same tokens, chips, profile-picker, progress
+   bar and grade-row components (copied, not shared — see AGENTS.md), plus
+   new components for situation cards (context, phrase bank, model answer).
+   ========================================================================== */
+
+/* Palette tokens (--ink, --muted, --rule, --paper, --accent, --accent-bg) and
+   the body.level-* accent overrides come from assets/app-shell.css, which every
+   situations page now loads first. Only the trainer-specific tokens live here. */
+:root {
+  --card-bg: #ffffff;
+  --again: #b3401f;
+  --hard: #c07a17;
+  --good: #2f7d4f;
+  --easy: #1d6fa5;
+}
+
+* { box-sizing: border-box; }
+
+html { background: #e6e2d6; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 28px 24px 70px;
+  background: var(--paper);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.12);
+  min-height: 100vh;
+}
+
+h1, h2, h3 { color: var(--ink); font-weight: 700; }
+h1 { font-size: 1.6em; margin-bottom: 0.15em; }
+h2 { font-size: 1.2em; margin-top: 1.4em; }
+
+a { color: var(--accent); }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+  margin-bottom: 1.4em;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.topbar .profile-name { font-weight: 700; color: var(--accent); }
+
+.level-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
+.doc-header { text-align: center; margin-bottom: 1.6em; }
+.doc-meta { font-size: 0.88em; color: var(--muted); font-style: italic; }
+
+/* ---------- Buttons ---------- */
+
+button { font-family: inherit; cursor: pointer; }
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.95em;
+  border-radius: 8px;
+}
+.btn:hover { opacity: 0.9; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-block { width: 100%; }
+
+/* ---------- Profile picker ---------- */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 1.2em 0;
+}
+
+.profile-tile {
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 16px 10px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--ink);
+}
+.profile-tile:hover { border-color: var(--accent); }
+
+.new-profile-row { display: flex; gap: 8px; margin-top: 1.2em; }
+.new-profile-row input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 9px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+
+/* ---------- Chips (level / category selectors) ---------- */
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0.6em 0 1.4em; }
+
+.chip {
+  background: #fff;
+  border: 1.5px solid var(--rule);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 0.9em;
+  color: var(--muted);
+}
+.chip.active { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); font-weight: 700; }
+
+.field-label {
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 0.3em;
+}
+
+.field-label #count-value {
+  color: var(--accent);
+  font-size: 1.15em;
+  margin-left: 0.3em;
+}
+
+/* ---------- Count slider ---------- */
+
+.slider-row { margin: 0.4em 0 1.4em; }
+
+.slider-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 28px;
+  cursor: pointer;
+}
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75em;
+  color: var(--muted);
+  margin-top: -4px;
+}
+
+/* ---------- Session progress ---------- */
+
+.progress-bar-track { background: var(--rule); border-radius: 999px; height: 8px; overflow: hidden; margin-bottom: 1.4em; }
+.progress-bar-fill { background: var(--accent); height: 100%; transition: width 0.25s ease; }
+
+.session-meta { display: flex; justify-content: space-between; font-size: 0.82em; color: var(--muted); margin-bottom: 0.4em; }
+
+/* ---------- Card ---------- */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 26px 24px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 1em;
+}
+
+.card .mode-tag { font-size: 0.72em; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+/* ---------- Situation card specifics ---------- */
+
+.situation-context { text-align: left; }
+.situation-de { font-size: 1.25em; font-weight: 600; line-height: 1.5; }
+.situation-en { font-size: 0.9em; color: var(--muted); font-style: italic; margin-top: 0.5em; }
+
+.audio-row { display: flex; justify-content: flex-start; gap: 10px; align-items: center; }
+button.play-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+.your-turn { margin-bottom: 1em; }
+.your-turn textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 10px 12px;
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.reveal-block { display: flex; flex-direction: column; gap: 1em; margin-bottom: 1em; }
+
+.model-response-block, .phrase-bank-block {
+  background: var(--accent-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+
+.model-response-block .label, .phrase-bank-block .label {
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 0.72em;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4em;
+  display: block;
+}
+
+.model-response-text { font-size: 1.02em; line-height: 1.6; }
+
+.phrase-bank-list { list-style: none; padding: 0; margin: 0; }
+.phrase-bank-list li {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--rule);
+  display: flex;
+  flex-direction: column;
+}
+.phrase-bank-list li:last-child { border-bottom: none; }
+.phrase-de { font-weight: 600; }
+.phrase-en { font-size: 0.85em; color: var(--muted); font-style: italic; }
+
+/* ---------- Grade buttons (Again / Hard / Good / Easy) ---------- */
+
+.grade-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 0.4em; }
+
+.grade-btn { border: none; border-radius: 10px; padding: 12px 6px; color: #fff; font-size: 0.88em; font-weight: 700; }
+.grade-btn .key-hint { display: block; font-size: 0.75em; font-weight: 400; opacity: 0.85; }
+.grade-btn.again { background: var(--again); }
+.grade-btn.hard { background: var(--hard); }
+.grade-btn.good { background: var(--good); }
+.grade-btn.easy { background: var(--easy); }
+
+/* ---------- Session summary ---------- */
+
+.summary-stats { display: grid; grid-template-columns: repeat(1, 1fr); gap: 10px; margin: 1.4em 0; text-align: center; }
+.stat-tile { background: var(--accent-bg); border-radius: 10px; padding: 14px 8px; }
+.stat-tile .num { font-size: 1.6em; font-weight: 700; color: var(--accent); }
+.stat-tile .label { font-size: 0.78em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.empty-state { text-align: center; color: var(--muted); padding: 2em 1em; font-style: italic; }
+
+.doc-footer {
+  margin-top: 2.4em;
+  padding-top: 1em;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--muted);
+}

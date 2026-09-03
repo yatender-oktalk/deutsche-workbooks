@@ -5,28 +5,15 @@
    handwriting space, answer key printed directly below each exercise.
    ========================================================================== */
 
-:root {
-  --ink: #1c1c1c;
-  --muted: #5b5b5b;
-  --rule: #cfcfcf;
-  --paper: #fdfdfb;
-  --accent: #1d4e89;      /* default / A2-bridge blue */
-  --accent-bg: #eaf1fa;
-  --answer-bg: #eef6ee;
-  --answer-border: #3f8f5c;
-  --tip-bg: #fff8e6;
-  --tip-border: #d8b23a;
-}
-
-body.level-b1 { --accent: #1d4e89; --accent-bg: #eaf1fa; }
-body.level-b2 { --accent: #7a2048; --accent-bg: #f6e9ee; }
-body.level-exam { --accent: #0f6f6a; --accent-bg: #e6f3f2; }
-body.level-a2 { --accent: #4a6fa5; --accent-bg: #eaf1fa; }
-body.level-ref { --accent: #55545a; --accent-bg: #ececec; }
+/* Design tokens (--ink, --accent, --paper, level accents, …) and all screen-only
+   app chrome live in assets/app-shell.css, which every page loads FIRST.
+   This file only styles the printable worksheet itself + a light retune of the
+   on-screen controls/header to match the "Register" look. Do not redefine
+   :root or body.level-* here. */
 
 * { box-sizing: border-box; }
 
-html { background: #e9e9e6; }
+html { background: #e6e2d6; }
 
 body {
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
@@ -69,32 +56,53 @@ a { color: var(--accent); }
   font-style: italic;
 }
 
-.controls { text-align: center; margin: 1em 0 1.6em; }
-
-button.print-btn {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 9px 18px;
-  font-size: 0.95em;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: inherit;
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  margin: 0.2em 0 1.8em;
+  padding-bottom: 0.7em;
+  border-bottom: 1px solid var(--rule);
 }
 
-button.print-btn:hover { opacity: 0.88; }
+button.print-btn {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  border-radius: 2px;
+  padding: 7px 14px;
+  cursor: pointer;
+  margin-left: auto;
+}
 
-.back-link { display: inline-block; margin: 0 0.8em; font-size: 0.85em; }
+button.print-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.back-link {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--signal); }
 
 /* ---------- Tip / instructions ---------- */
 
 .tip-box {
   background: var(--tip-bg);
   border: 1px solid var(--tip-border);
-  border-radius: 8px;
+  border-left: 3px solid var(--signal);
+  border-radius: 2px;
   padding: 0.7em 1em;
-  font-size: 0.88em;
-  margin-bottom: 1.6em;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-bottom: 1.8em;
 }
 
 .tip-box strong { color: #8a6d1a; }
@@ -247,9 +255,12 @@ th { background: rgba(0, 0, 0, 0.06); font-weight: 700; }
   padding-top: 1em;
   border-top: 1px solid var(--rule);
   text-align: center;
-  font-size: 0.88em;
+  font-family: var(--sans);
+  font-size: 0.8rem;
   color: var(--muted);
 }
+.doc-footer a { color: var(--muted); text-decoration: none; }
+.doc-footer a:hover { color: var(--signal); }
 
 /* ---------- Listening (Hörverstehen) — browser text-to-speech ---------- */
 

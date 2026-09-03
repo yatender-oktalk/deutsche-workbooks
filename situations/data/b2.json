@@ -1,0 +1,386 @@
+[
+  {
+    "id": "b2-beim-arzt-1",
+    "level": "b2",
+    "category": "beim-arzt",
+    "category_label": "Beim Arzt",
+    "situation_de": "Sie sollen dem Arzt erklären, warum Sie eine bestimmte Behandlung ablehnen möchten, obwohl er sie empfohlen hat. Begründen Sie Ihre Entscheidung höflich, aber bestimmt.",
+    "situation_en": "You need to explain to the doctor why you'd rather decline a treatment they recommended. Justify your decision politely but firmly.",
+    "model_response": "Ich habe mir Ihren Vorschlag gut überlegt, möchte die Behandlung aber vorerst nicht durchführen lassen. Zum einen habe ich Bedenken wegen der möglichen Nebenwirkungen, zum anderen würde ich gerne erst eine zweite Meinung einholen, bevor ich mich endgültig entscheide. Das heißt nicht, dass ich Ihrem Rat nicht vertraue — ich brauche einfach noch etwas Zeit.",
+    "phrase_bank": [
+      { "de": "Ich habe mir ... gut überlegt, möchte aber ...", "en": "I've thought carefully about ..., but I'd rather ..." },
+      { "de": "Ich habe Bedenken wegen ...", "en": "I have concerns about ..." },
+      { "de": "Ich würde gerne erst ... einholen.", "en": "I'd like to get ... first." },
+      { "de": "Das heißt nicht, dass ...", "en": "That doesn't mean that ..." },
+      { "de": "..., bevor ich mich endgültig entscheide.", "en": "..., before I make a final decision." }
+    ]
+  },
+  {
+    "id": "b2-beim-arzt-2",
+    "level": "b2",
+    "category": "beim-arzt",
+    "category_label": "Beim Arzt",
+    "situation_de": "Ein Freund fragt Sie, was der Arzt zu Ihrer Diagnose gesagt hat. Geben Sie das Gespräch in indirekter Rede wieder.",
+    "situation_en": "A friend asks what the doctor said about your diagnosis. Report the conversation using indirect speech.",
+    "model_response": "Der Arzt meinte, es handle sich wahrscheinlich um eine harmlose Erkältung, man müsse sich aber noch genauer die Blutwerte ansehen. Er sagte, ich solle mich in den nächsten Tagen schonen und bei Verschlechterung sofort wiederkommen. Außerdem habe er mir empfohlen, mehr zu trinken und auf ausreichend Schlaf zu achten.",
+    "phrase_bank": [
+      { "de": "Der Arzt meinte, es handle sich um ...", "en": "The doctor said it was probably ..." },
+      { "de": "Er sagte, ich solle ...", "en": "He said I should ..." },
+      { "de": "Er habe mir empfohlen, ... zu ...", "en": "He recommended that I ..." },
+      { "de": "Man müsse noch ... ansehen.", "en": "They still need to look at ..." },
+      { "de": "Bei Verschlechterung sofort wiederkommen.", "en": "Come back immediately if it gets worse." }
+    ]
+  },
+  {
+    "id": "b2-beim-arzt-3",
+    "level": "b2",
+    "category": "beim-arzt",
+    "category_label": "Beim Arzt",
+    "situation_de": "Sie beschweren sich bei der Praxisverwaltung, weil Sie trotz Termin über eine Stunde warten mussten. Formulieren Sie Ihre Beschwerde sachlich.",
+    "situation_en": "You complain to the practice's front desk because you had to wait over an hour despite having an appointment. Phrase your complaint objectively.",
+    "model_response": "Ich hatte heute um 14 Uhr einen Termin, musste aber über eine Stunde warten, obwohl ich pünktlich da war. Das ist mir schon mehrmals passiert, und ich finde es sehr ärgerlich, zumal ich extra Urlaub genommen habe. Könnten Sie mir erklären, woran das liegt, und mir sagen, wie ich das in Zukunft vermeiden kann?",
+    "phrase_bank": [
+      { "de": "Ich hatte einen Termin, musste aber ... warten.", "en": "I had an appointment but had to wait ..." },
+      { "de": "..., obwohl ich pünktlich da war.", "en": "..., even though I was on time." },
+      { "de": "Das ist mir schon mehrmals passiert.", "en": "This has happened to me several times." },
+      { "de": "..., zumal ich ...", "en": "..., especially since I ..." },
+      { "de": "Könnten Sie mir erklären, woran das liegt?", "en": "Could you explain what's causing this?" }
+    ]
+  },
+  {
+    "id": "b2-im-restaurant-1",
+    "level": "b2",
+    "category": "im-restaurant",
+    "category_label": "Im Restaurant",
+    "situation_de": "Sie planen mit Kollegen ein Geschäftsessen und müssen dem Restaurant besondere Anforderungen mitteilen (private Ecke, Rechnung auf die Firma, pünktlicher Beginn).",
+    "situation_en": "You're planning a business dinner with colleagues and need to tell the restaurant your special requirements (private corner, invoice to the company, prompt start).",
+    "model_response": "Wir würden gerne ein Geschäftsessen für acht Personen bei Ihnen ausrichten, vorausgesetzt, dass ein etwas ruhigerer Bereich zur Verfügung steht, da wir während des Essens auch geschäftliche Themen besprechen möchten. Zudem bräuchten wir die Rechnung auf unsere Firma ausgestellt. Wäre es außerdem möglich, dass wir pünktlich um 19 Uhr beginnen, da einige Kollegen im Anschluss noch einen Zug erreichen müssen?",
+    "phrase_bank": [
+      { "de": "Wir würden gerne ... ausrichten.", "en": "We'd like to host ..." },
+      { "de": "..., vorausgesetzt, dass ...", "en": "..., provided that ..." },
+      { "de": "Wir bräuchten die Rechnung auf ...", "en": "We'd need the invoice made out to ..." },
+      { "de": "Wäre es möglich, dass ...?", "en": "Would it be possible for ...?" },
+      { "de": "..., da einige ... im Anschluss ...", "en": "..., since some ... afterward ..." }
+    ]
+  },
+  {
+    "id": "b2-im-restaurant-2",
+    "level": "b2",
+    "category": "im-restaurant",
+    "category_label": "Im Restaurant",
+    "situation_de": "Ein Freund fragt Sie nach Ihrer Meinung zu einem neuen, sehr teuren Restaurant, in dem Sie kürzlich waren. Geben Sie eine differenzierte Bewertung mit Vor- und Nachteilen.",
+    "situation_en": "A friend asks your opinion of a new, very expensive restaurant you recently went to. Give a nuanced review with pros and cons.",
+    "model_response": "Das Essen war wirklich hervorragend, und die Präsentation der Gerichte war beeindruckend, wohingegen der Service etwas zu wünschen übrig ließ — wir mussten sehr lange auf die Getränke warten. Insofern die Preise ein Argument sind: Für den Preis hätte ich mehr Aufmerksamkeit erwartet. Trotzdem würde ich es für einen besonderen Anlass weiterempfehlen.",
+    "phrase_bank": [
+      { "de": "..., wohingegen ...", "en": "..., whereas ..." },
+      { "de": "... ließ zu wünschen übrig.", "en": "... left something to be desired." },
+      { "de": "Für den Preis hätte ich ... erwartet.", "en": "For the price I would have expected ..." },
+      { "de": "Trotzdem würde ich es weiterempfehlen.", "en": "Still, I'd recommend it." },
+      { "de": "..., insofern ...", "en": "..., insofar as ..." }
+    ]
+  },
+  {
+    "id": "b2-im-restaurant-3",
+    "level": "b2",
+    "category": "im-restaurant",
+    "category_label": "Im Restaurant",
+    "situation_de": "Das Restaurant hat Ihre vegane Bestellung mit einem tierischen Produkt zubereitet. Beschweren Sie sich und fordern Sie eine angemessene Lösung.",
+    "situation_en": "The restaurant prepared your vegan order with an animal product. Complain and demand a reasonable solution.",
+    "model_response": "Ich hatte ausdrücklich ein veganes Gericht bestellt, im Curry befand sich jedoch eindeutig Sahne. Das ist für mich nicht nur unangenehm, sondern aus religiösen bzw. ethischen Gründen ein echtes Problem. Ich würde erwarten, dass Sie mir das Gericht neu zubereiten und uns als Entschuldigung vielleicht ein Dessert aufs Haus anbieten.",
+    "phrase_bank": [
+      { "de": "Ich hatte ausdrücklich ... bestellt.", "en": "I had explicitly ordered ..." },
+      { "de": "..., jedoch befand sich eindeutig ...", "en": "..., however there was clearly ..." },
+      { "de": "Das ist nicht nur ..., sondern ...", "en": "That's not just ..., but ..." },
+      { "de": "Ich würde erwarten, dass ...", "en": "I would expect that ..." },
+      { "de": "... aufs Haus", "en": "... on the house" }
+    ]
+  },
+  {
+    "id": "b2-am-arbeitsplatz-1",
+    "level": "b2",
+    "category": "am-arbeitsplatz",
+    "category_label": "Am Arbeitsplatz",
+    "situation_de": "In einem Meeting sollen Sie einem Vorschlag eines Kollegen höflich, aber bestimmt widersprechen und eine Alternative vorschlagen.",
+    "situation_en": "In a meeting, you need to politely but firmly disagree with a colleague's proposal and suggest an alternative.",
+    "model_response": "Ich verstehe den Gedanken hinter deinem Vorschlag, bin aber nicht ganz überzeugt, dass er in der Praxis funktioniert, zumal wir damit das Budget für dieses Quartal deutlich überschreiten würden. Wäre es nicht sinnvoller, die Kosten zunächst über zwei Quartale zu verteilen? Dann könnten wir das Risiko besser abschätzen.",
+    "phrase_bank": [
+      { "de": "Ich verstehe den Gedanken, bin aber nicht überzeugt, dass ...", "en": "I get the idea, but I'm not convinced that ..." },
+      { "de": "..., zumal wir damit ... würden.", "en": "..., especially since we'd ..." },
+      { "de": "Wäre es nicht sinnvoller, ... zu ...?", "en": "Wouldn't it make more sense to ...?" },
+      { "de": "Dann könnten wir ... besser abschätzen.", "en": "Then we could better assess ..." },
+      { "de": "Lass uns das noch einmal durchdenken.", "en": "Let's think this through again." }
+    ]
+  },
+  {
+    "id": "b2-am-arbeitsplatz-2",
+    "level": "b2",
+    "category": "am-arbeitsplatz",
+    "category_label": "Am Arbeitsplatz",
+    "situation_de": "Sie müssen einem Teammitglied konstruktives, aber kritisches Feedback zu einem Projektbericht geben.",
+    "situation_en": "You need to give a team member constructive but critical feedback on a project report.",
+    "model_response": "Insgesamt ist der Bericht gut strukturiert, allerdings finde ich, dass einige Zahlen genauer belegt werden sollten, damit die Argumentation überzeugender wirkt. Außerdem wäre es hilfreich, wenn du die Schlussfolgerung noch etwas kürzer fassen würdest — momentan wiederholt sie einiges aus dem Hauptteil. Ansonsten ein wirklich solider erster Entwurf.",
+    "phrase_bank": [
+      { "de": "Insgesamt ist ... gut, allerdings ...", "en": "Overall it's good, however ..." },
+      { "de": "..., damit die Argumentation überzeugender wirkt.", "en": "..., so the argument comes across as more convincing." },
+      { "de": "Es wäre hilfreich, wenn du ... würdest.", "en": "It would help if you ..." },
+      { "de": "Momentan wiederholt sie ...", "en": "Right now it repeats ..." },
+      { "de": "Ein solider erster Entwurf.", "en": "A solid first draft." }
+    ]
+  },
+  {
+    "id": "b2-am-arbeitsplatz-3",
+    "level": "b2",
+    "category": "am-arbeitsplatz",
+    "category_label": "Am Arbeitsplatz",
+    "situation_de": "Sie kündigen Ihre Stelle und müssen es Ihrem Chef in einem Gespräch mitteilen. Erklären Sie den Grund freundlich, aber klar.",
+    "situation_en": "You're resigning and need to tell your boss in person. Explain the reason in a friendly but clear way.",
+    "model_response": "Ich möchte Ihnen mitteilen, dass ich mich entschieden habe, das Unternehmen zu verlassen. Es geht mir dabei nicht um Unzufriedenheit mit meiner Arbeit hier, sondern um eine neue berufliche Herausforderung, die sich mir gerade bietet. Ich werde natürlich alles daransetzen, eine geordnete Übergabe zu gewährleisten.",
+    "phrase_bank": [
+      { "de": "Ich möchte Ihnen mitteilen, dass ich mich entschieden habe, ... zu ...", "en": "I'd like to let you know I've decided to ..." },
+      { "de": "Es geht mir dabei nicht um ..., sondern um ...", "en": "It's not about ..., but rather about ..." },
+      { "de": "... die sich mir gerade bietet.", "en": "... that has come up for me right now." },
+      { "de": "Ich werde alles daransetzen, ... zu gewährleisten.", "en": "I'll do everything I can to ensure ..." },
+      { "de": "eine geordnete Übergabe", "en": "an orderly handover" }
+    ]
+  },
+  {
+    "id": "b2-reisen-planen-1",
+    "level": "b2",
+    "category": "reisen-planen",
+    "category_label": "Reisen & Planen",
+    "situation_de": "Sie planen mit mehreren Freunden eine gemeinsame Reise, aber die Meinungen zum Reiseziel gehen auseinander. Moderieren Sie die Diskussion und schlagen Sie einen Kompromiss vor.",
+    "situation_en": "You're planning a trip with several friends, but opinions on the destination differ. Moderate the discussion and propose a compromise.",
+    "model_response": "Ich sehe, dass wir unterschiedliche Vorstellungen haben — die einen wollen ans Meer, die anderen in die Berge. Wie wäre es, wenn wir uns für eine Region entscheiden, die beides bietet, zum Beispiel die kroatische Küste mit den Bergen im Hinterland? So könnte jeder etwas von dem bekommen, was er sich wünscht.",
+    "phrase_bank": [
+      { "de": "Ich sehe, dass wir unterschiedliche Vorstellungen haben.", "en": "I see we have different ideas." },
+      { "de": "Die einen wollen ..., die anderen ...", "en": "Some want ..., others ..." },
+      { "de": "Wie wäre es, wenn wir uns für ... entscheiden?", "en": "How about we decide on ...?" },
+      { "de": "So könnte jeder etwas von dem bekommen, was er sich wünscht.", "en": "That way everyone could get some of what they want." },
+      { "de": "Lasst uns abstimmen.", "en": "Let's vote." }
+    ]
+  },
+  {
+    "id": "b2-reisen-planen-2",
+    "level": "b2",
+    "category": "reisen-planen",
+    "category_label": "Reisen & Planen",
+    "situation_de": "Ihr Flug wurde storniert. Sie müssen sich am Flughafenschalter beschweren und eine Entschädigung sowie eine alternative Verbindung fordern.",
+    "situation_en": "Your flight was cancelled. You need to complain at the airport counter and demand compensation as well as an alternative connection.",
+    "model_response": "Mein Flug wurde ohne Vorwarnung gestrichen, und ich wurde bisher nicht darüber informiert, wie es weitergeht. Laut EU-Fluggastrechten steht mir in diesem Fall entweder eine Umbuchung auf den nächstmöglichen Flug oder eine Entschädigung zu. Könnten Sie mir bitte sofort eine alternative Verbindung für heute Abend suchen?",
+    "phrase_bank": [
+      { "de": "Mein Flug wurde ohne Vorwarnung gestrichen.", "en": "My flight was cancelled without warning." },
+      { "de": "Laut ... steht mir ... zu.", "en": "According to ..., I'm entitled to ..." },
+      { "de": "entweder ... oder ...", "en": "either ... or ..." },
+      { "de": "Könnten Sie mir eine alternative Verbindung suchen?", "en": "Could you find me an alternative connection?" },
+      { "de": "Ich bestehe auf einer schriftlichen Bestätigung.", "en": "I insist on written confirmation." }
+    ]
+  },
+  {
+    "id": "b2-reisen-planen-3",
+    "level": "b2",
+    "category": "reisen-planen",
+    "category_label": "Reisen & Planen",
+    "situation_de": "Sie erzählen von einer Reise, die völlig anders verlief als geplant. Berichten Sie im Rückblick, was schiefgelaufen ist und was Sie daraus gelernt haben.",
+    "situation_en": "You're telling the story of a trip that turned out completely differently than planned. Report in hindsight what went wrong and what you learned.",
+    "model_response": "Eigentlich hatten wir alles bis ins Detail geplant, aber schon am ersten Tag verpassten wir den Anschlussflug, sodass wir eine ganze Nacht am Flughafen verbringen mussten. Im Nachhinein betrachtet war das gar nicht so schlimm — wir haben gelernt, spontaner zu reisen und uns weniger an einen starren Plan zu klammern.",
+    "phrase_bank": [
+      { "de": "Eigentlich hatten wir alles geplant, aber ...", "en": "We'd actually planned everything, but ..." },
+      { "de": "..., sodass wir ... mussten.", "en": "..., so that we had to ..." },
+      { "de": "Im Nachhinein betrachtet ...", "en": "Looking back ..." },
+      { "de": "Wir haben gelernt, ... zu ...", "en": "We learned to ..." },
+      { "de": "sich an etwas klammern", "en": "to cling to something" }
+    ]
+  },
+  {
+    "id": "b2-wohnen-beschwerden-1",
+    "level": "b2",
+    "category": "wohnen-beschwerden",
+    "category_label": "Wohnen & Beschwerden",
+    "situation_de": "Sie schreiben eine formelle Beschwerde an die Hausverwaltung, weil trotz mehrerer Meldungen ein Wasserschaden nicht behoben wurde.",
+    "situation_en": "You write a formal complaint to the property management because a water leak hasn't been fixed despite several reports.",
+    "model_response": "Ich möchte Sie hiermit erneut darauf hinweisen, dass der Wasserschaden in meinem Badezimmer trotz meiner Meldung vor drei Wochen noch immer nicht behoben wurde. Insofern sich in den nächsten Tagen nichts ändert, sehe ich mich gezwungen, rechtliche Schritte in Erwägung zu ziehen. Ich bitte um eine verbindliche Rückmeldung bis spätestens Freitag.",
+    "phrase_bank": [
+      { "de": "Ich möchte Sie hiermit erneut darauf hinweisen, dass ...", "en": "I would like to point out to you once again that ..." },
+      { "de": "..., insofern sich nichts ändert, ...", "en": "..., insofar as nothing changes, ..." },
+      { "de": "Ich sehe mich gezwungen, ... in Erwägung zu ziehen.", "en": "I feel compelled to consider ..." },
+      { "de": "rechtliche Schritte", "en": "legal steps" },
+      { "de": "Ich bitte um eine verbindliche Rückmeldung bis ...", "en": "I request a binding response by ..." }
+    ]
+  },
+  {
+    "id": "b2-wohnen-beschwerden-2",
+    "level": "b2",
+    "category": "wohnen-beschwerden",
+    "category_label": "Wohnen & Beschwerden",
+    "situation_de": "Sie diskutieren mit Ihrem Mitbewohner über die faire Aufteilung der Hausarbeit, nachdem es wiederholt Konflikte gab.",
+    "situation_en": "You discuss with your roommate a fair division of housework after repeated conflicts.",
+    "model_response": "Mir ist aufgefallen, dass ich in letzter Zeit deutlich mehr putze als du, und das führt bei mir zu Frust. Können wir uns nicht auf einen festen Plan einigen, wer wann für was zuständig ist? Ich schlage vor, dass wir das wöchentlich abwechseln, dann wäre es für beide gerecht.",
+    "phrase_bank": [
+      { "de": "Mir ist aufgefallen, dass ...", "en": "I've noticed that ..." },
+      { "de": "..., und das führt bei mir zu Frust.", "en": "..., and that leaves me frustrated." },
+      { "de": "Können wir uns nicht auf ... einigen?", "en": "Can't we agree on ...?" },
+      { "de": "Ich schlage vor, dass wir ...", "en": "I suggest that we ..." },
+      { "de": "dann wäre es für beide gerecht", "en": "then it would be fair for both of us" }
+    ]
+  },
+  {
+    "id": "b2-wohnen-beschwerden-3",
+    "level": "b2",
+    "category": "wohnen-beschwerden",
+    "category_label": "Wohnen & Beschwerden",
+    "situation_de": "Ein möglicher neuer Mitbewohner besichtigt Ihre WG. Erklären Sie ihm die Regeln des Zusammenlebens und beantworten Sie mögliche Bedenken.",
+    "situation_en": "A prospective new roommate is viewing your shared flat. Explain the house rules and address any concerns.",
+    "model_response": "Bei uns läuft es eigentlich ziemlich entspannt, wir haben nur ein paar Grundregeln: Gäste bitte vorher ankündigen, und die Küche sollte man immer so verlassen, wie man sie vorgefunden hat. Ansonsten legt jeder selbst fest, wie viel er sich einbringen möchte — es sei denn, es steht mal ein größeres gemeinsames Projekt an, wie ein Umzug oder eine Renovierung.",
+    "phrase_bank": [
+      { "de": "Bei uns läuft es ziemlich entspannt.", "en": "Things run pretty relaxed here." },
+      { "de": "Wir haben nur ein paar Grundregeln.", "en": "We only have a few basic rules." },
+      { "de": "..., es sei denn, ...", "en": "..., unless ..." },
+      { "de": "so verlassen, wie man es vorgefunden hat", "en": "leave it the way you found it" },
+      { "de": "Hast du sonst noch Fragen?", "en": "Do you have any other questions?" }
+    ]
+  },
+  {
+    "id": "b2-behoerden-termine-1",
+    "level": "b2",
+    "category": "behoerden-termine",
+    "category_label": "Behörden & Termine",
+    "situation_de": "Sie legen schriftlich Widerspruch gegen einen behördlichen Bescheid ein, den Sie für ungerechtfertigt halten.",
+    "situation_en": "You file a written objection against an official notice you believe is unjustified.",
+    "model_response": "Hiermit lege ich Widerspruch gegen den Bescheid vom 3. März ein, da ich die darin getroffene Entscheidung für nicht nachvollziehbar halte. Wie aus den beigefügten Unterlagen hervorgeht, wurde mein Antrag vollständig und fristgerecht eingereicht. Ich bitte um eine erneute Prüfung des Falls unter Berücksichtigung der beigefügten Dokumente.",
+    "phrase_bank": [
+      { "de": "Hiermit lege ich Widerspruch gegen ... ein.", "en": "I hereby file an objection against ..." },
+      { "de": "..., da ich ... für nicht nachvollziehbar halte.", "en": "..., since I find ... incomprehensible." },
+      { "de": "Wie aus ... hervorgeht, ...", "en": "As is evident from ..., ..." },
+      { "de": "fristgerecht eingereicht", "en": "submitted within the deadline" },
+      { "de": "unter Berücksichtigung von ...", "en": "taking ... into account" }
+    ]
+  },
+  {
+    "id": "b2-behoerden-termine-2",
+    "level": "b2",
+    "category": "behoerden-termine",
+    "category_label": "Behörden & Termine",
+    "situation_de": "Ein Sachbearbeiter erklärt Ihnen einen komplizierten Vorgang. Fassen Sie das Gesagte zusammen und stellen Sie eine Rückfrage, um sicherzugehen, dass Sie alles richtig verstanden haben.",
+    "situation_en": "A caseworker explains a complicated process to you. Summarize what was said and ask a follow-up question to make sure you understood correctly.",
+    "model_response": "Wenn ich Sie richtig verstanden habe, muss ich also zunächst das Formular ausfüllen und dann die Bestätigung meines Arbeitgebers nachreichen, bevor der Antrag überhaupt bearbeitet werden kann. Habe ich das so richtig zusammengefasst? Und was passiert, falls eine der Fristen nicht eingehalten wird?",
+    "phrase_bank": [
+      { "de": "Wenn ich Sie richtig verstanden habe, ...", "en": "If I understood you correctly, ..." },
+      { "de": "..., bevor der Antrag bearbeitet werden kann.", "en": "..., before the application can be processed." },
+      { "de": "Habe ich das so richtig zusammengefasst?", "en": "Did I summarize that correctly?" },
+      { "de": "Was passiert, falls ...?", "en": "What happens if ...?" },
+      { "de": "Könnten Sie das noch einmal in eigenen Worten erklären?", "en": "Could you explain that again in different words?" }
+    ]
+  },
+  {
+    "id": "b2-behoerden-termine-3",
+    "level": "b2",
+    "category": "behoerden-termine",
+    "category_label": "Behörden & Termine",
+    "situation_de": "Sie müssen einer Behörde erklären, warum Sie eine wichtige Frist versäumt haben, und um eine Fristverlängerung bitten.",
+    "situation_en": "You need to explain to an authority why you missed an important deadline and ask for an extension.",
+    "model_response": "Ich möchte mich zunächst für die verspätete Einreichung entschuldigen. Ich hatte die Frist leider übersehen, da ich in den vergangenen Wochen krankheitsbedingt ausgefallen bin — ein entsprechendes ärztliches Attest liegt bei. Ich bitte höflich um eine nachträgliche Fristverlängerung von zwei Wochen, um die fehlenden Unterlagen einzureichen.",
+    "phrase_bank": [
+      { "de": "Ich möchte mich für ... entschuldigen.", "en": "I'd like to apologize for ..." },
+      { "de": "..., da ich krankheitsbedingt ausgefallen bin.", "en": "..., since I was out due to illness." },
+      { "de": "ein ärztliches Attest liegt bei", "en": "a doctor's certificate is enclosed" },
+      { "de": "Ich bitte um eine nachträgliche Fristverlängerung.", "en": "I'm requesting a retroactive extension." },
+      { "de": "um die fehlenden Unterlagen einzureichen", "en": "to submit the missing documents" }
+    ]
+  },
+  {
+    "id": "b2-soziales-einladungen-1",
+    "level": "b2",
+    "category": "soziales-einladungen",
+    "category_label": "Soziales & Einladungen",
+    "situation_de": "Sie müssen einem engen Freund eine unangenehme Wahrheit sagen — zum Beispiel, dass sein Verhalten in letzter Zeit die Freundschaft belastet.",
+    "situation_en": "You need to tell a close friend an uncomfortable truth — for example, that their recent behavior is straining the friendship.",
+    "model_response": "Ich muss dir mal etwas sagen, auch wenn es nicht ganz leicht ist. Mir ist aufgefallen, dass du dich in letzter Zeit häufiger nicht meldest oder Verabredungen kurzfristig absagst, und das belastet unsere Freundschaft ein wenig. Ich will dir keinen Vorwurf machen, sondern nur, dass wir offen darüber reden, bevor sich das weiter aufstaut.",
+    "phrase_bank": [
+      { "de": "Ich muss dir mal etwas sagen, auch wenn es nicht leicht ist.", "en": "I need to tell you something, even though it's not easy." },
+      { "de": "Mir ist aufgefallen, dass ...", "en": "I've noticed that ..." },
+      { "de": "..., und das belastet ... ein wenig.", "en": "..., and that puts a bit of strain on ..." },
+      { "de": "Ich will dir keinen Vorwurf machen, sondern ...", "en": "I don't want to blame you, but rather ..." },
+      { "de": "..., bevor sich das weiter aufstaut.", "en": "..., before it builds up further." }
+    ]
+  },
+  {
+    "id": "b2-soziales-einladungen-2",
+    "level": "b2",
+    "category": "soziales-einladungen",
+    "category_label": "Soziales & Einladungen",
+    "situation_de": "Bei einem gesellschaftlichen Anlass wird ein kontroverses Thema angesprochen (z. B. Politik). Äußern Sie diplomatisch Ihre Meinung, ohne die Stimmung zu verderben.",
+    "situation_en": "At a social gathering, a controversial topic comes up (e.g. politics). Express your opinion diplomatically without spoiling the mood.",
+    "model_response": "Das ist wirklich ein Thema, bei dem die Meinungen weit auseinandergehen. Ich persönlich sehe das etwas differenzierter — es gibt meiner Meinung nach durchaus Argumente auf beiden Seiten. Aber lasst uns das vielleicht ein andermal ausführlicher diskutieren, ich möchte den schönen Abend nicht mit einer hitzigen Debatte verderben.",
+    "phrase_bank": [
+      { "de": "Das ist ein Thema, bei dem die Meinungen weit auseinandergehen.", "en": "That's a topic where opinions differ widely." },
+      { "de": "Ich sehe das etwas differenzierter.", "en": "I see it a bit more nuanced." },
+      { "de": "Es gibt Argumente auf beiden Seiten.", "en": "There are arguments on both sides." },
+      { "de": "Lasst uns das ein andermal ausführlicher diskutieren.", "en": "Let's discuss that in more detail another time." },
+      { "de": "Ich möchte die Stimmung nicht verderben.", "en": "I don't want to spoil the mood." }
+    ]
+  },
+  {
+    "id": "b2-soziales-einladungen-3",
+    "level": "b2",
+    "category": "soziales-einladungen",
+    "category_label": "Soziales & Einladungen",
+    "situation_de": "Sie moderieren eine hitzige Diskussion zwischen zwei Freunden bei einem Abendessen, damit sie nicht eskaliert.",
+    "situation_en": "You mediate a heated discussion between two friends at dinner so it doesn't escalate.",
+    "model_response": "Ich glaube, ihr habt beide gute Punkte, aber lasst uns das vielleicht etwas ruhiger angehen. Können wir uns kurz Zeit nehmen, damit jeder in Ruhe ausreden kann, ohne unterbrochen zu werden? Am Ende müssen wir uns ja nicht einig sein — wir können auch einfach unterschiedlicher Meinung bleiben.",
+    "phrase_bank": [
+      { "de": "Ich glaube, ihr habt beide gute Punkte.", "en": "I think you both have good points." },
+      { "de": "Lasst uns das etwas ruhiger angehen.", "en": "Let's take this a bit more calmly." },
+      { "de": "..., damit jeder in Ruhe ausreden kann.", "en": "..., so everyone can finish speaking calmly." },
+      { "de": "Wir müssen uns ja nicht einig sein.", "en": "We don't have to agree, after all." },
+      { "de": "unterschiedlicher Meinung bleiben", "en": "to agree to disagree" }
+    ]
+  },
+  {
+    "id": "b2-meinungen-diskussion-1",
+    "level": "b2",
+    "category": "meinungen-diskussion",
+    "category_label": "Meinungen & Diskussion",
+    "situation_de": "Sie sollen im Rahmen einer Diskussion eine unpopuläre Meinung vertreten und sie überzeugend begründen, auch wenn Sie persönlich anders denken.",
+    "situation_en": "In a discussion, you need to argue an unpopular opinion convincingly, even if you personally think differently.",
+    "model_response": "Auch wenn es auf den ersten Blick unpopulär klingt, würde ich behaupten, dass eine Vier-Tage-Woche nicht für jede Branche sinnvoll ist. Zwar profitieren Bürojobs davon nachweislich, aber im Gesundheits- oder Pflegebereich würde eine kürzere Woche schlicht zu Personalmangel führen. Man müsste die Idee also differenzierter betrachten, statt sie pauschal auf alle Branchen zu übertragen.",
+    "phrase_bank": [
+      { "de": "Auch wenn es unpopulär klingt, würde ich behaupten, dass ...", "en": "Even though it sounds unpopular, I'd argue that ..." },
+      { "de": "Zwar ..., aber ...", "en": "Admittedly ..., but ..." },
+      { "de": "... würde schlicht zu ... führen.", "en": "... would simply lead to ..." },
+      { "de": "Man müsste die Idee differenzierter betrachten.", "en": "One would need to look at the idea in a more nuanced way." },
+      { "de": "..., statt sie pauschal auf alle zu übertragen.", "en": "..., instead of applying it blanket to everyone." }
+    ]
+  },
+  {
+    "id": "b2-meinungen-diskussion-2",
+    "level": "b2",
+    "category": "meinungen-diskussion",
+    "category_label": "Meinungen & Diskussion",
+    "situation_de": "Sie nehmen an einer Debatte über den Klimawandel teil und sollen Ihre Position mit Argumenten und einem Gegenargument untermauern.",
+    "situation_en": "You take part in a debate about climate change and need to back up your position with arguments and a counterargument.",
+    "model_response": "Meiner Meinung nach müssen wir deutlich konsequenter beim Klimaschutz handeln, auch wenn das kurzfristig unbequem ist. Manche argumentieren, das schade der Wirtschaft, aber langfristig betrachtet dürfte untätiges Zusehen weitaus teurer werden, wenn man die Folgekosten von Naturkatastrophen mit einrechnet. Insofern sehe ich hier keinen echten Widerspruch zwischen Klimaschutz und wirtschaftlichem Interesse.",
+    "phrase_bank": [
+      { "de": "Meiner Meinung nach müssen wir ...", "en": "In my opinion we need to ..." },
+      { "de": "Manche argumentieren, ..., aber ...", "en": "Some argue that ..., but ..." },
+      { "de": "... dürfte weitaus teurer werden.", "en": "... is likely to become far more expensive." },
+      { "de": "..., wenn man ... mit einrechnet.", "en": "..., if you factor in ..." },
+      { "de": "Insofern sehe ich keinen echten Widerspruch.", "en": "In that sense I see no real contradiction." }
+    ]
+  },
+  {
+    "id": "b2-meinungen-diskussion-3",
+    "level": "b2",
+    "category": "meinungen-diskussion",
+    "category_label": "Meinungen & Diskussion",
+    "situation_de": "Sie widersprechen in einer Diskussion einer Aussage, die Sie für ein Vorurteil halten, ohne die andere Person anzugreifen.",
+    "situation_en": "In a discussion, you push back on a statement you consider a prejudice, without attacking the other person.",
+    "model_response": "Ich verstehe, woher diese Ansicht kommt, aber ich glaube, das ist eher ein weitverbreitetes Vorurteil als eine belegte Tatsache. Es gibt durchaus Studien, die das Gegenteil zeigen. Vielleicht lohnt es sich, das noch einmal von einer anderen Seite zu betrachten, bevor man zu einem endgültigen Urteil kommt.",
+    "phrase_bank": [
+      { "de": "Ich verstehe, woher diese Ansicht kommt, aber ...", "en": "I understand where this view comes from, but ..." },
+      { "de": "..., das ist eher ein Vorurteil als eine Tatsache.", "en": "..., that's more a prejudice than a fact." },
+      { "de": "Es gibt durchaus Studien, die das Gegenteil zeigen.", "en": "There are certainly studies showing the opposite." },
+      { "de": "Vielleicht lohnt es sich, das von einer anderen Seite zu betrachten.", "en": "Maybe it's worth looking at it from a different angle." },
+      { "de": "..., bevor man zu einem endgültigen Urteil kommt.", "en": "..., before reaching a final judgment." }
+    ]
+  }
+]
