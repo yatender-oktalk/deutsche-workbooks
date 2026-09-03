@@ -22,6 +22,7 @@ body.level-b1 { --accent: #1d4e89; --accent-bg: #eaf1fa; }
 body.level-b2 { --accent: #7a2048; --accent-bg: #f6e9ee; }
 body.level-exam { --accent: #0f6f6a; --accent-bg: #e6f3f2; }
 body.level-a2 { --accent: #4a6fa5; --accent-bg: #eaf1fa; }
+body.level-ref { --accent: #55545a; --accent-bg: #ececec; }
 
 * { box-sizing: border-box; }
 
