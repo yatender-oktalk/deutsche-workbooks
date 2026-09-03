@@ -539,12 +539,42 @@ html { background: #e6e2d6; }
    Generated timeline  (study-plan.html)
    ========================================================================== */
 
-.dw-timeline { font-family: var(--sans); margin: 6px 0 24px; }
-.dw-timeline table { font-family: var(--sans); }
+.dw-timeline { font-family: var(--sans); margin: 6px 0 24px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.dw-timeline table { font-family: var(--sans); min-width: 34em; }
 .dw-timeline .dw-tl-now td { background: var(--signal-bg); }
 .dw-timeline .dw-tl-now td:first-child { border-left: 3px solid var(--signal); }
-.dw-tl-caption { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 6px; }
-.dw-tl-flag { color: var(--signal); font-weight: 700; font-style: normal; }
+.dw-tl-caption { font-size: 12px; color: var(--muted); font-style: italic; margin: 6px 0; }
+.dw-tl-flag { color: var(--signal); font-weight: 700; font-style: normal; white-space: nowrap; }
+
+/* ==========================================================================
+   Responsive wide content  (screen only — print keeps the A4 table as-is)
+   --------------------------------------------------------------------------
+   Wrap any wide <table> in <div class="dw-table-scroll"> so it scrolls
+   inside its own box instead of stretching the page. .cheatsheet gets the
+   same safety net automatically.
+   ========================================================================== */
+
+.dw-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0.8em 0;
+  border: 1px solid var(--rule);
+}
+.dw-table-scroll > table { margin: 0; border: none; min-width: 32em; }
+
+@media screen {
+  .cheatsheet { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@media screen and (max-width: 600px) {
+  .cheatsheet { padding-left: 14px; padding-right: 14px; }
+  .cheatsheet table,
+  .dw-timeline table,
+  .dw-table-scroll > table { font-size: 0.8rem; }
+  .cheatsheet th, .cheatsheet td,
+  .dw-timeline th, .dw-timeline td,
+  .dw-table-scroll th, .dw-table-scroll td { padding: 5px 7px; }
+}
 
 /* ==========================================================================
    Print — the shell simply does not exist on paper
@@ -561,4 +591,8 @@ html { background: #e6e2d6; }
 
   .dw-week { border: none; border-left: 2px solid #999; padding: 0 0 0 12px; }
   html { background: #fff; }
+
+  /* wide-content wrappers collapse back to plain tables on paper */
+  .dw-timeline, .dw-table-scroll { overflow: visible !important; border: none !important; }
+  .dw-timeline table, .dw-table-scroll > table { min-width: 0 !important; }
 }

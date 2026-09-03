@@ -59,6 +59,8 @@ Every current-format page — all print-first pages, `index.html`, `study-plan.h
 
 **Adding a page**: add it to the `PAGES` array in `assets/app-shell.js` (`{ p: root-relative path, t: title, g: group key, lv: level for the tag colour, tag: short label }`) — that is what surfaces it in the hub register and the Index — then add the two shell lines to the page.
 
+**Responsive wide tables** — `app-shell.css` adds a screen-only safety net: `.cheatsheet` scrolls its own overflow, and wrapping a wide `<table>` in `<div class="dw-table-scroll">` makes it scroll inside a bordered box instead of stretching the page (used on `study-plan.html`). Both collapse back to plain full-width tables in `@media print`.
+
 **`vocab/sw.js`**: `../assets/app-shell.css` and `../assets/app-shell.js` are in `PRECACHE_URLS`; bump `CACHE_NAME` (currently `vokabeltrainer-v3`) whenever either changes.
 
 ## The print-first workbook format (core convention — apply to every new page)
