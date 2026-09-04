@@ -225,14 +225,26 @@ function toggleTranscript(id, btnEl) {
   if (btnEl) btnEl.textContent = willShow ? 'Transkript verbergen' : 'Transkript anzeigen';
 }
 
-/* Some browsers (notably Chrome) load voice lists asynchronously. */
+/* Voice lists load asynchronously on most browsers (notably Chrome), and on
+   iOS Safari — especially installed/standalone PWAs — 'voiceschanged' often
+   never fires at all, so the list can still be empty the first few times we
+   check. Poll for a bit rather than relying solely on that event. */
 if ('speechSynthesis' in window) {
-  window.speechSynthesis.getVoices();
   var _voicePickerReady = function () {
     window.speechSynthesis.getVoices();
     buildVoicePicker();
   };
   window.speechSynthesis.onvoiceschanged = _voicePickerReady;
+
+  var _voicePollAttempts = 0;
+  var _voicePoll = setInterval(function () {
+    _voicePollAttempts++;
+    _voicePickerReady();
+    if (document.querySelector('.voice-picker') || _voicePollAttempts >= 20) {
+      clearInterval(_voicePoll);
+    }
+  }, 300);
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', _voicePickerReady);
   } else {
