@@ -62,6 +62,12 @@
 
   var PAGES = [
     // 01 — Grammatik
+    { p: "workbooks/A1/workbook-3-artikel-nomen.html",              t: "Artikel, Nomen & Plural",      g: "grammar", lv: "a1", tag: "A1" },
+    { p: "workbooks/A1/workbook-4-praesens.html",                   t: "Präsens: Verben konjugieren",  g: "grammar", lv: "a1", tag: "A1" },
+    { p: "workbooks/A1/workbook-5-akkusativ.html",                  t: "Der Akkusativ",                g: "grammar", lv: "a1", tag: "A1" },
+    { p: "workbooks/A1/workbook-6-possessivartikel.html",           t: "Possessivartikel",            g: "grammar", lv: "a1", tag: "A1" },
+    { p: "workbooks/A1/workbook-7-modalverben.html",                t: "Modalverben (A1)",            g: "grammar", lv: "a1", tag: "A1" },
+    { p: "workbooks/A1/workbook-8-w-fragen-satzbau.html",           t: "W-Fragen, Satzbau & trennbare Verben", g: "grammar", lv: "a1", tag: "A1" },
     { p: "workbooks/A2/workbook-9-dativ.html",                      t: "Der Dativ",                    g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-10-wechselpraepositionen.html",     t: "Wechselpräpositionen",         g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-11-komparativ-superlativ.html",     t: "Komparativ & Superlativ",      g: "grammar", lv: "a2", tag: "A2" },
