@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fortschritt — letzte 7 Tage</title>
+<link rel="stylesheet" href="assets/app-shell.css">
+<link rel="stylesheet" href="assets/print-workbook.css">
+<style>
+  .pg-wrap { max-width: 720px; margin: 0 auto; padding: 0 4px 60px; }
+  .pg-note { font-family: var(--sans); font-size: 12px; color: var(--muted); margin: 6px 0 18px; line-height: 1.5; }
+  .pg-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--rule-strong); border: 1px solid var(--rule-strong); margin: 10px 0 6px; }
+  .pg-tile { background: var(--paper); padding: 12px 14px; }
+  .pg-tile .n { font-family: var(--serif); font-size: 28px; line-height: 1.1; color: var(--ink); }
+  .pg-tile .lbl { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-top: 3px; }
+  .pg-tile .sub { font-family: var(--sans); font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+  .pg-tile .delta { font-family: var(--sans); font-size: 11.5px; margin-top: 2px; }
+  .pg-tile .delta.up { color: #2f7d32; }
+  .pg-tile .delta.down { color: #b3261e; }
+  .pg-tile .delta.flat { color: var(--muted); }
+  h2 { font-family: var(--serif); font-size: 17px; margin: 26px 0 6px; border-bottom: 1px solid var(--rule-strong); padding-bottom: 4px; }
+  .pg-bars { display: flex; align-items: flex-end; gap: 6px; height: 120px; margin: 12px 0 4px; }
+  .pg-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .pg-bar { width: 100%; background: var(--ink); min-height: 2px; }
+  .pg-bar.today { background: var(--signal); }
+  .pg-bar-lbl { font-family: var(--sans); font-size: 10px; color: var(--muted); }
+  .pg-bar-val { font-family: var(--sans); font-size: 10px; color: var(--ink); }
+  .pg-spark { display: flex; align-items: flex-end; gap: 2px; height: 46px; margin: 8px 0; }
+  .pg-spark span { flex: 1; background: var(--rule-strong); min-height: 1px; }
+  .pg-spark span.hit { background: var(--ink); }
+  .pg-streak { font-family: var(--serif); font-size: 20px; color: var(--ink); margin: 8px 0; }
+  .pg-streak b { color: var(--signal); }
+  .pg-split { font-family: var(--sans); font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+  .pg-split b { color: var(--ink); }
+  form.pg-manual { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; font-family: var(--sans); font-size: 13px; }
+  form.pg-manual select, form.pg-manual input { font-family: var(--sans); font-size: 13px; padding: 7px 9px; border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink); }
+  form.pg-manual input[type=number] { width: 5em; }
+  form.pg-manual input[type=text] { flex: 1; min-width: 8em; }
+  form.pg-manual button { font-family: var(--sans); font-size: 13px; padding: 7px 15px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); font-weight: 700; cursor: pointer; }
+  .pg-log { font-family: var(--sans); font-size: 12.5px; }
+  .pg-log li { padding: 4px 0; border-bottom: 1px solid var(--rule); display: flex; gap: 10px; }
+  .pg-log .d { color: var(--muted); white-space: nowrap; min-width: 88px; }
+  .pg-empty { font-family: var(--sans); font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .pg-reset { border: none; background: none; color: var(--muted); text-decoration: underline; font-family: var(--sans); font-size: 11.5px; cursor: pointer; padding: 0; margin-top: 14px; }
+</style>
+</head>
+<body class="level-ref" data-dw-nosplash>
+
+<div class="controls no-print">
+  <a class="back-link" href="index.html">&larr; Index</a>
+  <a class="back-link" href="study-plan.html">Studienplan &rarr;</a>
+</div>
+
+<div class="doc-header">
+  <div class="level-badge">PLAN — FORTSCHRITT</div>
+  <h1>Fortschritt — letzte 7 Tage</h1>
+  <p class="doc-meta">What you practised, how much, and this week vs. the week before — a momentum signal, not an exact ledger.</p>
+</div>
+
+<div class="pg-wrap">
+  <p class="pg-note">
+    <strong>Nur dieses Gerät.</strong> Zählt automatisch, was du hier machst: Vokabeltrainer, interaktive Hefte, Satztraining, Gesprächstrainer. iPad-Grammatik, Filme/Serien und YouTube trägst du unten selbst ein. Daten liegen lokal im Browser (nichts wird gesendet), also fehlt, was du auf einem anderen Gerät machst.
+  </p>
+
+  <div id="pg-body"></div>
+
+  <h2>Selbst eintragen (offline geübt)</h2>
+  <form class="pg-manual" id="pg-manual">
+    <select id="pg-cat" aria-label="Art">
+      <option value="ipad-grammatik">iPad — Grammatik</option>
+      <option value="hoeren">Hören (YouTube / Serie / Film)</option>
+      <option value="lesen">Lesen</option>
+      <option value="sprechen">Sprechen</option>
+      <option value="schreiben">Schreiben</option>
+      <option value="sonstiges">Sonstiges</option>
+    </select>
+    <input type="number" id="pg-min" min="1" max="600" placeholder="Min." aria-label="Minuten">
+    <input type="text" id="pg-note" placeholder="Notiz (optional) — z. B. „Tatort, 45 Min ohne Untertitel“" aria-label="Notiz">
+    <button type="submit">Eintragen</button>
+  </form>
+
+  <h2>Verlauf</h2>
+  <ul class="pg-log" id="pg-log"></ul>
+  <button class="pg-reset" id="pg-reset" type="button">Alle Aktivitätsdaten auf diesem Gerät löschen</button>
+</div>
+
+<script defer src="assets/app-shell.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var DAY = 86400000;
+  function start() {
+    if (!window.DW || !DW.getActivity) { return void setTimeout(start, 40); }
+    render();
+    document.getElementById("pg-manual").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var cat = document.getElementById("pg-cat").value;
+      var min = parseInt(document.getElementById("pg-min").value, 10);
+      var note = document.getElementById("pg-note").value.trim();
+      var meta = {};
+      if (min > 0) meta.min = min;
+      if (note) meta.note = note;
+      DW.logActivity("manual", cat, meta);
+      document.getElementById("pg-min").value = "";
+      document.getElementById("pg-note").value = "";
+      render();
+    });
+    document.getElementById("pg-reset").addEventListener("click", function () {
+      if (!confirm("Alle Aktivitätsdaten auf diesem Gerät löschen? (Vokabel-Statistik und Heft-Antworten bleiben erhalten.)")) return;
+      try { localStorage.removeItem("dw.activity"); } catch (e) {}
+      render();
+    });
+  }
+
+  function dayStart(ts) { var d = new Date(ts); d.setHours(0, 0, 0, 0); return d.getTime(); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+
+  var CAT_LABEL = {
+    "ipad-grammatik": "iPad-Grammatik", "hoeren": "Hören", "lesen": "Lesen",
+    "sprechen": "Sprechen", "schreiben": "Schreiben", "sonstiges": "Sonstiges"
+  };
+  var SRC_LABEL = { vocab: "Vokabeltrainer", workbook: "Heft (interaktiv)", satztraining: "Satztraining", situations: "Gesprächstrainer", manual: "Selbst" };
+
+  function summarise(events) {
+    var s = { vocab: 0, vocabNew: 0, workbook: 0, satz: 0, sit: 0, sitNew: 0, min: 0, minByCat: {} };
+    events.forEach(function (e) {
+      if (e.s === "vocab" && e.k === "review") { s.vocab++; if (e.isNew) s.vocabNew++; }
+      else if (e.s === "workbook" && e.k === "exercise") s.workbook++;
+      else if (e.s === "satztraining") s.satz++;
+      else if (e.s === "situations") { s.sit++; if (e.isNew) s.sitNew++; }
+      else if (e.s === "manual") {
+        if (e.min > 0) { s.min += e.min; s.minByCat[e.k] = (s.minByCat[e.k] || 0) + e.min; }
+        else { s.minByCat[e.k] = s.minByCat[e.k] || 0; }
+      }
+    });
+    return s;
+  }
+
+  function deltaHTML(now, prev) {
+    if (prev === 0 && now === 0) return '<span class="delta flat">&ndash;</span>';
+    var d = now - prev;
+    if (d === 0) return '<span class="delta flat">&plusmn;0 vs. Vorwoche</span>';
+    var cls = d > 0 ? "up" : "down";
+    return '<span class="delta ' + cls + '">' + (d > 0 ? "▲ +" : "▼ ") + d + ' vs. Vorwoche</span>';
+  }
+
+  var WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+  /* one titled section: a headline number + delta + 7 mini day-bars + extras */
+  function toolSection(title, headline, unit, delta, dayVals, opts) {
+    opts = opts || {};
+    var max = Math.max(1, Math.max.apply(null, dayVals));
+    var t0 = opts.t0;
+    var bars = '<div class="pg-bars">' + dayVals.map(function (v, k) {
+      var d = t0 - (6 - k) * DAY;
+      return '<div class="pg-bar-col">' +
+        '<div class="pg-bar-val">' + (v || "") + '</div>' +
+        '<div class="pg-bar' + (d === t0 ? " today" : "") + '" style="height:' + Math.round((v / max) * 100) + '%"></div>' +
+        '<div class="pg-bar-lbl">' + WD[new Date(d).getDay()] + '</div>' +
+        '</div>';
+    }).join("") + '</div>';
+    return '<h2>' + title + (opts.link ? ' <a style="font-family:var(--sans);font-size:12px;font-weight:400" href="' + opts.link + '">' + (opts.linkText || "öffnen") + ' &rarr;</a>' : "") + '</h2>' +
+      '<div class="pg-tiles"><div class="pg-tile"><div class="n">' + headline + '</div><div class="lbl">' + unit + '</div>' +
+      (opts.sub ? '<div class="sub">' + opts.sub + '</div>' : "") + delta + '</div>' +
+      (opts.extraTile || "") + '</div>' + bars +
+      (opts.foot ? '<p class="pg-split">' + opts.foot + '</p>' : "");
+  }
+
+  function daySeries(all, t0, pred) {
+    var out = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = t0 - i * DAY;
+      out.push(all.filter(function (e) { return e.t >= d && e.t < d + DAY && pred(e); }).length);
+    }
+    return out;
+  }
+  function daySeriesSum(all, t0, pred, field) {
+    var out = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = t0 - i * DAY;
+      out.push(all.filter(function (e) { return e.t >= d && e.t < d + DAY && pred(e); })
+        .reduce(function (a, e) { return a + (e[field] || 0); }, 0));
+    }
+    return out;
+  }
+
+  function render() {
+    var all = DW.getActivity().slice().sort(function (a, b) { return a.t - b.t; });
+    var body = document.getElementById("pg-body");
+    var log = document.getElementById("pg-log");
+
+    var t0 = dayStart(Date.now());
+    var week = all.filter(function (e) { return e.t >= t0 - 6 * DAY; });
+    var prevWeek = all.filter(function (e) { return e.t >= t0 - 13 * DAY && e.t < t0 - 6 * DAY; });
+    var W = summarise(week), P = summarise(prevWeek);
+
+    if (!all.length) {
+      body.innerHTML = '<p class="pg-empty">Noch keine Aktivität aufgezeichnet. Übe eine Runde im Vokabeltrainer oder in einem interaktiven Heft — oder trag unten ein, was du offline gemacht hast.</p>';
+      log.innerHTML = "";
+      return;
+    }
+
+    // streak (consecutive days with any event, ending today or yesterday)
+    var streak = 0, cur = t0;
+    if (!all.some(function (e) { return e.t >= t0 && e.t < t0 + DAY; })) cur = t0 - DAY;
+    while (all.some(function (e) { return e.t >= cur && e.t < cur + DAY; })) { streak++; cur -= DAY; }
+
+    // 30-day sparkline
+    var spark = '<div class="pg-spark">';
+    for (var j = 29; j >= 0; j--) {
+      var ds = t0 - j * DAY;
+      var hit = all.some(function (e) { return e.t >= ds && e.t < ds + DAY; });
+      spark += '<span class="' + (hit ? "hit" : "") + '" style="height:' + (hit ? 100 : 8) + '%"></span>';
+    }
+    spark += '</div>';
+
+    var drills = W.vocab + W.workbook;
+    var production = W.satz + W.sit + (W.minByCat.sprechen || 0) + (W.minByCat.schreiben || 0);
+    var input = (W.minByCat.hoeren || 0) + (W.minByCat.lesen || 0);
+
+    // --- Gesamt ---
+    var overview =
+      '<h2>Gesamt</h2>' +
+      '<div class="pg-streak">&#128293; <b>' + streak + '</b> ' + (streak === 1 ? "Tag" : "Tage") + ' in Folge</div>' +
+      '<p class="pg-split">Diese Woche grob: <b>' + drills + '</b> Drill-Einheiten · <b>' + production +
+      '</b> Produktion · <b>' + input + '</b> Minuten Hören/Lesen.<br>' +
+      'Für B2 zählt Produktion und echtes Hören/Lesen am meisten — Drills allein reichen nicht.</p>' +
+      '<div style="font-family:var(--sans);font-size:11px;color:var(--muted);margin:6px 0 2px">Letzte 30 Tage (Tag geübt / nicht)</div>' + spark;
+
+    // --- per-tool sections ---
+    var secVocab = toolSection("Vokabeltrainer", W.vocab, "Karten wiederholt (7 T.)",
+      deltaHTML(W.vocab, P.vocab),
+      daySeries(all, t0, function (e) { return e.s === "vocab"; }),
+      { t0: t0, sub: W.vocabNew + " davon neu", link: "vocab/stats.html", linkText: "volle Statistik",
+        extraTile: '<div class="pg-tile"><div class="n">' + W.vocabNew + '</div><div class="lbl">neue Wörter (7 T.)</div>' + deltaHTML(W.vocabNew, P.vocabNew) + '</div>' });
+
+    // workbook breakdown by heft
+    var byPage = {};
+    week.forEach(function (e) { if (e.s === "workbook" && e.k === "exercise") byPage[e.page] = (byPage[e.page] || 0) + 1; });
+    var pageList = Object.keys(byPage).sort(function (a, b) { return byPage[b] - byPage[a]; })
+      .map(function (p) { return esc(p.replace(/\.html$/, "")) + " · " + byPage[p]; }).join("<br>");
+    var secWb = toolSection("Interaktive Hefte", W.workbook, "Übungen geprüft (7 T.)",
+      deltaHTML(W.workbook, P.workbook),
+      daySeries(all, t0, function (e) { return e.s === "workbook"; }),
+      { t0: t0, foot: pageList ? "<b>Pro Heft:</b><br>" + pageList : "" });
+
+    var secSatz = toolSection("Satztraining", W.satz, "Karten (7 T.)",
+      deltaHTML(W.satz, P.satz),
+      daySeries(all, t0, function (e) { return e.s === "satztraining"; }),
+      { t0: t0, link: "workbooks/satztraining.html", linkText: "üben" });
+
+    var secSit = toolSection("Gesprächstrainer", W.sit, "Karten (7 T.)",
+      deltaHTML(W.sit, P.sit),
+      daySeries(all, t0, function (e) { return e.s === "situations"; }),
+      { t0: t0, sub: W.sitNew + " davon neu", link: "situations/index.html", linkText: "üben" });
+
+    // offline / manual, minutes
+    var catRows = ["ipad-grammatik", "hoeren", "lesen", "sprechen", "schreiben", "sonstiges"]
+      .filter(function (c) { return W.minByCat[c]; })
+      .map(function (c) { return CAT_LABEL[c] + " · " + W.minByCat[c] + " min"; }).join("<br>");
+    var secManual = toolSection("Offline / selbst eingetragen", W.min, "Minuten (7 T.)",
+      deltaHTML(W.min, P.min),
+      daySeriesSum(all, t0, function (e) { return e.s === "manual"; }, "min"),
+      { t0: t0, foot: catRows || "Noch nichts eingetragen — unten hinzufügen." });
+
+    body.innerHTML = overview + secVocab + secWb + secSatz + secSit + secManual;
+
+    // history list — last 30 entries, newest first
+    var recent = all.slice(-30).reverse();
+    log.innerHTML = recent.map(function (e) {
+      var when = new Date(e.t);
+      var ds = when.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " " +
+        when.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+      var what;
+      if (e.s === "manual") {
+        what = (CAT_LABEL[e.k] || e.k) + (e.min ? " · " + e.min + " min" : "") + (e.note ? " — " + esc(e.note) : "");
+      } else if (e.s === "vocab") {
+        what = "Vokabeltrainer — 1 Karte" + (e.isNew ? " (neu)" : "") + (e.correct === false ? " ✗" : "");
+      } else if (e.s === "workbook") {
+        what = "Heft " + esc(e.page || "") + " — 1 Übung (" + esc(e.r || "") + ")";
+      } else if (e.s === "satztraining") {
+        what = "Satztraining — 1 Karte (" + esc(e.mode || "") + ")";
+      } else if (e.s === "situations") {
+        what = "Gesprächstrainer — 1 Karte" + (e.isNew ? " (neu)" : "");
+      } else {
+        what = (SRC_LABEL[e.s] || e.s) + " — " + esc(e.k);
+      }
+      return '<li><span class="d">' + ds + '</span><span>' + what + '</span></li>';
+    }).join("");
+  }
+
+  start();
+})();
+</script>
+</body>
+</html>

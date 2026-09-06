@@ -218,7 +218,12 @@
       it.fb.classList.add("is-no");
       it.fb.innerHTML = '<span class="tag">✗ Nochmal üben.</span>';
     }
-    if (!silent) { state.r[it.idx] = result; persist(); updateProgress(); }
+    if (!silent) {
+      state.r[it.idx] = result; persist(); updateProgress();
+      if (window.DW && DW.logActivity) {
+        DW.logActivity("workbook", "exercise", { page: location.pathname.split("/").pop(), r: result });
+      }
+    }
   }
 
   function revealModel(it, silent) {

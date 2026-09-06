@@ -110,6 +110,7 @@
     // 04 — Referenz
     { p: "study-plan.html",                        t: "Studienplan & Zeitplan",           g: "reference", lv: "ref", tag: "PLAN" },
     { p: "narration-plan.html",                    t: "Selbstnarration — 3-Wochen-Plan",  g: "reference", lv: "ref", tag: "PLAN" },
+    { p: "progress.html",                          t: "Fortschritt — letzte 7 Tage",     g: "reference", lv: "ref", tag: "PLAN" },
     { p: "workbooks/satztraining.html",            t: "Satztraining — Kreis & Leiter (interaktiv)", g: "interactive", lv: "ref", tag: "B1–B2" },
     { p: "workbooks/connectors-reference.html",    t: "Konnektoren — Gesamtübersicht",    g: "reference", lv: "ref", tag: "REF" },
     { p: "cheatsheets/master.html",                t: "Kasus & Pronomen — Spickzettel",   g: "reference", lv: "ref", tag: "REF" },
@@ -689,6 +690,29 @@
   });
 
   /* ====================================================================
+     Cross-page activity log  —  localStorage['dw.activity']
+     A capped list of { t: ms, s: source, k: kind, ...meta }. Every practice
+     surface appends to it via DW.logActivity; progress.html reads it.
+     Per-device only (localStorage). Meant as a momentum/trend signal.
+     ==================================================================== */
+
+  var ACT_KEY = "dw.activity", ACT_CAP = 5000;
+  function actRead() {
+    try { var a = JSON.parse(localStorage.getItem(ACT_KEY)); return Array.isArray(a) ? a : []; }
+    catch (e) { return []; }
+  }
+  function logActivity(source, kind, meta) {
+    if (!source || !kind) return;
+    var a = actRead();
+    var e = { t: Date.now(), s: "" + source, k: "" + kind };
+    if (meta) for (var m in meta) if (Object.prototype.hasOwnProperty.call(meta, m)) e[m] = meta[m];
+    a.push(e);
+    if (a.length > ACT_CAP) a = a.slice(-ACT_CAP);
+    try { localStorage.setItem(ACT_KEY, JSON.stringify(a)); } catch (e2) {}
+    if (typeof DW.onActivity === "function") { try { DW.onActivity(e); } catch (e3) {} }
+  }
+
+  /* ====================================================================
      Public API
      ==================================================================== */
 
@@ -710,8 +734,14 @@
     fmtDE: fmtDE,
     uiLang: function () { return LANG; },
     setUiLang: setUiLang,
+    logActivity: logActivity,
+    getActivity: function (since) {
+      var a = actRead();
+      return since ? a.filter(function (e) { return e.t >= since; }) : a;
+    },
     onProfileChange: null,
-    onUiLangChange: null
+    onUiLangChange: null,
+    onActivity: null
   };
 
   /* ====================================================================

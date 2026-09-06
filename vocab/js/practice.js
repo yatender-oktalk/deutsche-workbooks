@@ -131,6 +131,7 @@ async function finishCard(entry, mode, grade, correct) {
   if (correct) session.correct++; else session.wrong++;
 
   let card = await VocabDB.getCard(session.profile, entry.id);
+  const isNew = !card;
   if (!card) card = newCard(session.profile, entry);
   gradeCard(card, grade);
   await VocabDB.putCard(card);
@@ -145,6 +146,10 @@ async function finishCard(entry, mode, grade, correct) {
     day: todayStr(),
     ts: Date.now(),
   });
+
+  if (window.DW && DW.logActivity) {
+    DW.logActivity('vocab', 'review', { level: entry.level, correct: !!correct, isNew });
+  }
 
   session.index++;
   renderProgress();

@@ -520,6 +520,15 @@
     el("st-feedback").hidden = true;
     el("tts-source").textContent = current.base;
     el("st-count").textContent = totalCards() + " Karten in diesem Modus";
+    current._logged = false;
+  }
+
+  function logCard() {
+    if (!current || current._logged) return;
+    current._logged = true;
+    if (window.DW && DW.logActivity) {
+      DW.logActivity("satztraining", "card", { mode: current.isLeiter ? "leiter" : "kreis" });
+    }
   }
 
   function runCheck() {
@@ -596,9 +605,9 @@
     render();
   });
 
-  el("st-check").addEventListener("click", runCheck);
+  el("st-check").addEventListener("click", function () { logCard(); runCheck(); });
   el("st-rulebtn").addEventListener("click", function () { el("st-rule").hidden = !el("st-rule").hidden; });
-  el("st-reveal").addEventListener("click", function () { el("st-answer").hidden = false; });
+  el("st-reveal").addEventListener("click", function () { logCard(); el("st-answer").hidden = false; });
   el("st-next").addEventListener("click", render);
   el("st-speak").addEventListener("click", function () {
     if (typeof window.speakText === "function") window.speakText("tts-source");

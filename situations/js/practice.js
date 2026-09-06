@@ -78,6 +78,7 @@ function speak(text) {
 
 async function finishCard(entry, grade) {
   let card = await SitDB.getCard(session.profile, entry.id);
+  const isNew = !card;
   if (!card) card = newCard(session.profile, entry);
   gradeCard(card, grade);
   await SitDB.putCard(card);
@@ -91,6 +92,10 @@ async function finishCard(entry, grade) {
     day: todayStr(),
     ts: Date.now(),
   });
+
+  if (window.DW && DW.logActivity) {
+    DW.logActivity('situations', 'card', { level: entry.level, category: entry.category, isNew });
+  }
 
   session.index++;
   renderProgress();
