@@ -62,6 +62,12 @@
 
   var PAGES = [
     // 01 — Grammatik
+    { p: "workbooks/A2/workbook-9-dativ.html",                      t: "Der Dativ",                    g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-10-wechselpraepositionen.html",     t: "Wechselpräpositionen",         g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-11-komparativ-superlativ.html",     t: "Komparativ & Superlativ",      g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-12-nebensaetze.html",               t: "Nebensätze (weil, dass, wenn)", g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-13-perfekt.html",                   t: "Perfekt & Partizip II",        g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-14-praeteritum.html",               t: "Präteritum (sein/haben/Modalverben)", g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-7-adjektivendungen-vergleich.html", t: "Adjektivendungen & Vergleich", g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-8-reflexive-verben.html",           t: "Reflexive Verben",             g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/B1/workbook-1-praeteritum-perfekt.html",  t: "Präteritum & Perfekt",              g: "grammar", lv: "b1", tag: "B1" },
