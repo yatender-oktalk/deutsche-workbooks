@@ -112,7 +112,7 @@ function _installHelpText() {
   var standalone = ('standalone' in window.navigator) && window.navigator.standalone === true;
   var msg = 'Installierte Stimmen auf diesem Ger\u00e4t:\n\n' + _voicesDump() +
     '\n\n\u2014 Bessere deutsche Stimme installieren \u2014\n' +
-    'iPhone/iPad: Einstellungen \u203a Bedienungshilfen \u203a Gesprochene Inhalte \u203a Stimmen \u203a Deutsch \u2014 eine Stimme mit \u201ePremium\u201c- oder \u201eErweitert\u201c-Kennzeichnung herunterladen. (Gilt auch f\u00fcr Chrome/Edge auf iOS \u2014 alle nutzen dieselben Stimmen.)\n' +
+    'iPhone/iPad: Einstellungen \u203a Bedienungshilfen \u203a Gesprochene Inhalte \u203a Stimmen \u203a Deutsch \u2014 eine Stimme mit \u201ePremium\u201c- oder \u201eErweitert\u201c-Kennzeichnung herunterladen (gro\u00dfe Datei, WLAN). Wichtig: Siri-Stimmen (Einstellungen \u203a Siri) z\u00e4hlen NICHT \u2014 die sind f\u00fcr Webseiten nicht verf\u00fcgbar. Nach dem Download das iPhone einmal NEU STARTEN, sonst sieht Safari die neue Stimme nicht. (Gilt auch f\u00fcr Chrome/Edge auf iOS \u2014 alle nutzen dieselben Stimmen.)\n' +
     'Android: Einstellungen \u203a Sprachausgabe / Text-in-Sprache \u203a Bevorzugte Engine \u201eGoogle\u201c \u203a Sprachdaten installieren \u203a Deutsch.\n\n' +
     'Danach Safari komplett schlie\u00dfen, die Seite neu laden und einmal \u25B6 tippen.';
   if (standalone) {
