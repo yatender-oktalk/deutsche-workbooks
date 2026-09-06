@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satztraining — Kreis &amp; Leiter</title>
+<link rel="stylesheet" href="../assets/app-shell.css">
+<link rel="stylesheet" href="../assets/print-workbook.css">
+<style>
+  .st-wrap { max-width: 680px; margin: 0 auto; padding: 0 4px 60px; }
+  .st-modes { display: flex; gap: 0; margin: 18px 0 6px; border: 1px solid var(--rule-strong); }
+  .st-modes button {
+    flex: 1; font-family: var(--sans); font-size: 13px; padding: 9px 6px;
+    background: var(--paper); color: var(--ink); border: none; cursor: pointer;
+    border-right: 1px solid var(--rule-strong);
+  }
+  .st-modes button:last-child { border-right: none; }
+  .st-modes button[aria-pressed="true"] { background: var(--ink); color: var(--paper); font-weight: 700; }
+  .st-meta { font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 14px 0 4px; }
+  .st-base { font-family: var(--serif); font-size: 24px; line-height: 1.3; margin: 0 0 2px; }
+  .st-step { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--accent); margin: 12px 0 2px; }
+  .st-prompt { font-family: var(--serif); font-size: 16px; margin: 0 0 10px; }
+  .st-input {
+    width: 100%; box-sizing: border-box; min-height: 84px; padding: 10px 12px;
+    font-family: var(--serif); font-size: 16px; line-height: 1.5;
+    border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink); resize: vertical;
+  }
+  .st-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .st-actions button {
+    font-family: var(--sans); font-size: 13px; padding: 9px 16px; cursor: pointer;
+    border: 1px solid var(--ink); background: var(--paper); color: var(--ink);
+  }
+  .st-actions button.st-primary { background: var(--ink); color: var(--paper); font-weight: 700; }
+  .st-answer { border-left: 3px solid var(--accent); padding: 10px 14px; margin: 6px 0 0; background: rgba(0,0,0,0.02); }
+  .st-answer .lbl { font-family: var(--sans); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+  .st-answer .mod { font-family: var(--serif); font-size: 17px; line-height: 1.5; }
+  .st-answer .why { display: block; font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .st-hint { font-family: var(--sans); font-size: 12px; color: var(--muted); margin-top: 22px; line-height: 1.6; }
+  .st-count { font-family: var(--sans); font-size: 11px; color: var(--muted); float: right; }
+</style>
+</head>
+<body class="level-ref" data-dw-nosplash>
+
+<div class="controls no-print">
+  <a class="back-link" href="../index.html">&larr; Index</a>
+  <a class="back-link" href="B2/workbook-7-satzkreis.html">Satzkreis (Heft) &rarr;</a>
+  <a class="back-link" href="B1/workbook-8-satzleiter.html">Satzleiter (Heft) &rarr;</a>
+</div>
+
+<div class="doc-header">
+  <div class="level-badge">B1 &rarr; B2 — ÜBEN</div>
+  <h1>Satztraining — Kreis &amp; Leiter</h1>
+  <p class="doc-meta">Endlose Umformungskarten: ein Grundsatz, eine Station bzw. Sprosse · laut sagen, dann Lösung aufdecken, selbst prüfen · nichts wird gespeichert</p>
+</div>
+
+<div class="st-wrap">
+  <div class="st-modes" id="st-modes">
+    <button type="button" data-mode="kreis" aria-pressed="true">Satzkreis (Zeiten &amp; Modi)</button>
+    <button type="button" data-mode="leiter" aria-pressed="false">Satzleiter (Nebensätze)</button>
+    <button type="button" data-mode="mix" aria-pressed="false">Gemischt</button>
+  </div>
+  <span class="st-count" id="st-count"></span>
+
+  <div class="st-meta">Grundsatz</div>
+  <p class="st-base" id="st-base">&nbsp;</p>
+  <div class="st-step" id="st-step">&nbsp;</div>
+  <p class="st-prompt" id="st-prompt">&nbsp;</p>
+
+  <textarea class="st-input" id="st-input" placeholder="Sag den umgeformten Satz laut &mdash; tipp ihn hier, wenn du willst (wird nicht gespeichert)&hellip;" aria-label="Dein Satz"></textarea>
+
+  <div class="st-actions">
+    <button type="button" class="st-primary" id="st-reveal">Lösung zeigen</button>
+    <button type="button" id="st-next">Nächste Karte</button>
+    <button type="button" id="st-speak">&#128266; Grundsatz vorlesen</button>
+  </div>
+
+  <div class="st-answer" id="st-answer" hidden>
+    <span class="lbl">Modellantwort</span>
+    <span class="mod" id="st-mod"></span>
+    <span class="why" id="st-why"></span>
+  </div>
+
+  <p class="st-hint">
+    Kein Lösungsschlüssel &bdquo;richtig/falsch&ldquo; &mdash; die Modellantwort ist <em>eine</em> mögliche Form. Prüfe deine gegen die Wortstellungsregel.
+    Ausführlich mit Erklärungen und zum Ausdrucken: <a href="B2/workbook-7-satzkreis.html">Der Satzkreis</a> (B2&nbsp;Heft&nbsp;7) und <a href="B1/workbook-8-satzleiter.html">Die Satzleiter</a> (B1&nbsp;Heft&nbsp;8).
+  </p>
+
+  <span id="tts-source" hidden></span>
+</div>
+
+<script defer src="../assets/app-shell.js"></script>
+<script src="../assets/listening.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var SATZKREIS = [
+    { base: "Das Wetter ist schön.", steps: [
+      { s: "Station 1 · Grundformen", p: "Aussage, Verneinung, Ja/Nein-Frage.",
+        a: "Das Wetter ist schön. / Das Wetter ist nicht schön. / Ist das Wetter schön?",
+        w: "„nicht“ verneint das Adjektiv; in der Frage steht das Verb an Position 1." },
+      { s: "Station 2 · Wortwechsel + Angaben", p: "Tausche das Prädikativ, füge eine Zeit-/Grad-Angabe hinzu (2–3 Varianten).",
+        a: "Das Wetter ist heute schlecht. / … gerade ziemlich wechselhaft. / … im Moment drückend heiß.",
+        w: "Prädikativ nach „sein“ wird nicht dekliniert." },
+      { s: "Station 3 · Futur I", p: "Als Vorhersage und als Vermutung über die Gegenwart.",
+        a: "Das Wetter wird morgen schön sein. / Das Wetter wird jetzt wohl schön sein.",
+        w: "„werden“ Position 2, Infinitiv „sein“ am Ende; „wohl“ macht die Gegenwartsvermutung." },
+      { s: "Station 4 · Modalverben", p: "Zwei Modalverben: eigene Vermutung + fremde Aussage.",
+        a: "Das Wetter müsste eigentlich schön sein. / Das Wetter soll am Wochenende schön werden.",
+        w: "„müsste/dürfte“ = Vermutung des Sprechers; „soll“ = fremde Quelle." },
+      { s: "Station 5 · Vergangenheit", p: "Präteritum und Perfekt.",
+        a: "Das Wetter war schön. / Das Wetter ist schön gewesen.",
+        w: "„sein“ bildet das Perfekt mit „ist“ + „gewesen“." },
+      { s: "Station 6 · Modalverb + Vergangenheit", p: "Real (Präteritum) und irreal (hätte + Infinitiv + Modalinfinitiv).",
+        a: "Das Wetter sollte am Wochenende schön werden. / Das Wetter hätte schön sein können.",
+        w: "Präteritum fürs Reale; „hätte … sein können“ für die verpasste Möglichkeit." },
+      { s: "Station 7 · Konjunktiv II", p: "Irrealis Gegenwart, Irrealis Vergangenheit, Wunsch.",
+        a: "Das Wetter wäre schön, wenn die Sonne schiene. / … wäre schön gewesen, wenn es nicht geregnet hätte. / Ich wünschte, das Wetter wäre schön.",
+        w: "„wäre“ = Konj. II von sein; Vergangenheit = „wäre … gewesen“." },
+      { s: "Station 8 · Infinitivsatz mit „zu“", p: "„Das Wetter ist schön“ hat keine Handlung — bette eine passende Handlung ein.",
+        a: "Es ist schön, bei diesem Wetter draußen zu sitzen. / Ich habe keine Lust, bei so schönem Wetter drinnen zu bleiben.",
+        w: "Infinitivsatz braucht ein Verb; Komma + „zu + Infinitiv“." },
+      { s: "Station 9 · Nebensätze", p: "Je einmal mit wenn (Bedingung), dass (Hoffnung), ob (Zweifel).",
+        a: "Ich gehe nur joggen, wenn das Wetter schön ist. / Ich hoffe, dass das Wetter morgen schön wird. / Ich weiß nicht, ob das Wetter am Sonntag schön ist.",
+        w: "Nach wenn/dass/ob steht das konjugierte Verb am Satzende." },
+      { s: "Station 10 · Passiv", p: "Kein Akkusativobjekt → unpersönliches Passiv aus einer passenden Handlung.",
+        a: "Bei schönem Wetter wird viel draußen gegrillt. / Bei Sonne wird im Park Volleyball gespielt.",
+        w: "„sein + Adjektiv“ hat kein Passiv; das unpersönliche Passiv braucht kein Subjekt." },
+      { s: "Station 11 · Indirekte Rede", p: "Als Aussage des Wetterberichts, Gegenwart und Vergangenheit.",
+        a: "Der Wetterbericht sagt, das Wetter sei schön. / Im Bericht hieß es, das Wetter sei am Wochenende schön gewesen.",
+        w: "Konj. I: „sei“, „werde“; Vergangenheit immer „sei/habe … + Partizip“." }
+    ]},
+    { base: "Ich trinke einen Kaffee.", steps: [
+      { s: "Station 1 · Grundformen", p: "Aussage, Verneinung, Ja/Nein-Frage.",
+        a: "Ich trinke einen Kaffee. / Ich trinke keinen Kaffee. / Trinkst du einen Kaffee?",
+        w: "Objekt mit unbestimmtem Artikel verneinen → „kein-“." },
+      { s: "Station 2 · Wortwechsel + Angaben", p: "Tausche das Akkusativobjekt (Artikel/Kasus!) und ergänze Zeit/Art.",
+        a: "Ich trinke jeden Morgen einen starken Espresso. / … gerade eine Tasse Tee. / … nach dem Essen ein Glas Wasser.",
+        w: "Akkusativ bleibt: einen (m.) / eine (f.) / ein (n.)." },
+      { s: "Station 3 · Futur I", p: "Zukunft und Vermutung über die Gegenwart.",
+        a: "Ich werde gleich einen Kaffee trinken. / Er wird jetzt wohl einen Kaffee trinken.",
+        w: "„werden“ Position 2, „trinken“ am Ende." },
+      { s: "Station 4 · Modalverben", p: "Drei Modalverben mit unterschiedlicher Bedeutung.",
+        a: "Ich möchte einen Kaffee trinken. / Ich will jetzt einen Kaffee trinken. / Ich muss erst einen Kaffee trinken.",
+        w: "möchte = höflicher Wunsch, will = Wille, muss = Notwendigkeit." },
+      { s: "Station 5 · Vergangenheit", p: "Präteritum und Perfekt.",
+        a: "Ich trank einen Kaffee. / Ich habe einen Kaffee getrunken.",
+        w: "„trinken“ stark: trank / getrunken, Perfekt mit „haben“." },
+      { s: "Station 6 · Modalverb + Vergangenheit", p: "Real (Präteritum) und im Nebensatz mit „weil“ (doppelter Infinitiv).",
+        a: "Ich wollte einen Kaffee trinken, aber die Maschine war kaputt. / …, weil ich unbedingt einen Kaffee habe trinken wollen.",
+        w: "Im Nebensatz steht „habe“ VOR den beiden Infinitiven." },
+      { s: "Station 7 · Konjunktiv II", p: "Gegenwart (würde- und echte Form), Vergangenheit, Wunsch.",
+        a: "Ich würde jetzt gern einen Kaffee trinken. (echt: Ich tränke jetzt gern einen Kaffee.) / Ich hätte einen Kaffee trinken können. / Ich wünschte, ich hätte jetzt einen Kaffee.",
+        w: "„tränke“ = trank + Umlaut + -e; Alltag meist würde-Form." },
+      { s: "Station 8 · Infinitivsatz mit „zu“", p: "Nach „es ist schön“, „keine Zeit haben“, „sich freuen auf“.",
+        a: "Es ist schön, morgens in Ruhe einen Kaffee zu trinken. / Ich habe keine Zeit, jetzt einen Kaffee zu trinken. / Ich freue mich darauf, gleich einen Kaffee zu trinken.",
+        w: "„sich freuen auf“ → Korrelat „darauf“, dann „…, zu + Infinitiv“." },
+      { s: "Station 9 · Nebensätze", p: "Je einmal mit wenn, weil, ob.",
+        a: "Wenn ich einen Kaffee trinke, kann ich besser arbeiten. / Ich mache eine Pause, weil ich einen Kaffee trinken will. / Ich weiß nicht, ob ich noch einen Kaffee trinken soll.",
+        w: "Verb ans Ende; bei Modalverb das konjugierte Modalverb ganz am Ende." },
+      { s: "Station 10 · Passiv", p: "Präsens, Präteritum, Perfekt, und mit Modalverb.",
+        a: "Ein Kaffee wird getrunken. / Ein Kaffee wurde getrunken. / Ein Kaffee ist getrunken worden. / Jetzt muss erst mal ein Kaffee getrunken werden.",
+        w: "Perfekt mit „ist … worden“ (nicht „geworden“); „ich“ fällt weg." },
+      { s: "Station 11 · Indirekte Rede", p: "Gegenwart, Vergangenheit, und ein Passiv-Satz in indirekter Rede.",
+        a: "Sie sagt, sie trinke einen Kaffee. / Er sagte, er habe einen Kaffee getrunken. / Jemand hat behauptet, es werde gerade ein Kaffee getrunken.",
+        w: "Konj. I: „trinke“, „habe getrunken“, Passiv „werde getrunken“." }
+    ]},
+    { base: "Mein Kollege hilft mir.", steps: [
+      { s: "Station 1 · Grundformen", p: "Aussage, Verneinung, Ja/Nein-Frage.",
+        a: "Mein Kollege hilft mir. / Mein Kollege hilft mir nicht. / Hilft mir mein Kollege?",
+        w: "„helfen“ verlangt den Dativ (mir)." },
+      { s: "Station 2 · Attribute + Angaben", p: "Adjektivattribut, Häufigkeit, Art, Präpositionalobjekt ergänzen.",
+        a: "Mein neuer Kollege hilft mir jeden Tag geduldig bei der Arbeit.",
+        w: "„mein neuer Kollege“ (gemischte Deklination, Nom. m.); „geduldig“ als Adverb bleibt." },
+      { s: "Station 3 · Futur I", p: "Zukunft und beruhigende Vermutung.",
+        a: "Mein Kollege wird mir morgen helfen. / Mein Kollege wird mir schon helfen.",
+        w: "„schon“ macht daraus eine beruhigende Vermutung." },
+      { s: "Station 4 · Modalverben", p: "Fähigkeit, Bereitschaft, fremder Auftrag.",
+        a: "Mein Kollege kann mir helfen. / Mein Kollege will mir helfen. / Mein Kollege soll mir helfen.",
+        w: "kann = Fähigkeit, will = Bereitschaft, soll = jemand hat es ihm aufgetragen." },
+      { s: "Station 5 · Vergangenheit", p: "Präteritum und Perfekt.",
+        a: "Mein Kollege half mir. / Mein Kollege hat mir geholfen.",
+        w: "half / geholfen, Perfekt mit „haben“; Dativ „mir“ bleibt." },
+      { s: "Station 6 · Modalverb + Vergangenheit", p: "Real (Präteritum) und irreal (Konj. II, doppelter Infinitiv).",
+        a: "Mein Kollege wollte mir helfen. / Mein Kollege hätte mir helfen können (helfen sollen / helfen müssen).",
+        w: "„hätte … helfen können“ = doppelter Infinitiv im Konj. II." },
+      { s: "Station 7 · Konjunktiv II", p: "Gegenwart, Vergangenheit, Wunsch.",
+        a: "Mein Kollege würde mir helfen, wenn ich ihn fragte. / Mein Kollege hätte mir geholfen, wenn ich gefragt hätte. / Ich wünschte, mein Kollege würde mir helfen.",
+        w: "Hauptsatz „würde + Infinitiv“; Vergangenheit „hätte … geholfen“." },
+      { s: "Station 8 · Infinitivsatz mit „zu“", p: "Nach „versprechen“, „anbieten“, „nett sein von“.",
+        a: "Mein Kollege verspricht mir, mir zu helfen. / Mein Kollege hat angeboten, mir zu helfen. / Es ist nett von meinem Kollegen, mir zu helfen.",
+        w: "„Kollege“ ist n-Deklination → „von meinem Kollegen“." },
+      { s: "Station 9 · Nebensätze", p: "Grund (weil), Bedingung (wenn), Zweifel (ob).",
+        a: "Ich schaffe die Aufgabe, weil mein Kollege mir hilft. / Wenn mein Kollege mir hilft, bin ich schneller fertig. / Ich bin nicht sicher, ob mein Kollege mir heute hilft.",
+        w: "Verb ans Ende; nach vorangestelltem Nebensatz folgt sofort das Verb." },
+      { s: "Station 10 · Passiv", p: "Nur Dativobjekt → unpersönliches Passiv in drei Zeitstufen.",
+        a: "Mir wird (von meinem Kollegen) geholfen. / Mir wurde geholfen. / Mir ist geholfen worden.",
+        w: "„mir“ kann nicht Subjekt werden und bleibt Dativ; das Passiv ist subjektlos." },
+      { s: "Station 11 · Indirekte Rede", p: "Gegenwart, Vergangenheit, Zukunft — und einmal als Passiv.",
+        a: "Mein Kollege sagt, er helfe mir. / Er sagte, er habe mir geholfen. / Er sagte, er werde mir helfen. / Man sagt, mir werde im Team immer gern geholfen.",
+        w: "Konj. I: „helfe“, „habe geholfen“, „werde helfen“." }
+    ]}
+  ];
+
+  var SATZLEITER = [
+    { base: "Ich lerne Deutsch.", steps: [
+      { s: "Sprosse 2 · Koordination", p: "Hänge mit und / aber / denn je einen zweiten Hauptsatz an.",
+        a: "Ich lerne Deutsch, und ich übe jeden Tag. / …, aber es ist nicht immer leicht. / …, denn ich möchte nach Deutschland ziehen.",
+        w: "und/aber/oder/denn ändern die Wortstellung nicht — Verb bleibt Position 2." },
+      { s: "Sprosse 3 · weil", p: "Gib einen Grund.",
+        a: "Ich lerne Deutsch, weil ich nach Deutschland ziehen möchte.",
+        w: "Erster Nebensatz: konjugiertes Verb (möchte) ganz ans Ende." },
+      { s: "Sprosse 4 · dass", p: "Nach einem Meinungsverb (glauben / finden / denken).",
+        a: "Ich glaube, dass Deutsch nicht so schwer ist.",
+        w: "dass leitet den Inhaltssatz ein; Verb (ist) ans Ende." },
+      { s: "Sprosse 5 · obwohl", p: "Setze einen Gegensatz.",
+        a: "Ich lerne Deutsch, obwohl ich wenig Zeit habe.",
+        w: "Gleiche Wortstellung wie weil — Verb (habe) ans Ende." },
+      { s: "Sprosse 6 · wenn", p: "Stelle den wenn-Satz voran.",
+        a: "Wenn ich Zeit habe, lerne ich Deutsch.",
+        w: "Vorangestellter Nebensatz → im Hauptsatz sofort das Verb: „…, lerne ich …“." },
+      { s: "Sprosse 7 · als", p: "Ein einmaliger Moment in deiner Vergangenheit.",
+        a: "Als ich jung war, habe ich nie Deutsch gelernt.",
+        w: "als = ein Moment in der Vergangenheit, nicht „wenn“." },
+      { s: "Sprosse 8 · Relativsatz", p: "Beschreibe das Nomen „eine Sprache“ selbst.",
+        a: "Deutsch ist eine Sprache, die ich schon lange lernen wollte.",
+        w: "„die“ = feminin (Sprache), hier Akkusativobjekt; Verb ans Ende." }
+    ]},
+    { base: "Ich koche jeden Abend.", steps: [
+      { s: "Sprosse 2 · Koordination", p: "Mit aber und einer Inversion im zweiten Satz.",
+        a: "Ich koche jeden Abend, aber am Wochenende bestelle ich manchmal Essen.",
+        w: "Zweiter Hauptsatz beginnt mit „am Wochenende“ → Inversion (bestelle ich)." },
+      { s: "Sprosse 3 · weil", p: "Gib einen Grund.",
+        a: "Ich koche jeden Abend, weil ich gern esse, was mir schmeckt.",
+        w: "Verb (esse) ans Ende; „was mir schmeckt“ = eingeschobener freier Relativsatz." },
+      { s: "Sprosse 4 · dass", p: "Nach „finden“.",
+        a: "Ich finde, dass Kochen eigentlich ziemlich entspannend ist.",
+        w: "„Kochen“ (nominalisiert) = Subjekt; Verb (ist) ans Ende." },
+      { s: "Sprosse 5 · obwohl", p: "Setze einen Gegensatz.",
+        a: "Ich koche jeden Abend, obwohl ich manchmal keine Zeit habe.",
+        w: "Verb (habe) ans Ende — gleiche Struktur wie weil." },
+      { s: "Sprosse 6 · wenn", p: "Vorangestellt.",
+        a: "Wenn ich müde bin, koche ich trotzdem etwas Einfaches.",
+        w: "wenn-Satz im Vorfeld → „…, koche ich …“." },
+      { s: "Sprosse 7 · als", p: "Eine Phase in deiner Vergangenheit.",
+        a: "Als ich noch bei meinen Eltern gewohnt habe, habe ich nie gekocht.",
+        w: "Schriftsprachlich sauberer im Präteritum: „Als ich … wohnte, kochte ich nie.“" },
+      { s: "Sprosse 8 · Relativsatz", p: "Beschreibe das Objekt „Gerichte“.",
+        a: "Ich koche gern Gerichte, die nicht viel Zeit brauchen.",
+        w: "„die“ = Plural (Gerichte), Subjekt; Verb (brauchen) ans Ende." }
+    ]},
+    { base: "Ich arbeite von zu Hause.", steps: [
+      { s: "Sprosse 2 · Koordination", p: "Zweiter Hauptsatz mit einer Angabe im Vorfeld.",
+        a: "Ich arbeite von zu Hause, aber manchmal gehe ich ins Büro.",
+        w: "„manchmal“ vorn → Inversion (gehe ich)." },
+      { s: "Sprosse 3 · weil", p: "Gib einen Grund.",
+        a: "Ich arbeite von zu Hause, weil ich dort flexibler bin.",
+        w: "Verb (bin) ans Ende." },
+      { s: "Sprosse 4 · dass", p: "Mit einem Modalverb im dass-Satz.",
+        a: "Ich glaube, dass Homeoffice produktiver sein kann.",
+        w: "Bei Modalverb im Nebensatz steht das konjugierte Modalverb (kann) ganz am Ende." },
+      { s: "Sprosse 5 · obwohl", p: "Setze einen Gegensatz.",
+        a: "Ich arbeite von zu Hause, obwohl ich manchmal die Kollegen vermisse.",
+        w: "Verb (vermisse) ans Ende." },
+      { s: "Sprosse 6 · wenn", p: "Vorangestellt, mit trennbarem Verb im Hauptsatz.",
+        a: "Wenn ich mich konzentrieren muss, schalte ich mein Handy aus.",
+        w: "„schalte ich … aus“: Verb zuerst, Präfix am Ende." },
+      { s: "Sprosse 7 · als", p: "Eine Phase in deiner Vergangenheit.",
+        a: "Als ich noch im Büro gearbeitet habe, bin ich jeden Tag gependelt.",
+        w: "Schriftsprachlich: „Als ich … arbeitete, pendelte ich …“." },
+      { s: "Sprosse 8 · Relativsatz", p: "Beschreibe „einen Job“.",
+        a: "Ich habe einen Job, der mir wirklich Spaß macht.",
+        w: "„der“ = maskulin (Job), Subjekt im Nominativ; Verb (macht) ans Ende." }
+    ]}
+  ];
+
+  var el = function (id) { return document.getElementById(id); };
+  var mode = "kreis";
+  try { var m = localStorage.getItem("satztraining.mode"); if (m) mode = m; } catch (e) {}
+  var current = null;
+
+  function pool() {
+    if (mode === "kreis") return SATZKREIS;
+    if (mode === "leiter") return SATZLEITER;
+    return SATZKREIS.concat(SATZLEITER);
+  }
+
+  function totalCards() {
+    return pool().reduce(function (n, b) { return n + b.steps.length; }, 0);
+  }
+
+  function pick() {
+    var list = pool();
+    var b = list[Math.floor(Math.random() * list.length)];
+    var st = b.steps[Math.floor(Math.random() * b.steps.length)];
+    if (current && current.base === b.base && current.step.s === st.s && totalCards() > 1) return pick();
+    return { base: b.base, step: st };
+  }
+
+  function render() {
+    current = pick();
+    el("st-base").textContent = current.base;
+    el("st-step").textContent = current.step.s;
+    el("st-prompt").textContent = current.step.p;
+    el("st-input").value = "";
+    el("st-mod").textContent = current.step.a;
+    el("st-why").textContent = current.step.w;
+    el("st-answer").hidden = true;
+    el("tts-source").textContent = current.base;
+    el("st-count").textContent = totalCards() + " Karten in diesem Modus";
+  }
+
+  el("st-modes").addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-mode]");
+    if (!btn) return;
+    mode = btn.getAttribute("data-mode");
+    try { localStorage.setItem("satztraining.mode", mode); } catch (err) {}
+    [].forEach.call(this.querySelectorAll("button[data-mode]"), function (b) {
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+    render();
+  });
+
+  el("st-reveal").addEventListener("click", function () { el("st-answer").hidden = false; });
+  el("st-next").addEventListener("click", render);
+  el("st-speak").addEventListener("click", function () {
+    if (typeof window.speakText === "function") window.speakText("tts-source");
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName)) return;
+    if (e.key === "Enter") { e.preventDefault(); el("st-answer").hidden = false; }
+    else if (e.key.toLowerCase() === "n") { e.preventDefault(); render(); }
+  });
+
+  [].forEach.call(document.querySelectorAll("#st-modes button[data-mode]"), function (b) {
+    b.setAttribute("aria-pressed", b.getAttribute("data-mode") === mode ? "true" : "false");
+  });
+  render();
+})();
+</script>
+</body>
+</html>

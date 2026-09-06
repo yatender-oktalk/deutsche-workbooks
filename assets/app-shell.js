@@ -42,6 +42,24 @@
     { key: "legacy",      ord: "05", label: "Ältere Hefte" }
   ];
 
+  /* Top level of the register: one bucket per CEFR level, plus interactive and
+     reference. Each page lands in exactly one bucket; within a bucket the rows
+     are sub-grouped by GROUPS (Grammatik / Prüfungstraining / …). */
+  var LEVEL_BUCKETS = [
+    { key: "interactive", label: "Interaktiv üben", lv: "ref",
+      match: function (pg) { return pg.g === "interactive"; } },
+    { key: "a1", label: "A1", lv: "a1",
+      match: function (pg) { return pg.lv === "a1"; } },
+    { key: "a2", label: "A2", lv: "a2",
+      match: function (pg) { return pg.lv === "a2"; } },
+    { key: "b1", label: "B1", lv: "b1",
+      match: function (pg) { return pg.lv === "b1" || (pg.g === "exam" && pg.tag === "B1"); } },
+    { key: "b2", label: "B2", lv: "b2",
+      match: function (pg) { return pg.lv === "b2" || (pg.g === "exam" && pg.tag === "B2"); } },
+    { key: "reference", label: "Referenz & Pläne", lv: "ref",
+      match: function (pg) { return pg.g === "reference"; } }
+  ];
+
   var PAGES = [
     // 01 — Grammatik
     { p: "workbooks/A2/workbook-7-adjektivendungen-vergleich.html", t: "Adjektivendungen & Vergleich", g: "grammar", lv: "a2", tag: "A2" },
@@ -53,6 +71,7 @@
     { p: "workbooks/B1/workbook-5-adjective-declension.html", t: "Adjektivdeklination (komplett)",     g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-6-konjunktiv-ii.html",        t: "Konjunktiv II & zweiteilige Konnektoren", g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-7-modalverben.html",          t: "Modalverben — subjektiv & doppelter Infinitiv", g: "grammar", lv: "b1", tag: "B1" },
+    { p: "workbooks/B1/workbook-8-satzleiter.html",           t: "Die Satzleiter — Nebensätze stapeln", g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B2/workbook-1-konjunktiv-i-reported-speech.html", t: "Konjunktiv I & Indirekte Rede", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-2-passive-advanced.html",     t: "Passiv mit Modalverben & Zustandspassiv", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-3-advanced-connectors.html",  t: "Fortgeschrittene Konnektoren",       g: "grammar", lv: "b2", tag: "B2" },
@@ -78,6 +97,8 @@
 
     // 04 — Referenz
     { p: "study-plan.html",                        t: "Studienplan & Zeitplan",           g: "reference", lv: "ref", tag: "PLAN" },
+    { p: "narration-plan.html",                    t: "Selbstnarration — 3-Wochen-Plan",  g: "reference", lv: "ref", tag: "PLAN" },
+    { p: "workbooks/satztraining.html",            t: "Satztraining — Kreis & Leiter (interaktiv)", g: "interactive", lv: "ref", tag: "B1–B2" },
     { p: "workbooks/connectors-reference.html",    t: "Konnektoren — Gesamtübersicht",    g: "reference", lv: "ref", tag: "REF" },
     { p: "cheatsheets/master.html",                t: "Kasus & Pronomen — Spickzettel",   g: "reference", lv: "ref", tag: "REF" },
     { p: "cheatsheets/master-2.html",              t: "Kasus & Pronomen — Spickzettel v2", g: "reference", lv: "ref", tag: "REF" },
@@ -322,26 +343,38 @@
      Register list  (rendered into the slide-over index and the hub)
      ==================================================================== */
 
-  function renderRegister(mount, opts) {
-    opts = opts || {};
+  function renderRegister(mount) {
     mount.innerHTML = "";
-    GROUPS.forEach(function (grp) {
-      if (opts.groups && opts.groups.indexOf(grp.key) === -1) return;
-      var items = PAGES.filter(function (pg) { return pg.g === grp.key; });
+    LEVEL_BUCKETS.forEach(function (lvl) {
+      var items = PAGES.filter(lvl.match);
       if (!items.length) return;
-      var g = el("div", { "class": "dw-group" });
-      g.appendChild(el("div", { "class": "dw-group-head",
-        html: "<span class=\"dw-ord\">" + grp.ord + "</span>" + grp.label }));
-      items.forEach(function (pg) {
-        var href = ROOT + pg.p;
-        var row = el("a", { "class": "dw-row", href: href });
-        if (href === CURRENT) row.setAttribute("aria-current", "page");
-        row.appendChild(el("span", { "class": "dw-row-title", text: pg.t }));
-        row.appendChild(el("span", { "class": "dw-row-lead" }));
-        row.appendChild(el("span", { "class": "dw-row-tag lv-" + pg.lv, text: pg.tag }));
-        g.appendChild(row);
+
+      var bucket = el("div", { "class": "dw-bucket" });
+      var bhead = el("div", { "class": "dw-bucket-head lv-" + lvl.lv });
+      bhead.appendChild(el("span", { "class": "dw-bucket-label", text: lvl.label }));
+      bhead.appendChild(el("span", { "class": "dw-bucket-count", text: String(items.length) }));
+      bucket.appendChild(bhead);
+
+      var subs = GROUPS.filter(function (grp) {
+        return items.some(function (pg) { return pg.g === grp.key; });
       });
-      mount.appendChild(g);
+      subs.forEach(function (grp) {
+        var g = el("div", { "class": "dw-group" });
+        if (subs.length > 1) {
+          g.appendChild(el("div", { "class": "dw-group-head", text: grp.label }));
+        }
+        items.filter(function (pg) { return pg.g === grp.key; }).forEach(function (pg) {
+          var href = ROOT + pg.p;
+          var row = el("a", { "class": "dw-row", href: href });
+          if (href === CURRENT) row.setAttribute("aria-current", "page");
+          row.appendChild(el("span", { "class": "dw-row-title", text: pg.t }));
+          row.appendChild(el("span", { "class": "dw-row-lead" }));
+          row.appendChild(el("span", { "class": "dw-row-tag lv-" + pg.lv, text: pg.tag }));
+          g.appendChild(row);
+        });
+        bucket.appendChild(g);
+      });
+      mount.appendChild(bucket);
     });
   }
 
@@ -388,6 +421,9 @@
         if (hit) shown++;
       });
       g.classList.toggle("is-empty", shown === 0);
+    });
+    scroll.querySelectorAll(".dw-bucket").forEach(function (b) {
+      b.classList.toggle("is-empty", !b.querySelector(".dw-row:not(.is-hidden)"));
     });
   }
 
@@ -593,6 +629,7 @@
     ROOT: ROOT,
     PAGES: PAGES,
     GROUPS: GROUPS,
+    LEVEL_BUCKETS: LEVEL_BUCKETS,
     LEVEL_LABELS: LEVEL_LABELS,
     PHASES: PHASES,
     readProfile: readProfile,

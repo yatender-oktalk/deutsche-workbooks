@@ -293,6 +293,39 @@ html { background: #e6e2d6; }
 .dw-group.is-empty { display: none; }
 .dw-row.is-hidden { display: none; }
 
+/* Two-level register: a bucket per CEFR level, sub-grouped by type */
+.dw-bucket { margin-top: 32px; }
+.dw-bucket:first-child { margin-top: 8px; }
+.dw-bucket.is-empty { display: none; }
+.dw-bucket-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+  padding: 0 2px 6px 10px;
+  border-left: 3px solid var(--rule-strong);
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 2px;
+}
+.dw-bucket-head.lv-a1 { border-left-color: var(--lv-a1); }
+.dw-bucket-head.lv-a2 { border-left-color: var(--lv-a2); }
+.dw-bucket-head.lv-b1 { border-left-color: var(--lv-b1); }
+.dw-bucket-head.lv-b2 { border-left-color: var(--lv-b2); }
+.dw-bucket-head.lv-ref { border-left-color: var(--lv-ref); }
+.dw-bucket-count {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.dw-bucket .dw-group { margin-top: 14px; }
+.dw-bucket .dw-group:first-of-type { margin-top: 4px; }
+
 /* ==========================================================================
    Splash / onboarding  (full-screen, paper ground, three quiet steps)
    ========================================================================== */
