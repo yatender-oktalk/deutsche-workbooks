@@ -109,11 +109,16 @@ function _voicesDump() {
 }
 
 function _installHelpText() {
-  return 'Installierte Stimmen auf diesem Ger\u00e4t:\n\n' + _voicesDump() +
+  var standalone = ('standalone' in window.navigator) && window.navigator.standalone === true;
+  var msg = 'Installierte Stimmen auf diesem Ger\u00e4t:\n\n' + _voicesDump() +
     '\n\n\u2014 Bessere deutsche Stimme installieren \u2014\n' +
-    'iPhone/iPad: Einstellungen \u203a Bedienungshilfen \u203a Gesprochene Inhalte \u203a Stimmen \u203a Deutsch \u2014 eine \u201ePremium\u201c- oder \u201eErweitert\u201c-Stimme laden. (Gilt auch f\u00fcr Chrome auf iOS.)\n' +
+    'iPhone/iPad: Einstellungen \u203a Bedienungshilfen \u203a Gesprochene Inhalte \u203a Stimmen \u203a Deutsch \u2014 eine Stimme mit \u201ePremium\u201c- oder \u201eErweitert\u201c-Kennzeichnung herunterladen. (Gilt auch f\u00fcr Chrome/Edge auf iOS \u2014 alle nutzen dieselben Stimmen.)\n' +
     'Android: Einstellungen \u203a Sprachausgabe / Text-in-Sprache \u203a Bevorzugte Engine \u201eGoogle\u201c \u203a Sprachdaten installieren \u203a Deutsch.\n\n' +
-    'Danach die Seite neu laden und einmal \u25B6 tippen.';
+    'Danach Safari komplett schlie\u00dfen, die Seite neu laden und einmal \u25B6 tippen.';
+  if (standalone) {
+    msg += '\n\nHinweis: Diese Seite l\u00e4uft gerade als installierte App. iOS zeigt hier oft nur die einfache Stimme. F\u00fcr die guten Stimmen die H\u00f6rverstehen-Seiten direkt in Safari \u00f6ffnen.';
+  }
+  return msg;
 }
 
 function buildVoicePicker() {
