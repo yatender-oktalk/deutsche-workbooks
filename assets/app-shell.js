@@ -35,28 +35,28 @@
      ==================================================================== */
 
   var GROUPS = [
-    { key: "grammar",     ord: "01", label: "Grammatik" },
-    { key: "exam",        ord: "02", label: "Prüfungstraining" },
-    { key: "interactive", ord: "03", label: "Üben" },
-    { key: "reference",   ord: "04", label: "Referenz" },
-    { key: "legacy",      ord: "05", label: "Ältere Hefte" }
+    { key: "grammar",     ord: "01", label: "Grammatik",       en: "Grammar" },
+    { key: "exam",        ord: "02", label: "Prüfungstraining", en: "Exam practice" },
+    { key: "interactive", ord: "03", label: "Üben",             en: "Practice" },
+    { key: "reference",   ord: "04", label: "Referenz",         en: "Reference" },
+    { key: "legacy",      ord: "05", label: "Ältere Hefte",     en: "Older workbooks" }
   ];
 
   /* Top level of the register: one bucket per CEFR level, plus interactive and
      reference. Each page lands in exactly one bucket; within a bucket the rows
      are sub-grouped by GROUPS (Grammatik / Prüfungstraining / …). */
   var LEVEL_BUCKETS = [
-    { key: "interactive", label: "Interaktiv üben", lv: "ref",
+    { key: "interactive", label: "Interaktiv üben", en: "Interactive practice", lv: "ref",
       match: function (pg) { return pg.g === "interactive"; } },
-    { key: "a1", label: "A1", lv: "a1",
+    { key: "a1", label: "A1", en: "A1", lv: "a1",
       match: function (pg) { return pg.lv === "a1"; } },
-    { key: "a2", label: "A2", lv: "a2",
+    { key: "a2", label: "A2", en: "A2", lv: "a2",
       match: function (pg) { return pg.lv === "a2"; } },
-    { key: "b1", label: "B1", lv: "b1",
+    { key: "b1", label: "B1", en: "B1", lv: "b1",
       match: function (pg) { return pg.lv === "b1" || (pg.g === "exam" && pg.tag === "B1"); } },
-    { key: "b2", label: "B2", lv: "b2",
+    { key: "b2", label: "B2", en: "B2", lv: "b2",
       match: function (pg) { return pg.lv === "b2" || (pg.g === "exam" && pg.tag === "B2"); } },
-    { key: "reference", label: "Referenz & Pläne", lv: "ref",
+    { key: "reference", label: "Referenz & Pläne", en: "Reference & plans", lv: "ref",
       match: function (pg) { return pg.g === "reference"; } }
   ];
 
@@ -118,6 +118,49 @@
     a1: "A1", a2: "A2 → B1 Brücke", b1: "B1 Grammatik",
     b2: "B2 Grammatik", exam: "Prüfungstraining", ref: "Referenz", mixed: "Üben"
   };
+  var LEVEL_LABELS_EN = {
+    a1: "A1", a2: "A2 → B1 bridge", b1: "B1 grammar",
+    b2: "B2 grammar", exam: "Exam practice", ref: "Reference", mixed: "Practice"
+  };
+
+  /* ====================================================================
+     UI language  (chrome only — never the exercise content)
+     dw.uiLang = "de" | "en" ; default "de"
+     ==================================================================== */
+
+  var LANG = "de";
+  try { var _l = localStorage.getItem("dw.uiLang"); if (_l === "en" || _l === "de") LANG = _l; } catch (e) {}
+  document.documentElement.setAttribute("data-uilang", LANG);
+
+  function t(de, en) { return (LANG === "en" && en != null) ? en : de; }
+
+  function setUiLang(l) {
+    l = (l === "en") ? "en" : "de";
+    if (l === LANG) return;
+    LANG = l;
+    try { localStorage.setItem("dw.uiLang", LANG); } catch (e) {}
+    document.documentElement.setAttribute("data-uilang", LANG);
+    refreshChrome();
+    if (typeof DW.onUiLangChange === "function") DW.onUiLangChange(LANG);
+  }
+
+  /* re-render every piece of chrome that carries translatable text */
+  function refreshChrome() {
+    var crumb = document.querySelector(".dw-crumb");
+    if (crumb) crumb.innerHTML = crumbHTML();
+    var mw = document.querySelector(".dw-menu-word");
+    if (mw) mw.textContent = t("Index", "Index");
+    var lb = document.getElementById("dw-lang-btn");
+    if (lb) { lb.textContent = LANG === "en" ? "DE" : "EN"; lb.setAttribute("aria-label", t("Sprache der Oberfläche wechseln", "Switch interface language")); }
+    var gb = document.getElementById("dw-gloss-btn");
+    if (gb) gb.setAttribute("aria-label", t("Seiten-Glossar", "Page glossary"));
+    renderCountdown();
+    var ih = document.querySelector(".dw-index-head h2");
+    if (ih) ih.textContent = t("Index", "Index");
+    if (indexFilter) indexFilter.setAttribute("placeholder", t("Filtern…  ( / )", "Filter…  ( / )"));
+    var scroll = document.getElementById("dw-index-scroll");
+    if (scroll) renderRegister(scroll);
+  }
 
   /* ====================================================================
      Study-plan phase model  (shared with study-plan.html)
@@ -287,7 +330,8 @@
 
   function crumbHTML() {
     var lv = (document.body.className.match(/level-(\w+)/) || [])[1];
-    var levelText = lv && LEVEL_LABELS[lv] ? LEVEL_LABELS[lv] : "";
+    var map = LANG === "en" ? LEVEL_LABELS_EN : LEVEL_LABELS;
+    var levelText = lv && map[lv] ? map[lv] : "";
     var title = (document.title || "").split(/[—–|]/)[0].trim();
     var parts = ["Deutsch"];
     if (levelText) parts.push(levelText);
@@ -299,20 +343,31 @@
     var bar = el("div", { "class": "dw-topbar no-print" });
     var inner = el("div", { "class": "dw-topbar-inner" });
 
-    var menuBtn = el("button", { "class": "dw-menu-btn", type: "button", "aria-label": "Index öffnen",
-      html: "≡<span class=\"dw-menu-word\">Index</span>" });
+    var menuBtn = el("button", { "class": "dw-menu-btn", type: "button", "aria-label": t("Index öffnen", "Open index"),
+      html: "≡<span class=\"dw-menu-word\">" + t("Index", "Index") + "</span>" });
     menuBtn.addEventListener("click", openIndex);
 
     var crumb = el("span", { "class": "dw-crumb", html: crumbHTML() });
     var spring = el("span", { "class": "dw-topbar-spring" });
 
+    var glossBtn = el("button", { "class": "dw-tb-btn", id: "dw-gloss-btn", type: "button",
+      "aria-label": t("Seiten-Glossar", "Page glossary"), text: "📖" });
+    glossBtn.addEventListener("click", function () { if (window.DWGloss) window.DWGloss.toggle(); });
+
+    var langBtn = el("button", { "class": "dw-tb-btn", id: "dw-lang-btn", type: "button",
+      "aria-label": t("Sprache der Oberfläche wechseln", "Switch interface language"),
+      text: LANG === "en" ? "DE" : "EN" });
+    langBtn.addEventListener("click", function () { setUiLang(LANG === "en" ? "de" : "en"); });
+
     var cd = el("button", { "class": "dw-countdown", type: "button", id: "dw-countdown",
-      "aria-label": "Prüfungstermin bearbeiten", text: "…" });
+      "aria-label": t("Prüfungstermin bearbeiten", "Edit exam date"), text: "…" });
     cd.addEventListener("click", openProfileEditor);
 
     inner.appendChild(menuBtn);
     inner.appendChild(crumb);
     inner.appendChild(spring);
+    inner.appendChild(glossBtn);
+    inner.appendChild(langBtn);
     inner.appendChild(cd);
     bar.appendChild(inner);
 
@@ -328,15 +383,15 @@
     var p = readProfile();
     if (!p || !p.examDate) {
       cd.removeAttribute("data-live");
-      cd.textContent = "Kein Termin";
+      cd.textContent = t("Kein Termin", "No exam date");
       return;
     }
     var d = daysBetween(startOfToday(), parseISO(p.examDate));
     cd.setAttribute("data-live", "");
-    if (d < 0) cd.textContent = "Prüfung vorbei";
-    else if (d === 0) cd.textContent = "Prüfung heute";
-    else if (d <= 21) cd.textContent = "noch " + d + " Tag" + (d === 1 ? "" : "e");
-    else cd.textContent = "noch " + Math.round(d / 7) + " Wochen";
+    if (d < 0) cd.textContent = t("Prüfung vorbei", "Exam passed");
+    else if (d === 0) cd.textContent = t("Prüfung heute", "Exam today");
+    else if (d <= 21) cd.textContent = t("noch " + d + " Tag" + (d === 1 ? "" : "e"), d + (d === 1 ? " day left" : " days left"));
+    else cd.textContent = t("noch " + Math.round(d / 7) + " Wochen", Math.round(d / 7) + " weeks left");
   }
 
   /* ====================================================================
@@ -351,7 +406,7 @@
 
       var bucket = el("div", { "class": "dw-bucket" });
       var bhead = el("div", { "class": "dw-bucket-head lv-" + lvl.lv });
-      bhead.appendChild(el("span", { "class": "dw-bucket-label", text: lvl.label }));
+      bhead.appendChild(el("span", { "class": "dw-bucket-label", text: t(lvl.label, lvl.en) }));
       bhead.appendChild(el("span", { "class": "dw-bucket-count", text: String(items.length) }));
       bucket.appendChild(bhead);
 
@@ -361,7 +416,7 @@
       subs.forEach(function (grp) {
         var g = el("div", { "class": "dw-group" });
         if (subs.length > 1) {
-          g.appendChild(el("div", { "class": "dw-group-head", text: grp.label }));
+          g.appendChild(el("div", { "class": "dw-group-head", text: t(grp.label, grp.en) }));
         }
         items.filter(function (pg) { return pg.g === grp.key; }).forEach(function (pg) {
           var href = ROOT + pg.p;
@@ -390,13 +445,13 @@
 
     indexPanel = el("aside", { "class": "dw-index no-print", "aria-hidden": "true" });
     var head = el("div", { "class": "dw-index-head" });
-    head.appendChild(el("h2", { text: "Index" }));
-    var x = el("button", { "class": "dw-index-close", type: "button", "aria-label": "Schließen", text: "×" });
+    head.appendChild(el("h2", { text: t("Index", "Index") }));
+    var x = el("button", { "class": "dw-index-close", type: "button", "aria-label": t("Schließen", "Close"), text: "×" });
     x.addEventListener("click", closeOverlays);
     head.appendChild(x);
 
     indexFilter = el("input", { "class": "dw-index-filter", type: "search",
-      placeholder: "Filtern…  ( / )", "aria-label": "Seiten filtern" });
+      placeholder: t("Filtern…  ( / )", "Filter…  ( / )"), "aria-label": t("Seiten filtern", "Filter pages") });
     indexFilter.addEventListener("input", applyFilter);
     indexFilter.addEventListener("keydown", function (e) { if (e.key === "Escape") closeOverlays(); });
 
@@ -641,15 +696,27 @@
     buildTimeline: buildTimeline,
     currentFocus: currentFocus,
     fmtDE: fmtDE,
-    onProfileChange: null
+    uiLang: function () { return LANG; },
+    setUiLang: setUiLang,
+    onProfileChange: null,
+    onUiLangChange: null
   };
 
   /* ====================================================================
      Boot
      ==================================================================== */
 
+  function loadScript(rel) {
+    var s = document.createElement("script");
+    s.src = ROOT + rel;
+    s.async = false;   // keep insertion order: glossary-data.js before glossary.js
+    document.head.appendChild(s);
+  }
+
   function boot() {
     injectTopbar();
+    loadScript("assets/glossary-data.js");
+    loadScript("assets/glossary.js");
     if (!readProfile() && !document.body.hasAttribute("data-dw-nosplash")) {
       runSplash();
     }

@@ -138,6 +138,21 @@ html { background: #e6e2d6; }
 }
 .dw-countdown:hover { border-color: var(--rule-strong); }
 .dw-countdown[data-live] { color: var(--signal); font-weight: 700; }
+
+.dw-tb-btn {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: none;
+  border: 1px solid transparent;
+  padding: 6px 8px;
+  cursor: pointer;
+  line-height: 1;
+}
+.dw-tb-btn:hover { border-color: var(--rule-strong); color: var(--ink); }
+#dw-gloss-btn { font-size: 15px; padding: 4px 7px; }
 .dw-countdown[data-live]::before {
   content: "";
   display: inline-block;

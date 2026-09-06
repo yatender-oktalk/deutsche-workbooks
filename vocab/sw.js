@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vokabeltrainer-v5';
+const CACHE_NAME = 'vokabeltrainer-v6';
 
 const PRECACHE_URLS = [
   'index.html',
@@ -19,6 +19,8 @@ const PRECACHE_URLS = [
   '../assets/listening.js',
   '../assets/app-shell.css',
   '../assets/app-shell.js',
+  '../assets/glossary.js',
+  '../assets/glossary-data.js',
   'icons/icon-192.png',
   'icons/icon-512.png',
   'icons/apple-touch-icon.png',
