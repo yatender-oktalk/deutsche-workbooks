@@ -31,10 +31,18 @@
     border: 1px solid var(--ink); background: var(--paper); color: var(--ink);
   }
   .st-actions button.st-primary { background: var(--ink); color: var(--paper); font-weight: 700; }
-  .st-answer { border-left: 3px solid var(--accent); padding: 10px 14px; margin: 6px 0 0; background: rgba(0,0,0,0.02); }
-  .st-answer .lbl { font-family: var(--sans); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
-  .st-answer .mod { font-family: var(--serif); font-size: 17px; line-height: 1.5; }
-  .st-answer .why { display: block; font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .st-box { border-left: 3px solid var(--rule-strong); padding: 10px 14px; margin: 6px 0 0; background: rgba(0,0,0,0.02); }
+  .st-box.st-answer { border-left-color: var(--accent); }
+  .st-box .lbl { font-family: var(--sans); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+  .st-box .mod { font-family: var(--serif); font-size: 17px; line-height: 1.5; }
+  .st-box .why { display: block; font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .st-rule-txt { font-family: var(--sans); font-size: 13.5px; line-height: 1.6; }
+  .st-fb-list { margin: 4px 0 0; padding-left: 18px; font-family: var(--sans); font-size: 13px; line-height: 1.6; }
+  .st-fb-list li.ok { color: var(--muted); list-style: none; margin-left: -18px; }
+  .st-fb-list li.warn::marker { content: "\26A0\FE0E  "; }
+  .st-fb-unknown { font-family: var(--sans); font-size: 12.5px; margin-top: 8px; color: var(--muted); }
+  .st-fb-unknown b { color: var(--ink); }
+  .st-fb-note { display: block; font-family: var(--sans); font-size: 11.5px; color: var(--muted); margin-top: 8px; font-style: italic; }
   .st-hint { font-family: var(--sans); font-size: 12px; color: var(--muted); margin-top: 22px; line-height: 1.6; }
   .st-count { font-family: var(--sans); font-size: 11px; color: var(--muted); float: right; }
 </style>
@@ -50,7 +58,7 @@
 <div class="doc-header">
   <div class="level-badge">B1 &rarr; B2 — ÜBEN</div>
   <h1>Satztraining — Kreis &amp; Leiter</h1>
-  <p class="doc-meta">Endlose Umformungskarten: ein Grundsatz, eine Station bzw. Sprosse · laut sagen, dann Lösung aufdecken, selbst prüfen · nichts wird gespeichert</p>
+  <p class="doc-meta">Endlose Umformungskarten: ein Grundsatz, eine Station bzw. Sprosse · laut sagen, dann Regel &amp; Lösung aufdecken, selbst prüfen · nichts wird gespeichert</p>
 </div>
 
 <div class="st-wrap">
@@ -69,20 +77,34 @@
   <textarea class="st-input" id="st-input" placeholder="Sag den umgeformten Satz laut &mdash; tipp ihn hier, wenn du willst (wird nicht gespeichert)&hellip;" aria-label="Dein Satz"></textarea>
 
   <div class="st-actions">
+    <button type="button" id="st-check">Prüfen</button>
+    <button type="button" id="st-rulebtn">Regel zeigen</button>
     <button type="button" class="st-primary" id="st-reveal">Lösung zeigen</button>
     <button type="button" id="st-next">Nächste Karte</button>
-    <button type="button" id="st-speak">&#128266; Grundsatz vorlesen</button>
+    <button type="button" id="st-speak">&#128266;</button>
   </div>
 
-  <div class="st-answer" id="st-answer" hidden>
+  <div class="st-box" id="st-feedback" hidden>
+    <span class="lbl">Rückmeldung (grobe Heuristik)</span>
+    <ul class="st-fb-list" id="st-fb-list"></ul>
+    <div class="st-fb-unknown" id="st-fb-unknown" hidden></div>
+    <span class="st-fb-note">Nur eine mechanische Prüfung von Wortstellung und Struktur — kein Ersatz für die Musterlösung. Kreative, aber korrekte Sätze können fälschlich angemerkt werden.</span>
+  </div>
+
+  <div class="st-box" id="st-rule" hidden>
+    <span class="lbl">Regel / Wortstellung</span>
+    <span class="st-rule-txt" id="st-rule-txt"></span>
+  </div>
+
+  <div class="st-box st-answer" id="st-answer" hidden>
     <span class="lbl">Modellantwort</span>
     <span class="mod" id="st-mod"></span>
     <span class="why" id="st-why"></span>
   </div>
 
   <p class="st-hint">
-    Kein Lösungsschlüssel &bdquo;richtig/falsch&ldquo; &mdash; die Modellantwort ist <em>eine</em> mögliche Form. Prüfe deine gegen die Wortstellungsregel.
-    Ausführlich mit Erklärungen und zum Ausdrucken: <a href="B2/workbook-7-satzkreis.html">Der Satzkreis</a> (B2&nbsp;Heft&nbsp;7) und <a href="B1/workbook-8-satzleiter.html">Die Satzleiter</a> (B1&nbsp;Heft&nbsp;8).
+    „Prüfen“ macht eine mechanische Struktur- und Rechtschreibkontrolle (Wörterbuch wird beim ersten Mal geladen, ~1&nbsp;MB, danach offline). Ausführlich mit Erklärungen und zum Ausdrucken:
+    <a href="B2/workbook-7-satzkreis.html">Der Satzkreis</a> (B2&nbsp;Heft&nbsp;7) und <a href="B1/workbook-8-satzleiter.html">Die Satzleiter</a> (B1&nbsp;Heft&nbsp;8).
   </p>
 
   <span id="tts-source" hidden></span>
@@ -90,16 +112,19 @@
 
 <script defer src="../assets/app-shell.js"></script>
 <script src="../assets/listening.js"></script>
+<script src="vendor/typo.js"></script>
 <script>
 (function () {
   "use strict";
+
+  /* ------------------------------------------------------------------ data */
 
   var SATZKREIS = [
     { base: "Das Wetter ist schön.", steps: [
       { s: "Station 1 · Grundformen", p: "Aussage, Verneinung, Ja/Nein-Frage.",
         a: "Das Wetter ist schön. / Das Wetter ist nicht schön. / Ist das Wetter schön?",
         w: "„nicht“ verneint das Adjektiv; in der Frage steht das Verb an Position 1." },
-      { s: "Station 2 · Wortwechsel + Angaben", p: "Tausche das Prädikativ, füge eine Zeit-/Grad-Angabe hinzu (2–3 Varianten).",
+      { s: "Station 2 · Wortwechsel + Angaben", p: "Tausche das Prädikativ und füge eine Zeit-/Grad-Angabe hinzu (2–3 Varianten).",
         a: "Das Wetter ist heute schlecht. / … gerade ziemlich wechselhaft. / … im Moment drückend heiß.",
         w: "Prädikativ nach „sein“ wird nicht dekliniert." },
       { s: "Station 3 · Futur I", p: "Als Vorhersage und als Vermutung über die Gegenwart.",
@@ -274,9 +299,195 @@
     ]}
   ];
 
+  var KREIS_RULES = [
+    "Aussage: Subjekt + Verb(2) + …  ·  Verneinung mit „nicht/kein“  ·  Frage: Verb(1) + Subjekt + … ?",
+    "Struktur bleibt, nur Wörter tauschen: „… ist [Adjektiv]“ bzw. „… + [Akk.-Objekt]“ + eine Zeit-/Ortangabe.",
+    "Futur I: [Subjekt] + werden(2) + … + [Infinitiv am Ende]. Mit „wohl/vermutlich“ = Vermutung über jetzt.",
+    "[Subjekt] + Modalverb(2) + … + [Infinitiv am Ende]. will / muss / kann / soll / möchte / dürfte …",
+    "Präteritum: [Verbstamm + -te] bzw. starke Form. Perfekt: haben/sein(2) + … + [Partizip II am Ende].",
+    "Real: Modalverb im Präteritum (wollte / musste …). Irreal: hätte(2) + … + [Infinitiv + Modalinfinitiv].",
+    "würde(2) + … + [Infinitiv]  ·  oder echte Form (wäre / hätte / käme / gäbe / tränke)  ·  Wunsch: „Ich wünschte, …“.",
+    "[Hauptsatz] + Komma + „…, [Objekt] zu + Infinitiv“. Trennbar: „… fernzusehen“.",
+    "…, [Konjunktion] + [Subjekt] + … + [Verb ganz ans Ende]. weil / dass / obwohl / ob — dieselbe Regel.",
+    "Vorgangspassiv: [Objekt → Subjekt] + werden(2) + … + [Partizip II]. Perfekt: „… ist … worden“.",
+    "[X sagt / sagte,] + [Nebensatz im Konjunktiv I: sei / habe / werde …]."
+  ];
+  var LEITER_RULES = [
+    "[Hauptsatz 1] + „, und / aber / oder / denn“ + [Hauptsatz 2]. Verb bleibt in beiden auf Position 2.",
+    "[Hauptsatz] + „, weil“ + [Subjekt] + … + [Verb ganz ans Ende].",
+    "[Meinungsverb: glaube / finde / denke …] + „, dass“ + [Subjekt] + … + [Verb ans Ende].",
+    "[Hauptsatz] + „, obwohl“ + [Subjekt] + … + [Verb ans Ende]. Gleiche Stellung wie weil.",
+    "„Wenn“ + [Subjekt] + … + [Verb ans Ende] + „,“ + [Verb] + [Subjekt] + …  (Verb – Komma – Verb).",
+    "„Als“ + [Subjekt] + … + [Verb ans Ende, Vergangenheit] + „,“ + [Verb] + [Subjekt] + …  — nur ein Ereignis.",
+    "[Nomen] + „, der / die / das“ (Genus des Nomens) + … + [Verb ans Ende]."
+  ];
+
+  /* ------------------------------------------------------- structural checks */
+
+  function norm(s) {
+    return String(s).toLowerCase().replace(/[„“”"‚‘’]/g, "").replace(/\s+/g, " ").trim();
+  }
+  function wordsOf(s) {
+    return norm(s).replace(/[.,;:!?()–—-]/g, " ").split(/\s+/).filter(Boolean);
+  }
+  var AUX = ("bin bist ist sind seid war warst waren wart wäre wärst wären wären " +
+    "habe hast hat haben habt hatte hattest hatten hättet hätte hätten " +
+    "werde wirst wird werden werdet wurde wurdest wurden würde würdest würden " +
+    "kann kannst könnt konnte konnten könnte könnten " +
+    "muss musst müsst musste mussten müsste müssten " +
+    "will willst wollt wollte wollten " +
+    "soll sollst sollt sollte sollten " +
+    "mag magst mögt mochte möchte möchten möchtest " +
+    "darf darfst dürft durfte durften dürfte dürften " +
+    "sei seien könne müsse wolle solle gebe trinke helfe lese käme gäbe ginge wüsste wünschte tränke läse schiene").split(/\s+/);
+  var AUXSET = {};
+  AUX.forEach(function (w) { AUXSET[w] = true; });
+  var SEP = /^(an|auf|aus|ab|mit|zu|vor|nach|ein|los|weg|hin|her|um|bei|fest|frei|nieder|zurück|zusammen)$/;
+
+  function looksVerb(w) {
+    if (!w) return false;
+    if (AUXSET[w]) return true;
+    return w.length > 3 && /(?:e|st|t|en|te|ten|tet|est)$/.test(w);
+  }
+  function endsWithVerb(cw) {
+    if (!cw || !cw.length) return false;
+    var last = cw[cw.length - 1];
+    if (looksVerb(last)) return true;
+    if (cw.length > 1 && SEP.test(last) && looksVerb(cw[cw.length - 2])) return true;
+    if (cw.length > 1 && (last === "nicht" || last === "worden" || last === "gewesen") && looksVerb(cw[cw.length - 2])) return true;
+    return false;
+  }
+  function clauseAfter(text, conj) {
+    var n = norm(text);
+    var re = new RegExp("(^|[,.;!?]\\s*)" + conj + "\\b");
+    var m = re.exec(n);
+    if (!m) return null;
+    var rest = n.slice(m.index + m[0].length);
+    var cut = rest.search(/[,.;!?]/);
+    return (cut < 0 ? rest : rest.slice(0, cut)).replace(/[.,;:!?()–—-]/g, " ").split(/\s+/).filter(Boolean);
+  }
+  function has(text, re) { return re.test(norm(text)); }
+
+  function subCheck(t, conj, label) {
+    var out = [];
+    if (!has(t, new RegExp("\\b" + conj + "\\b"))) { out.push("„" + conj + "“ fehlt im Satz."); return out; }
+    if (!has(t, new RegExp("(,\\s*" + conj + "\\b|^" + conj + "\\b)"))) out.push("Vor „" + conj + "“ fehlt vermutlich das Komma.");
+    var cw = clauseAfter(t, conj);
+    if (cw && cw.length > 1 && !endsWithVerb(cw)) out.push("Nach „" + (label || conj) + "“ steht das Verb wohl nicht am Satzende.");
+    return out;
+  }
+
+  var KREIS_CHECK = [
+    function (t) {
+      var o = [];
+      if (!/\?/.test(t)) o.push("Keine Frage dabei — die Ja/Nein-Frage endet mit „?“ und beginnt mit dem Verb.");
+      if (!has(t, /\b(nicht|kein|keine|keinen|keinem|keiner|keines)\b/)) o.push("Keine Verneinung erkennbar (kein „nicht / kein …“).");
+      return o;
+    },
+    function (t, base) { return norm(t) === norm(base) ? ["Unverändert — tausch mindestens das Prädikativ/Objekt und füge eine Angabe hinzu."] : []; },
+    function (t) { return has(t, /\b(werde|wirst|wird|werden|werdet)\b/) ? [] : ["Kein „werden“ gefunden — Futur I = werden (Position 2) + Infinitiv am Ende."]; },
+    function (t) { return has(t, /\b(will|willst|wollt|muss|musst|müsst|kann|kannst|könnt|soll|sollst|sollt|möchte|möchten|möchtest|darf|dürft|müsste|dürfte|sollte|könnte|mag|magst)\b/) ? [] : ["Kein Modalverb gefunden (will / muss / kann / soll / möchte / dürfte …)."]; },
+    function (t) { return (has(t, /\b(war|warst|waren|hatte|hatten|ist|sind|bin|hat|habe|haben)\b/) || has(t, /\bge\w+(t|en)\b/) || has(t, /\b\w+te\b/)) ? [] : ["Klingt nicht nach Vergangenheit — Präteritum (war / …te) oder Perfekt (hat / ist + ge…)."]; },
+    function (t) { return (has(t, /\b(wollte|musste|konnte|sollte|durfte|mochte)\b/) || has(t, /\bhätte\b[\s\S]*\b\w+en\b/)) ? [] : ["Kein Vergangenheits-Modalverb (wollte / musste / konnte …) und kein „hätte … + Infinitiv“."]; },
+    function (t) { return has(t, /\b(würde|würden|würdest|wäre|wären|wärst|hätte|hätten|hättest|käme|gäbe|ginge|wüsste|wünschte|tränke|läse|schiene|bräuchte)\b/) ? [] : ["Keine Konjunktiv-II-Form (würde / wäre / hätte / … oder echte Form wie käme, gäbe)."]; },
+    function (t) {
+      var o = [];
+      if (!/,/.test(t)) o.push("Kein Komma — der Infinitivsatz wird mit Komma abgetrennt.");
+      if (!has(t, /\bzu\s+\w+en\b/) && !has(t, /\b\w+zu\w+en\b/)) o.push("Kein „zu + Infinitiv“ gefunden.");
+      return o;
+    },
+    function (t) {
+      var o = [], any = false;
+      ["weil", "dass", "wenn", "ob", "obwohl"].forEach(function (c) {
+        if (has(t, new RegExp("\\b" + c + "\\b"))) {
+          any = true;
+          var cw = clauseAfter(t, c);
+          if (cw && cw.length > 1 && !endsWithVerb(cw)) o.push("Nach „" + c + "“ scheint das Verb nicht am Satzende zu stehen.");
+        }
+      });
+      if (!any) o.push("Keine unterordnende Konjunktion (weil / dass / wenn / ob).");
+      return o;
+    },
+    function (t) { return (has(t, /\b(wird|werden|wurde|wurden)\b/) && (has(t, /\bge\w+(t|en)\b/) || has(t, /\bworden\b/))) ? [] : ["Kein Vorgangspassiv erkennbar — werden + Partizip II (Perfekt: „… ist … worden“)."]; },
+    function (t) {
+      var o = [];
+      if (!has(t, /\b(sagt|sagte|meint|meinte|hei[ßs]t|hie[ßs]|behauptet|behauptete|berichtet|erzählt|erzählte)\b/)) o.push("Kein Redeeinleitungs-Verb (sagt / sagte / heißt …).");
+      if (!has(t, /\b(sei|seien|habe|habest|haben|werde|werdest|könne|müsse|wolle|solle|gebe|trinke|helfe|lese)\b/)) o.push("Keine Konjunktiv-I-Form (sei / habe / werde / …).");
+      return o;
+    }
+  ];
+
+  var LEITER_CHECK = [
+    function (t) { return has(t, /,\s*(und|aber|oder|denn)\s+\w/) ? [] : ["Keine Koordination mit „, und / aber / oder / denn“ + zweitem Hauptsatz."]; },
+    function (t) { return subCheck(t, "weil"); },
+    function (t) {
+      var o = subCheck(t, "dass");
+      if (!has(t, /\b(glaube|glaubt|finde|findet|denke|denkt|hoffe|hofft|wei[ßs]|meine|meint|vermute)\b/)) o.push("Vor „dass“ steht meist ein Meinungsverb (glaube / finde / denke / hoffe / weiß).");
+      return o;
+    },
+    function (t) { return subCheck(t, "obwohl"); },
+    function (t) {
+      var o = subCheck(t, "wenn");
+      if (/^wenn\b/.test(norm(t))) {
+        var parts = norm(t).split(",");
+        if (parts[1]) {
+          var w2 = parts[1].trim().replace(/[.,;:!?()–—-]/g, " ").split(/\s+/).filter(Boolean);
+          if (w2.length && !looksVerb(w2[0])) o.push("Nach dem vorangestellten „Wenn …,“ sollte sofort das Verb kommen („…, gehe ich …“).");
+        }
+      }
+      return o;
+    },
+    function (t) {
+      var o = subCheck(t, "als");
+      if (!has(t, /\b(war|warst|waren|hatte|hatten|bin|ist|habe|hat|\w+te|ge\w+(t|en))\b/)) o.push("„als“ braucht die Vergangenheit (Präteritum oder Perfekt).");
+      return o;
+    },
+    function (t) {
+      if (!has(t, /,\s*(der|die|das|den|dem|deren|dessen|denen|welche[rsn]?)\s+\w/)) return ["Kein Relativsatz erkennbar („…, der / die / das … + Verb am Ende“)."];
+      var o = [];
+      var cw = clauseAfter(t, "(der|die|das|den|dem|deren|dessen|denen)");
+      if (cw && cw.length > 1 && !endsWithVerb(cw)) o.push("Im Relativsatz steht das Verb wohl nicht am Ende.");
+      return o;
+    }
+  ];
+
+  /* --------------------------------------------------------------- spelling */
+
+  var typo = null, typoState = "idle"; // idle | loading | ready | failed
+
+  function loadTypo(cb) {
+    if (typoState === "ready" || typoState === "failed") return cb();
+    if (typoState === "loading") { setTimeout(function () { loadTypo(cb); }, 200); return; }
+    typoState = "loading";
+    if (typeof Typo === "undefined" || typeof fetch === "undefined") { typoState = "failed"; return cb(); }
+    Promise.all([
+      fetch("vendor/de_DE.aff").then(function (r) { if (!r.ok) throw 0; return r.text(); }),
+      fetch("vendor/de_DE.dic").then(function (r) { if (!r.ok) throw 0; return r.text(); })
+    ]).then(function (d) {
+      try { typo = new Typo("de_DE", d[0], d[1]); typoState = "ready"; }
+      catch (e) { typoState = "failed"; }
+      cb();
+    }).catch(function () { typoState = "failed"; cb(); });
+  }
+
+  function spellCheck(text, safeWords) {
+    if (typoState !== "ready" || !typo) return null;
+    var seen = {}, bad = [];
+    wordsOf(text).forEach(function (w) {
+      if (w.length < 3 || /\d/.test(w) || seen[w]) return;
+      seen[w] = true;
+      if (safeWords[w]) return;
+      if (typo.check(w) || typo.check(w.charAt(0).toUpperCase() + w.slice(1))) return;
+      bad.push(w);
+    });
+    return bad;
+  }
+
+  /* ------------------------------------------------------------------ view */
+
   var el = function (id) { return document.getElementById(id); };
   var mode = "kreis";
-  try { var m = localStorage.getItem("satztraining.mode"); if (m) mode = m; } catch (e) {}
+  try { var sm = localStorage.getItem("satztraining.mode"); if (sm) mode = sm; } catch (e) {}
   var current = null;
 
   function pool() {
@@ -284,17 +495,15 @@
     if (mode === "leiter") return SATZLEITER;
     return SATZKREIS.concat(SATZLEITER);
   }
-
-  function totalCards() {
-    return pool().reduce(function (n, b) { return n + b.steps.length; }, 0);
-  }
+  function totalCards() { return pool().reduce(function (n, b) { return n + b.steps.length; }, 0); }
 
   function pick() {
     var list = pool();
-    var b = list[Math.floor(Math.random() * list.length)];
-    var st = b.steps[Math.floor(Math.random() * b.steps.length)];
-    if (current && current.base === b.base && current.step.s === st.s && totalCards() > 1) return pick();
-    return { base: b.base, step: st };
+    var bi = Math.floor(Math.random() * list.length);
+    var b = list[bi];
+    var si = Math.floor(Math.random() * b.steps.length);
+    if (current && current.base === b.base && current.si === si && totalCards() > 1) return pick();
+    return { base: b.base, si: si, step: b.steps[si], isLeiter: SATZLEITER.indexOf(b) !== -1 };
   }
 
   function render() {
@@ -305,9 +514,75 @@
     el("st-input").value = "";
     el("st-mod").textContent = current.step.a;
     el("st-why").textContent = current.step.w;
+    el("st-rule-txt").textContent = (current.isLeiter ? LEITER_RULES : KREIS_RULES)[current.si] || "";
     el("st-answer").hidden = true;
+    el("st-rule").hidden = true;
+    el("st-feedback").hidden = true;
     el("tts-source").textContent = current.base;
     el("st-count").textContent = totalCards() + " Karten in diesem Modus";
+  }
+
+  function runCheck() {
+    var text = el("st-input").value.trim();
+    var list = el("st-fb-list");
+    var unk = el("st-fb-unknown");
+    list.innerHTML = "";
+    unk.hidden = true;
+    el("st-feedback").hidden = false;
+
+    if (!text) {
+      var li0 = document.createElement("li");
+      li0.className = "warn";
+      li0.textContent = "Noch nichts eingetippt — schreib deinen Satz ins Feld, dann prüfe ich Struktur und Rechtschreibung.";
+      list.appendChild(li0);
+      return;
+    }
+
+    var checks = (current.isLeiter ? LEITER_CHECK : KREIS_CHECK)[current.si];
+    var warnings = checks ? checks(text, current.base) : [];
+    if (!warnings.length) {
+      var liOk = document.createElement("li");
+      liOk.className = "ok";
+      liOk.textContent = "✓ Struktur sieht plausibel aus (Wortstellung, Pflichtbausteine). Vergleich trotzdem mit der Musterlösung.";
+      list.appendChild(liOk);
+    } else {
+      warnings.forEach(function (msg) {
+        var li = document.createElement("li");
+        li.className = "warn";
+        li.textContent = msg;
+        list.appendChild(li);
+      });
+    }
+
+    // spelling — safe words = everything from this card's base + model answer
+    var safe = {};
+    wordsOf(current.base + " " + current.step.a).forEach(function (w) { safe[w] = true; });
+
+    var liSp = document.createElement("li");
+    liSp.className = "ok";
+    liSp.id = "st-sp-status";
+    liSp.textContent = "Rechtschreibung: Wörterbuch wird geladen …";
+    list.appendChild(liSp);
+
+    loadTypo(function () {
+      var stat = document.getElementById("st-sp-status");
+      if (typoState !== "ready") {
+        if (stat) stat.textContent = "Rechtschreibprüfung nicht verfügbar (offline / lokal geöffnet).";
+        return;
+      }
+      var bad = spellCheck(text, safe);
+      if (stat) stat.remove();
+      if (bad && bad.length) {
+        unk.hidden = false;
+        unk.innerHTML = "Unbekannte Wörter (prüfen — können auch Namen oder seltene Formen sein): <b>" +
+          bad.map(function (w) { return w.replace(/[<>&]/g, ""); }).join("</b>, <b>") + "</b>";
+      } else {
+        var liC = document.createElement("li");
+        liC.className = "ok";
+        liC.textContent = "Rechtschreibung: keine unbekannten Wörter.";
+        list.appendChild(liC);
+      }
+    });
   }
 
   el("st-modes").addEventListener("click", function (e) {
@@ -321,6 +596,8 @@
     render();
   });
 
+  el("st-check").addEventListener("click", runCheck);
+  el("st-rulebtn").addEventListener("click", function () { el("st-rule").hidden = !el("st-rule").hidden; });
   el("st-reveal").addEventListener("click", function () { el("st-answer").hidden = false; });
   el("st-next").addEventListener("click", render);
   el("st-speak").addEventListener("click", function () {
