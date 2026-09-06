@@ -717,6 +717,7 @@
     injectTopbar();
     loadScript("assets/glossary-data.js");
     loadScript("assets/glossary.js");
+    loadScript("assets/interactive.js");
     if (!readProfile() && !document.body.hasAttribute("data-dw-nosplash")) {
       runSplash();
     }
