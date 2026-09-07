@@ -117,7 +117,10 @@
     "@media print{.dw-ix-bar,.dw-ix-field,.dw-ix-btns,.dw-ix-fb{display:none!important}" +
       ".exercise .write-line,.exercise .write-area{display:block!important}" +
       "body:not(.dw-noprint-answers) .exercise .answer-block,body:not(.dw-noprint-answers) .exercise .model-answer-block{display:block!important}" +
-      "body.dw-noprint-answers .exercise .answer-block,body.dw-noprint-answers .exercise .model-answer-block{display:none!important}}"
+      "body.dw-noprint-answers .exercise .answer-block,body.dw-noprint-answers .exercise .model-answer-block{display:none!important}" +
+      "body.dw-noprint-answers .exercise .write-line{min-height:2.7em}" +
+      "body.dw-noprint-answers .exercise .write-area{min-height:7em}" +
+      "body.dw-noprint-answers .exercise .write-area.tall{min-height:15em}}"
   ].join("");
   document.head.appendChild(style);
 

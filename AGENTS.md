@@ -71,7 +71,7 @@ Every current-format page — all print-first pages, `index.html`, `study-plan.h
 
 **Responsive wide tables** — `app-shell.css` adds a screen-only safety net: `.cheatsheet` scrolls its own overflow, and wrapping a wide `<table>` in `<div class="dw-table-scroll">` makes it scroll inside a bordered box instead of stretching the page (used on `study-plan.html`). Both collapse back to plain full-width tables in `@media print`.
 
-**`vocab/sw.js`**: `../assets/app-shell.css`, `../assets/app-shell.js`, `../assets/glossary.js`, `../assets/glossary-data.js`, `../assets/interactive.js` and `../assets/listening.js` are in `PRECACHE_URLS`; bump `CACHE_NAME` (currently `vokabeltrainer-v14`) whenever any of them changes.
+**`vocab/sw.js`**: `../assets/app-shell.css`, `../assets/app-shell.js`, `../assets/glossary.js`, `../assets/glossary-data.js`, `../assets/interactive.js` and `../assets/listening.js` are in `PRECACHE_URLS`; bump `CACHE_NAME` (currently `vokabeltrainer-v15`) whenever any of them changes.
 
 ## The print-first workbook format (core convention — apply to every new page)
 

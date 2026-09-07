@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vokabeltrainer-v14';
+const CACHE_NAME = 'vokabeltrainer-v15';
 
 const PRECACHE_URLS = [
   'index.html',

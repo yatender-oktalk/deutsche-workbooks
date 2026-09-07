@@ -337,6 +337,8 @@ button.transcript-btn {
 
 @media print {
   @page { size: A4; margin: 16mm 14mm 18mm; }
+  /* separate rule so an engine that can't parse margin-boxes still keeps size/margin */
+  @page { @bottom-center { content: counter(page); font: 9px/1 Georgia, "Times New Roman", serif; color: #999; } }
 
   html, body {
     background: #fff;
@@ -347,9 +349,24 @@ button.transcript-btn {
 
   .no-print { display: none !important; }
 
-  .exercise, .cheatsheet, .tip-box { page-break-inside: avoid; break-inside: avoid; }
+  /* keep each exercise (prompt + write space + shown answer) on one page */
+  .exercise, .tip-box { page-break-inside: avoid; break-inside: avoid; }
+  .answer-block, .model-answer-block { page-break-inside: avoid; break-inside: avoid; }
 
-  h2 { break-after: avoid; }
+  /* headings stay with what follows them; never orphaned at a page bottom */
+  h2, .doc-header, .section-title, .section-note, .cheatsheet h3 {
+    break-after: avoid; page-break-after: avoid;
+  }
+  .prompt { orphans: 2; widows: 2; }
+
+  /* long cheatsheets may flow across pages, but not mid-row */
+  .cheatsheet { page-break-inside: auto; break-inside: auto; }
+  .cheatsheet table, .cheatsheet tr, .cheatsheet .tip-box { page-break-inside: avoid; break-inside: avoid; }
+
+  /* a bit more room to actually write by hand on paper */
+  .write-line { height: auto; min-height: 2.3em; }
+  .write-area { min-height: 5.6em; }
+  .write-area.tall { min-height: 13em; }
 
   a { color: inherit; text-decoration: none; }
 }
