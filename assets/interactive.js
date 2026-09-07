@@ -113,8 +113,11 @@
     ".dw-ix-fb.is-ok .tag{color:#2f7d32}",
     ".dw-ix-fb.is-close .tag{color:var(--signal)}",
     ".dw-ix-fb.is-no .tag{color:#b3261e}",
+    ".dw-ix-soltoggle{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-family:var(--sans);font-size:12px;cursor:pointer}",
     "@media print{.dw-ix-bar,.dw-ix-field,.dw-ix-btns,.dw-ix-fb{display:none!important}" +
-      ".exercise .write-line,.exercise .write-area,.exercise .answer-block,.exercise .model-answer-block{display:block!important}}"
+      ".exercise .write-line,.exercise .write-area{display:block!important}" +
+      "body:not(.dw-noprint-answers) .exercise .answer-block,body:not(.dw-noprint-answers) .exercise .model-answer-block{display:block!important}" +
+      "body.dw-noprint-answers .exercise .answer-block,body.dw-noprint-answers .exercise .model-answer-block{display:none!important}}"
   ].join("");
   document.head.appendChild(style);
 
@@ -309,12 +312,30 @@
       updateProgress();
     });
 
+    var solLabel = document.createElement("label");
+    solLabel.className = "dw-ix-soltoggle";
+    var solCb = document.createElement("input");
+    solCb.type = "checkbox";
+    solCb.checked = printAnswersHidden();
+    solCb.addEventListener("change", function () { setPrintAnswersHidden(solCb.checked); });
+    solLabel.appendChild(solCb);
+    solLabel.appendChild(document.createTextNode(" Lösungen im Druck ausblenden"));
+
     bar.appendChild(toggle);
     bar.appendChild(progEl);
+    bar.appendChild(solLabel);
     bar.appendChild(reset);
 
     var host = document.querySelector(".doc-header") || document.querySelector(".controls") || document.body;
     host.parentNode.insertBefore(bar, host.nextSibling);
+  }
+
+  function printAnswersHidden() {
+    try { return localStorage.getItem("dw.printAnswers") === "0"; } catch (e) { return false; }
+  }
+  function setPrintAnswersHidden(hide) {
+    try { localStorage.setItem("dw.printAnswers", hide ? "0" : "1"); } catch (e) {}
+    document.body.classList.toggle("dw-noprint-answers", !!hide);
   }
 
   function updateProgress() {
@@ -350,10 +371,14 @@
 
   // build the interactive layer up front (hidden by CSS in print mode) so the
   // Print ⇄ Interaktiv toggle is always present, then apply the saved mode.
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function () { build(); apply(readMode()); });
-  } else {
+  function init() {
     build();
+    if (printAnswersHidden()) document.body.classList.add("dw-noprint-answers");
     apply(readMode());
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
