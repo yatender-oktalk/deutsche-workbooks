@@ -166,7 +166,7 @@
     var lb = document.getElementById("dw-lang-btn");
     if (lb) { lb.textContent = LANG === "en" ? "DE" : "EN"; lb.setAttribute("aria-label", t("Sprache der Oberfläche wechseln", "Switch interface language")); }
     var gb = document.getElementById("dw-gloss-btn");
-    if (gb) gb.setAttribute("aria-label", t("Seiten-Glossar", "Page glossary"));
+    if (gb) gb.setAttribute("aria-label", t("Nachschlagen (Wörterbuch & Glossar)", "Look up (dictionary & glossary)"));
     renderCountdown();
     var ih = document.querySelector(".dw-index-head h2");
     if (ih) ih.textContent = t("Index", "Index");
@@ -364,7 +364,7 @@
     var spring = el("span", { "class": "dw-topbar-spring" });
 
     var glossBtn = el("button", { "class": "dw-tb-btn", id: "dw-gloss-btn", type: "button",
-      "aria-label": t("Seiten-Glossar", "Page glossary"), text: "📖" });
+      "aria-label": t("Nachschlagen (Wörterbuch & Glossar)", "Look up (dictionary & glossary)"), text: "📖" });
     glossBtn.addEventListener("click", function () { if (window.DWGloss) window.DWGloss.toggle(); });
 
     var langBtn = el("button", { "class": "dw-tb-btn", id: "dw-lang-btn", type: "button",
