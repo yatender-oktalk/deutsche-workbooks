@@ -91,6 +91,7 @@
     { p: "workbooks/B2/workbook-5-relative-clauses-advanced.html", t: "Relativsätze (fortgeschritten)", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-6-futur-modal-speculation.html", t: "Futur I/II & Modalverben der Vermutung", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-7-satzkreis.html", t: "Der Satzkreis — Satzumformung", g: "grammar", lv: "b2", tag: "B2" },
+    { p: "workbooks/B2/workbook-8-werden.html", t: "„werden“ in allen Funktionen", g: "grammar", lv: "b2", tag: "B2" },
 
     // 02 — Prüfungstraining
     { p: "exam-prep/B1/leseverstehen-practice.html",        t: "Leseverstehen",         g: "exam", lv: "exam", tag: "B1" },
