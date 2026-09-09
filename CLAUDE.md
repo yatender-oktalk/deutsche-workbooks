@@ -8,7 +8,7 @@ This file exists so Yatender never has to re-explain this project's context from
 
 ## What this repo is
 
-Yatender's personal German-learning workbook repo. He passed telc A1 with 91% and is preparing for **telc B2, target exam late December 2026**. This is unrelated to any work codebase — treat it as a personal project.
+Yatender's personal German-learning workbook repo. He passed telc A1 with 91% and is preparing for **telc B2, target exam April 2027**. This is unrelated to any work codebase — treat it as a personal project.
 
 ## Structure
 
@@ -130,4 +130,4 @@ This is real exam-prep material.
 
 ## Timeline context
 
-Target exam: telc B2, late December 2026. `study-plan.html` holds the phased plan. If the target date, scope (e.g. adding speaking/listening later), or phase order changes, update `study-plan.html`'s phase table, milestone checklist, and any date math in the same turn — don't leave it describing an out-of-date plan.
+Target exam: telc B2, April 2027. `study-plan.html` holds the phased plan. If the target date, scope (e.g. adding speaking/listening later), or phase order changes, update `study-plan.html`'s phase table, milestone checklist, and any date math in the same turn — don't leave it describing an out-of-date plan.
