@@ -76,6 +76,8 @@
     { p: "workbooks/A2/workbook-14-praeteritum.html",               t: "Präteritum (sein/haben/Modalverben)", g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-7-adjektivendungen-vergleich.html", t: "Adjektivendungen & Vergleich", g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-8-reflexive-verben.html",           t: "Reflexive Verben",             g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-15-konnektoren-zweck-grund.html",   t: "Konnektoren II (denn, ob, falls, damit, um … zu)", g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-16-pronomen-zeit-dativ-adjektive.html", t: "Pronomen, Zeitadverbien & Dativ-Adjektive", g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/B1/workbook-1-praeteritum-perfekt.html",  t: "Präteritum & Perfekt",              g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-2-passive-voice.html",        t: "Passiv (Vorgangspassiv)",           g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-3-relative-clauses.html",     t: "Relativsätze",                      g: "grammar", lv: "b1", tag: "B1" },
@@ -111,6 +113,7 @@
 
     // 04 — Referenz
     { p: "study-plan.html",                        t: "Studienplan & Zeitplan",           g: "reference", lv: "ref", tag: "PLAN" },
+    { p: "kursbegleiter.html",                     t: "Kursbegleiter — A2-Videokurs → Hefte", g: "reference", lv: "ref", tag: "PLAN" },
     { p: "narration-plan.html",                    t: "Selbstnarration — 3-Wochen-Plan",  g: "reference", lv: "ref", tag: "PLAN" },
     { p: "progress.html",                          t: "Fortschritt — letzte 7 Tage",     g: "reference", lv: "ref", tag: "PLAN" },
     { p: "workbooks/satztraining.html",            t: "Satztraining — Kreis & Leiter (interaktiv)", g: "interactive", lv: "ref", tag: "B1–B2" },
