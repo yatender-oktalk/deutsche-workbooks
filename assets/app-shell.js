@@ -416,6 +416,34 @@
      Register list  (rendered into the slide-over index and the hub)
      ==================================================================== */
 
+  /* ---- per-page "done" checklist --------------------------------------
+     Checkable pages (everything except the g:"interactive" trainers, which
+     are ongoing spaced-repetition practice with no "finished" state) get a
+     checkbox the user ticks by hand. If the page's own exercises already
+     have recorded results (dw.wb:<pathname>, written by interactive.js),
+     an unchecked-but-started row gets a quiet "begun" mark instead of
+     nothing, purely as a hint — it never auto-checks the box. */
+
+  function pagePathname(pg) {
+    try { return new URL(ROOT + pg.p, location.href).pathname; } catch (e) { return pg.p; }
+  }
+  function manualDoneKey(pathname) { return "dw.pageDone:" + pathname; }
+  function readManualDone(pathname) {
+    try { return localStorage.getItem(manualDoneKey(pathname)) === "1"; } catch (e) { return false; }
+  }
+  function writeManualDone(pathname, val) {
+    try {
+      if (val) localStorage.setItem(manualDoneKey(pathname), "1");
+      else localStorage.removeItem(manualDoneKey(pathname));
+    } catch (e) {}
+  }
+  function pageStarted(pathname) {
+    try {
+      var raw = JSON.parse(localStorage.getItem("dw.wb:" + pathname) || "null");
+      return !!(raw && raw.r && Object.keys(raw.r).length);
+    } catch (e) { return false; }
+  }
+
   function renderRegister(mount) {
     mount.innerHTML = "";
     LEVEL_BUCKETS.forEach(function (lvl) {
@@ -425,7 +453,8 @@
       var bucket = el("div", { "class": "dw-bucket" });
       var bhead = el("div", { "class": "dw-bucket-head lv-" + lvl.lv });
       bhead.appendChild(el("span", { "class": "dw-bucket-label", text: t(lvl.label, lvl.en) }));
-      bhead.appendChild(el("span", { "class": "dw-bucket-count", text: String(items.length) }));
+      var countEl = el("span", { "class": "dw-bucket-count" });
+      bhead.appendChild(countEl);
       bucket.appendChild(bhead);
 
       var subs = GROUPS.filter(function (grp) {
@@ -440,6 +469,32 @@
           var href = ROOT + pg.p;
           var row = el("a", { "class": "dw-row", href: href });
           if (href === CURRENT) row.setAttribute("aria-current", "page");
+
+          var checkable = pg.g !== "interactive";
+          if (checkable) {
+            var pathname = pagePathname(pg);
+            var done = readManualDone(pathname);
+            var started = !done && pageStarted(pathname);
+            var check = el("button", {
+              "class": "dw-check" + (done ? " is-done" : "") + (started ? " is-started" : ""),
+              type: "button",
+              "aria-pressed": done ? "true" : "false",
+              "aria-label": t("Als erledigt markieren", "Mark as done"),
+              title: done ? t("Erledigt — klicken zum Zurücksetzen", "Done — click to reset")
+                   : started ? t("Begonnen — klicken zum Abhaken", "Started — click to check off")
+                   : t("Klicken zum Abhaken", "Click to check off")
+            });
+            check.addEventListener("click", function (e) {
+              e.preventDefault(); e.stopPropagation();
+              var next = !readManualDone(pathname);
+              writeManualDone(pathname, next);
+              renderRegister(mount);
+            });
+            row.appendChild(check);
+            row.classList.add("is-checkable");
+            if (done) row.classList.add("is-done");
+          }
+
           row.appendChild(el("span", { "class": "dw-row-title", text: pg.t }));
           row.appendChild(el("span", { "class": "dw-row-lead" }));
           row.appendChild(el("span", { "class": "dw-row-tag lv-" + pg.lv, text: pg.tag }));
@@ -448,6 +503,10 @@
         bucket.appendChild(g);
       });
       mount.appendChild(bucket);
+
+      var checkableCount = items.filter(function (pg) { return pg.g !== "interactive"; }).length;
+      var doneCount = items.filter(function (pg) { return pg.g !== "interactive" && readManualDone(pagePathname(pg)); }).length;
+      countEl.textContent = checkableCount ? (doneCount + "/" + items.length) : String(items.length);
     });
   }
 

@@ -272,12 +272,45 @@ html { background: #e6e2d6; }
 }
 .dw-row:last-child { border-bottom: none; }
 .dw-row:hover .dw-row-title { color: var(--accent); }
+.dw-row.is-done .dw-row-title { color: var(--muted); }
 
 .dw-row-title {
   font-family: var(--serif);
   font-size: 15px;
   line-height: 1.3;
 }
+
+.dw-check {
+  flex: none;
+  align-self: center;
+  width: 13px;
+  height: 13px;
+  margin-right: 10px;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: 1px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.dw-check::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+}
+.dw-check.is-started::before { background: var(--rule-strong); border-radius: 50%; width: 5px; height: 5px; }
+.dw-check.is-done { border-color: var(--ink); background: var(--ink); }
+.dw-check.is-done::before {
+  content: "\2713";
+  width: auto; height: auto;
+  font-size: 10px;
+  color: #fff;
+  line-height: 1;
+}
+.dw-check:hover { border-color: var(--accent); }
 .dw-row-lead {
   flex: 1;
   align-self: center;
