@@ -114,13 +114,23 @@
     ".dw-ix-fb.is-close .tag{color:var(--signal)}",
     ".dw-ix-fb.is-no .tag{color:#b3261e}",
     ".dw-ix-soltoggle{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-family:var(--sans);font-size:12px;cursor:pointer}",
+    /* Short gap-fill answers move out of the exercise and into a single
+       "Lösungen" section at the end of the page — outside interactive mode
+       only; interactive mode still reveals each answer in place on check. */
+    "body:not(.dw-ix-on) .answer-block.dw-ak-source{display:none!important}",
+    ".dw-ix-on .dw-answer-key{display:none!important}",
+    ".dw-answer-key{margin-top:2.6em;padding-top:1.2em;border-top:2px solid var(--ink)}",
+    ".dw-answer-key .answer-block{margin-bottom:0.7em}",
+    ".dw-answer-key .answer-block .qnum{margin-right:0.5em}",
     "@media print{.dw-ix-bar,.dw-ix-field,.dw-ix-btns,.dw-ix-fb{display:none!important}" +
       ".exercise .write-line,.exercise .write-area{display:block!important}" +
-      "body:not(.dw-noprint-answers) .exercise .answer-block,body:not(.dw-noprint-answers) .exercise .model-answer-block{display:block!important}" +
-      "body.dw-noprint-answers .exercise .answer-block,body.dw-noprint-answers .exercise .model-answer-block{display:none!important}" +
+      "body:not(.dw-noprint-answers) .exercise .answer-block:not(.dw-ak-source),body:not(.dw-noprint-answers) .exercise .model-answer-block{display:block!important}" +
+      "body:not(.dw-noprint-answers) .dw-answer-key{display:block!important}" +
+      "body.dw-noprint-answers .exercise .answer-block,body.dw-noprint-answers .exercise .model-answer-block,body.dw-noprint-answers .dw-answer-key{display:none!important}" +
       "body.dw-noprint-answers .exercise .write-line{min-height:2.7em}" +
       "body.dw-noprint-answers .exercise .write-area{min-height:7em}" +
-      "body.dw-noprint-answers .exercise .write-area.tall{min-height:15em}}"
+      "body.dw-noprint-answers .exercise .write-area.tall{min-height:15em}" +
+      ".dw-answer-key{page-break-before:always;break-before:page}}"
   ].join("");
   document.head.appendChild(style);
 
@@ -196,8 +206,51 @@
       else if (state.shown[idx]) revealModel(it, true);
     });
 
+    buildAnswerKey();
     injectBar();
     updateProgress();
+  }
+
+  /* ---- consolidated answer key (print / non-interactive view only) ----
+     Short gap-fill answers (.answer-block, not .model-answer-block — those
+     stay in place next to their free-writing prompt) get pulled out of each
+     exercise and listed together at the end of the page, so a printed page
+     can be filled in fully before checking anything. Interactive mode is
+     untouched: it still reveals each answer inline on check. */
+  function buildAnswerKey() {
+    var plain = items.filter(function (it) { return !it.isModel; });
+    if (!plain.length) return;
+
+    var key = document.createElement("div");
+    key.className = "section dw-answer-key";
+    key.id = "dw-answer-key";
+    var title = document.createElement("div");
+    title.className = "section-title";
+    title.textContent = "Lösungen";
+    key.appendChild(title);
+    var note = document.createElement("p");
+    note.className = "section-note";
+    note.textContent = "Erst alle Aufgaben oben bearbeiten, dann hier vergleichen.";
+    key.appendChild(note);
+
+    plain.forEach(function (it) {
+      it.answerBox.classList.add("dw-ak-source");
+      var clone = it.answerBox.cloneNode(true);
+      clone.classList.remove("dw-ak-source");
+      clone.removeAttribute("data-ixhide");
+      var num = it.ex.querySelector(".qnum");
+      if (num) {
+        var numEl = document.createElement("span");
+        numEl.className = "qnum";
+        numEl.textContent = num.textContent;
+        clone.insertBefore(numEl, clone.firstChild);
+      }
+      key.appendChild(clone);
+    });
+
+    var footer = document.querySelector(".doc-footer");
+    if (footer) footer.parentNode.insertBefore(key, footer);
+    else document.body.appendChild(key);
   }
 
   function applyResult(it, result, silent) {
