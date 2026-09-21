@@ -68,6 +68,7 @@
     { p: "workbooks/A1/workbook-6-possessivartikel.html",           t: "Possessivartikel",            g: "grammar", lv: "a1", tag: "A1" },
     { p: "workbooks/A1/workbook-7-modalverben.html",                t: "Modalverben (A1)",            g: "grammar", lv: "a1", tag: "A1" },
     { p: "workbooks/A1/workbook-8-w-fragen-satzbau.html",           t: "W-Fragen, Satzbau & trennbare Verben", g: "grammar", lv: "a1", tag: "A1" },
+    { p: "workbooks/A1/workbook-9-uebersetzung-kumulativ.html",     t: "Übersetzung: Englisch → Deutsch (kumulativ)", g: "grammar", lv: "a1", tag: "A1" },
     { p: "workbooks/A2/workbook-9-dativ.html",                      t: "Der Dativ",                    g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-10-wechselpraepositionen.html",     t: "Wechselpräpositionen",         g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-11-komparativ-superlativ.html",     t: "Komparativ & Superlativ",      g: "grammar", lv: "a2", tag: "A2" },
@@ -78,6 +79,7 @@
     { p: "workbooks/A2/workbook-8-reflexive-verben.html",           t: "Reflexive Verben",             g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-15-konnektoren-zweck-grund.html",   t: "Konnektoren II (denn, ob, falls, damit, um … zu)", g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/A2/workbook-16-pronomen-zeit-dativ-adjektive.html", t: "Pronomen, Zeitadverbien & Dativ-Adjektive", g: "grammar", lv: "a2", tag: "A2" },
+    { p: "workbooks/A2/workbook-17-uebersetzung-kumulativ.html",     t: "Übersetzung: Englisch → Deutsch (kumulativ)", g: "grammar", lv: "a2", tag: "A2" },
     { p: "workbooks/B1/workbook-1-praeteritum-perfekt.html",  t: "Präteritum & Perfekt",              g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-2-passive-voice.html",        t: "Passiv (Vorgangspassiv)",           g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-3-relative-clauses.html",     t: "Relativsätze",                      g: "grammar", lv: "b1", tag: "B1" },
@@ -86,6 +88,7 @@
     { p: "workbooks/B1/workbook-6-konjunktiv-ii.html",        t: "Konjunktiv II & zweiteilige Konnektoren", g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-7-modalverben.html",          t: "Modalverben — subjektiv & doppelter Infinitiv", g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B1/workbook-8-satzleiter.html",           t: "Die Satzleiter — Nebensätze stapeln", g: "grammar", lv: "b1", tag: "B1" },
+    { p: "workbooks/B1/workbook-9-uebersetzung-kumulativ.html", t: "Übersetzung: Englisch → Deutsch (kumulativ)", g: "grammar", lv: "b1", tag: "B1" },
     { p: "workbooks/B2/workbook-1-konjunktiv-i-reported-speech.html", t: "Konjunktiv I & Indirekte Rede", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-2-passive-advanced.html",     t: "Passiv mit Modalverben & Zustandspassiv", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-3-advanced-connectors.html",  t: "Fortgeschrittene Konnektoren",       g: "grammar", lv: "b2", tag: "B2" },
@@ -94,6 +97,7 @@
     { p: "workbooks/B2/workbook-6-futur-modal-speculation.html", t: "Futur I/II & Modalverben der Vermutung", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-7-satzkreis.html", t: "Der Satzkreis — Satzumformung", g: "grammar", lv: "b2", tag: "B2" },
     { p: "workbooks/B2/workbook-8-werden.html", t: "„werden“ in allen Funktionen", g: "grammar", lv: "b2", tag: "B2" },
+    { p: "workbooks/B2/workbook-9-uebersetzung-kumulativ.html", t: "Übersetzung: Englisch → Deutsch (kumulativ)", g: "grammar", lv: "b2", tag: "B2" },
 
     // 02 — Prüfungstraining
     { p: "exam-prep/B1/leseverstehen-practice.html",        t: "Leseverstehen",         g: "exam", lv: "exam", tag: "B1" },
@@ -118,6 +122,7 @@
     { p: "progress.html",                          t: "Fortschritt — letzte 7 Tage",     g: "reference", lv: "ref", tag: "PLAN" },
     { p: "workbooks/satztraining.html",            t: "Satztraining — Kreis & Leiter (interaktiv)", g: "interactive", lv: "ref", tag: "B1–B2" },
     { p: "workbooks/connectors-reference.html",    t: "Konnektoren — Gesamtübersicht",    g: "reference", lv: "ref", tag: "REF" },
+    { p: "workbooks/translation-capstone.html",    t: "Abschlussübersetzung — Englisch → Deutsch (A1–B2)", g: "reference", lv: "ref", tag: "REF" },
     { p: "cheatsheets/master.html",                t: "Kasus & Pronomen — Spickzettel",   g: "reference", lv: "ref", tag: "REF" },
     { p: "cheatsheets/master-2.html",              t: "Kasus & Pronomen — Spickzettel v2", g: "reference", lv: "ref", tag: "REF" },
 
