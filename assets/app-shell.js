@@ -105,6 +105,7 @@
     { p: "exam-prep/B1/sprachbausteine-practice.html",      t: "Sprachbausteine",       g: "exam", lv: "exam", tag: "B1" },
     { p: "exam-prep/B1/schriftlicher-ausdruck-luecken.html", t: "Schriftlicher Ausdruck – Lücken", g: "exam", lv: "exam", tag: "B1" },
     { p: "exam-prep/B1/schriftlicher-ausdruck-guide.html",  t: "Schriftlicher Ausdruck", g: "exam", lv: "exam", tag: "B1" },
+    { p: "exam-prep/B1/muendliche-pruefung-guide.html",     t: "Mündliche Prüfung",     g: "exam", lv: "exam", tag: "B1" },
     { p: "exam-prep/B2/leseverstehen-practice.html",        t: "Leseverstehen",         g: "exam", lv: "exam", tag: "B2" },
     { p: "exam-prep/B2/hoerverstehen-practice.html",        t: "Hörverstehen",          g: "exam", lv: "exam", tag: "B2" },
     { p: "exam-prep/B2/sprachbausteine-practice.html",      t: "Sprachbausteine",       g: "exam", lv: "exam", tag: "B2" },
