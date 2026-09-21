@@ -210,6 +210,7 @@ function showSummary() {
   summary.hidden = false;
   document.getElementById('sum-total').textContent = session.queue.length;
   document.getElementById('again-btn').onclick = () => window.location.reload();
+  document.getElementById('summary-stats-link').href = `stats.html?profile=${encodeURIComponent(session.profile)}`;
 }
 
 (async function init() {

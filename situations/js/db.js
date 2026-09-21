@@ -85,4 +85,11 @@ const SitDB = {
     const store = tx(db, ['reviews'], 'readwrite').objectStore('reviews');
     await reqToPromise(store.add(entry));
   },
+
+  async getReviews(profile) {
+    const db = await openSitDB();
+    const store = tx(db, ['reviews'], 'readonly').objectStore('reviews');
+    const idx = store.index('by_profile');
+    return reqToPromise(idx.getAll(IDBKeyRange.only(profile)));
+  },
 };

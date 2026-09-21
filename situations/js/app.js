@@ -72,6 +72,7 @@ async function showSetupScreen() {
   document.getElementById('setup-screen').hidden = false;
   document.getElementById('profile-indicator').innerHTML =
     `Profil: <span class="profile-name">${escapeHtml(state.profile)}</span>`;
+  document.getElementById('stats-link').href = `stats.html?profile=${encodeURIComponent(state.profile)}`;
   await updateDueSummary();
 }
 
