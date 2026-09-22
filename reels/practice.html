@@ -27,14 +27,23 @@
 </div>
 <p class="rl-hint" id="rl-hint">Tippen: Bedeutung zeigen &middot; nochmal tippen: weiter &middot; Pfeiltasten funktionieren auch</p>
 
+<div id="rl-quiz" class="rl-quiz" hidden>
+  <div class="rl-kicker">Kurzer Check</div>
+  <div class="rl-quiz-progress" id="rl-quiz-progress"></div>
+  <div class="rl-quiz-q" id="rl-quiz-q"></div>
+  <div class="rl-quiz-choices" id="rl-quiz-choices"></div>
+  <button type="button" class="rl-quiz-skip" id="rl-quiz-skip">Check überspringen &rarr;</button>
+</div>
+
 <div id="rl-end" class="rl-end" hidden>
-  <h2>Wiederholung</h2>
-  <p class="rl-end-note">Alle Karten aus dieser Runde, zum schnellen Nochmal-Drüberlesen.</p>
+  <h2>Fertig</h2>
+  <p class="rl-end-note" id="rl-end-score">Alle Karten aus dieser Runde, zum schnellen Nochmal-Drüberlesen.</p>
   <div id="rl-review-list"></div>
   <div class="rl-end-actions">
     <button type="button" id="rl-again">Nochmal</button>
     <a class="primary" href="index.html">Neue Runde</a>
   </div>
+  <p class="rl-redirect" id="rl-redirect"></p>
 </div>
 
 <span id="tts-source" hidden></span>
@@ -100,6 +109,8 @@
   var idx = 0;
   var revealed = false;
   var seen = [];
+  var mode = "cards"; // "cards" | "quiz" | "end"
+  var redirectTimer = null;
 
   var elCard = document.getElementById("rl-card");
   var elKicker = document.getElementById("rl-kicker");
@@ -110,7 +121,13 @@
   var elProgress = document.getElementById("rl-progress-fill");
   var elStage = document.getElementById("rl-stage");
   var elHint = document.getElementById("rl-hint");
+  var elQuiz = document.getElementById("rl-quiz");
+  var elQuizProgress = document.getElementById("rl-quiz-progress");
+  var elQuizQ = document.getElementById("rl-quiz-q");
+  var elQuizChoices = document.getElementById("rl-quiz-choices");
   var elEnd = document.getElementById("rl-end");
+  var elEndScore = document.getElementById("rl-end-score");
+  var elRedirect = document.getElementById("rl-redirect");
 
   function renderCard() {
     if (deck.length === 0) { showEnd(); return; }
@@ -137,7 +154,7 @@
 
   function advance() {
     if (idx < deck.length - 1) { idx++; renderCard(); }
-    else { showEnd(); }
+    else { finishCards(); }
   }
 
   function tapCard() {
@@ -145,16 +162,116 @@
     else advance();
   }
 
-  function showEnd() {
+  /* ---------------------------------------------------------- quiz phase */
+
+  var quizDeck = [];
+  var quizIdx = 0;
+  var quizCorrect = 0;
+  var quizRan = false;
+
+  function finishCards() {
+    elProgress.style.width = "100%";
+    if (deck.length >= 4) { startQuiz(); }
+    else { showEnd(); }
+  }
+
+  function startQuiz() {
+    mode = "quiz";
+    quizRan = true;
+    quizDeck = shuffle(deck.slice());
+    quizIdx = 0;
+    quizCorrect = 0;
     elStage.hidden = true;
     elHint.hidden = true;
-    document.getElementById("rl-progress-fill").style.width = "100%";
+    elQuiz.hidden = false;
+    renderQuizQuestion();
+  }
+
+  function renderQuizQuestion() {
+    var c = quizDeck[quizIdx];
+    elQuizProgress.textContent = (quizIdx + 1) + " / " + quizDeck.length;
+    elQuizQ.textContent = c.front + (c.frontSub ? " — " + c.frontSub.replace(/^[^—]+—\s*/, "") : "");
+
+    var others = deck.filter(function (o) { return o.back !== c.back; });
+    shuffle(others);
+    var distractors = [];
+    var usedBacks = {};
+    for (var i = 0; i < others.length && distractors.length < 3; i++) {
+      if (!usedBacks[others[i].back]) { usedBacks[others[i].back] = true; distractors.push(others[i].back); }
+    }
+    var choices = shuffle(distractors.concat([c.back]));
+
+    elQuizChoices.innerHTML = "";
+    choices.forEach(function (choice) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rl-quiz-choice";
+      btn.textContent = choice;
+      btn.addEventListener("click", function () { answerQuiz(btn, choice, c.back); });
+      elQuizChoices.appendChild(btn);
+    });
+  }
+
+  function answerQuiz(btn, choice, correctBack) {
+    if (elQuizChoices.classList.contains("rl-answered")) return;
+    elQuizChoices.classList.add("rl-answered");
+    var correct = choice === correctBack;
+    if (correct) quizCorrect++;
+    Array.prototype.forEach.call(elQuizChoices.querySelectorAll(".rl-quiz-choice"), function (b) {
+      if (b.textContent === correctBack) b.classList.add("rl-correct");
+      else if (b === btn) b.classList.add("rl-wrong");
+    });
+    setTimeout(function () {
+      elQuizChoices.classList.remove("rl-answered");
+      if (quizIdx < quizDeck.length - 1) { quizIdx++; renderQuizQuestion(); }
+      else { elQuiz.hidden = true; showEnd(); }
+    }, 700);
+  }
+
+  document.getElementById("rl-quiz-skip").addEventListener("click", function () {
+    elQuiz.hidden = true;
+    quizRan = false;
+    showEnd();
+  });
+
+  /* ---------------------------------------------------------------- end */
+
+  function showEnd() {
+    mode = "end";
+    elStage.hidden = true;
+    elHint.hidden = true;
+    elQuiz.hidden = true;
     elEnd.hidden = false;
+    elEndScore.textContent = quizRan
+      ? quizCorrect + " von " + quizDeck.length + " im Check richtig."
+      : deck.length + " Karten durchgesehen.";
     var list = document.getElementById("rl-review-list");
     list.innerHTML = deck.map(function (c) {
       return '<div class="rl-review-row"><span class="f">' + esc(c.front) + '</span><span class="b">' + esc(c.back) + '</span></div>';
     }).join("");
+    startRedirectCountdown();
   }
+
+  function renderRedirect(secs) {
+    elRedirect.innerHTML = 'Weiter zur Auswahl in ' + secs + 's &middot; <a href="#" id="rl-cancel-redirect">hier bleiben</a>';
+  }
+
+  function startRedirectCountdown() {
+    var secs = 12;
+    renderRedirect(secs);
+    redirectTimer = setInterval(function () {
+      secs--;
+      if (secs <= 0) { clearInterval(redirectTimer); location.href = "index.html"; return; }
+      renderRedirect(secs);
+    }, 1000);
+  }
+
+  elRedirect.addEventListener("click", function (e) {
+    if (e.target.id !== "rl-cancel-redirect") return;
+    e.preventDefault();
+    clearInterval(redirectTimer);
+    elRedirect.textContent = "";
+  });
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
 
@@ -169,14 +286,17 @@
   });
 
   document.addEventListener("keydown", function (e) {
-    if (elEnd.hidden === false) return;
+    if (mode !== "cards") return;
     if (e.key === " " || e.key === "Enter") { e.preventDefault(); tapCard(); }
     else if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); if (!revealed) reveal(); else advance(); }
   });
 
   document.getElementById("rl-again").addEventListener("click", function () {
-    idx = 0; seen = [];
+    clearInterval(redirectTimer);
+    idx = 0; seen = []; quizRan = false;
+    mode = "cards";
     elEnd.hidden = true;
+    elQuiz.hidden = true;
     elStage.hidden = false;
     elHint.hidden = false;
     if (src === "vocab") shuffle(deck);
