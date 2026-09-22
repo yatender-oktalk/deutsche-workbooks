@@ -1,0 +1,118 @@
+/* ==========================================================================
+   reels.css — swipe-through revision mode (word → meaning, base → Modellsatz)
+   Sibling to vocab.css / situations.css: its own component tokens only,
+   palette + serif/sans stacks come from assets/app-shell.css.
+   ========================================================================== */
+
+body.rl-body { margin: 0; }
+
+.rl-setup { max-width: 640px; margin: 0 auto; padding: 0 4px 60px; }
+
+.rl-field-label {
+  font-family: var(--sans); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted); margin: 22px 0 8px;
+}
+.rl-field-label:first-of-type { margin-top: 8px; }
+
+.rl-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.rl-chip {
+  font-family: var(--sans); font-size: 13.5px; padding: 8px 16px;
+  border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink);
+  cursor: pointer;
+}
+.rl-chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.rl-src-card {
+  border: 1px solid var(--rule-strong); padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+}
+.rl-src-card.active { border-color: var(--accent); border-width: 1px 1px 1px 3px; }
+.rl-src-card .t { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+.rl-src-card .d { font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+
+.rl-count-note { font-family: var(--sans); font-size: 12px; color: var(--muted); margin: 10px 0 0; }
+
+.rl-start-btn {
+  display: block; width: 100%; box-sizing: border-box; margin-top: 26px;
+  font-family: var(--sans); font-size: 15px; font-weight: 700; padding: 13px;
+  background: var(--ink); color: var(--paper); border: none; cursor: pointer; text-align: center;
+}
+
+/* -------------------------------------------------------------- the reel */
+
+.rl-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--rule); z-index: 40; }
+.rl-progress-fill { height: 100%; background: var(--signal); width: 0%; transition: width 0.2s; }
+
+.rl-stage {
+  min-height: calc(100vh - 46px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px 16px 40px;
+  box-sizing: border-box;
+}
+
+.rl-card {
+  width: 100%; max-width: 480px;
+  border: 1px solid var(--rule-strong);
+  padding: 48px 28px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  min-height: 40vh;
+  display: flex; flex-direction: column; justify-content: center; gap: 18px;
+}
+
+.rl-card .rl-kicker {
+  font-family: var(--sans); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--muted);
+}
+
+.rl-card .rl-front {
+  font-family: var(--serif); font-size: clamp(26px, 6vw, 38px); line-height: 1.3; color: var(--ink);
+}
+
+.rl-card .rl-front-sub {
+  font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--ink); opacity: 0.85;
+}
+
+.rl-card .rl-speak {
+  align-self: center;
+  font-size: 20px; line-height: 1; background: none; border: 1px solid var(--rule-strong);
+  border-radius: 50%; width: 42px; height: 42px; cursor: pointer; color: var(--ink);
+}
+
+.rl-card .rl-back {
+  border-top: 1px solid var(--rule); padding-top: 18px; margin-top: 4px;
+  font-family: var(--sans); font-size: 18px; color: var(--accent); font-weight: 700;
+  opacity: 0; transform: translateY(4px); transition: opacity 0.25s, transform 0.25s;
+}
+.rl-card.rl-revealed .rl-back { opacity: 1; transform: translateY(0); }
+
+.rl-hint {
+  text-align: center; font-family: var(--sans); font-size: 12px; color: var(--muted);
+  margin-top: 14px;
+}
+
+.rl-counter {
+  position: fixed; top: 8px; right: 12px; font-family: var(--sans); font-size: 11.5px;
+  color: var(--muted); z-index: 40; background: var(--paper); padding: 2px 6px;
+}
+
+/* ---------------------------------------------------------- end / review */
+
+.rl-end { max-width: 560px; margin: 0 auto; padding: 20px 4px 60px; }
+.rl-end h2 { font-family: var(--serif); font-size: 22px; margin: 0 0 4px; }
+.rl-end .rl-end-note { font-family: var(--sans); font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+
+.rl-review-row {
+  display: flex; justify-content: space-between; gap: 14px;
+  padding: 10px 0; border-bottom: 1px solid var(--rule);
+  font-family: var(--sans); font-size: 14px;
+}
+.rl-review-row .f { font-family: var(--serif); font-size: 16px; color: var(--ink); }
+.rl-review-row .b { color: var(--muted); text-align: right; }
+
+.rl-end-actions { display: flex; gap: 10px; margin-top: 22px; }
+.rl-end-actions a, .rl-end-actions button {
+  flex: 1; text-align: center; font-family: var(--sans); font-size: 14px; padding: 11px;
+  border: 1px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; text-decoration: none;
+}
+.rl-end-actions .primary { background: var(--ink); color: var(--paper); font-weight: 700; }

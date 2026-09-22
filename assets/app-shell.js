@@ -115,6 +115,7 @@
     // 03 — Üben (interactive trainers)
     { p: "vocab/index.html",      t: "Vokabeltrainer",   g: "interactive", lv: "mixed", tag: "A1–B2" },
     { p: "situations/index.html", t: "Gesprächstrainer", g: "interactive", lv: "mixed", tag: "B1–B2" },
+    { p: "reels/index.html",      t: "Reels — Wort & Satz im Rutsch", g: "interactive", lv: "mixed", tag: "A1–B2" },
 
     // 04 — Referenz
     { p: "study-plan.html",                        t: "Studienplan & Zeitplan",           g: "reference", lv: "ref", tag: "PLAN" },

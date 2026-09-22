@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reels</title>
+<link rel="stylesheet" href="../assets/app-shell.css">
+<link rel="stylesheet" href="reels.css">
+</head>
+<body class="level-mixed rl-body" data-dw-nosplash>
+
+<div class="controls topbar">
+  <a href="../index.html">&larr; Übersicht</a>
+</div>
+
+<div class="doc-header">
+  <span class="level-badge">A1 &ndash; B2</span>
+  <h1>Reels</h1>
+  <div class="doc-meta">Wort &rarr; Bedeutung, im Rutsch durch. Keine Bewertung, keine Serien &mdash; am Ende eine kurze Wiederholungsliste.</div>
+</div>
+
+<div class="rl-setup">
+
+  <div class="rl-field-label">Quelle</div>
+  <div id="rl-src-cards">
+    <div class="rl-src-card active" data-src="vocab">
+      <div class="t">Vokabeln</div>
+      <div class="d">Wort &rarr; Übersetzung, aus dem Vokabeltrainer-Wortschatz.</div>
+    </div>
+    <div class="rl-src-card" data-src="kreis">
+      <div class="t">Satzkreis</div>
+      <div class="d">Grundsatz + Station &rarr; Modellantwort (3 Sätze &times; 11 Stationen).</div>
+    </div>
+    <div class="rl-src-card" data-src="leiter">
+      <div class="t">Satzleiter</div>
+      <div class="d">Grundsatz + Sprosse &rarr; Modellantwort (3 Sätze &times; 7 Sprossen).</div>
+    </div>
+  </div>
+
+  <div id="rl-vocab-opts">
+    <div class="rl-field-label">Niveau</div>
+    <div class="rl-chip-row" id="rl-level-chips">
+      <button type="button" class="rl-chip active" data-level="a1">A1</button>
+      <button type="button" class="rl-chip active" data-level="a2">A2</button>
+      <button type="button" class="rl-chip" data-level="b1">B1</button>
+      <button type="button" class="rl-chip" data-level="b2">B2</button>
+    </div>
+
+    <div class="rl-field-label">Kartenzahl</div>
+    <div class="rl-chip-row" id="rl-count-chips">
+      <button type="button" class="rl-chip" data-count="15">15</button>
+      <button type="button" class="rl-chip active" data-count="30">30</button>
+      <button type="button" class="rl-chip" data-count="60">60</button>
+      <button type="button" class="rl-chip" data-count="0">Alle</button>
+    </div>
+  </div>
+
+  <p class="rl-count-note" id="rl-note"></p>
+
+  <button class="rl-start-btn" id="rl-start">Los</button>
+</div>
+
+<div class="doc-footer">
+  <a href="../index.html">&larr; Zur Übersicht</a>
+</div>
+
+<script defer src="../assets/app-shell.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var src = "vocab";
+  var levels = { a1: true, a2: true, b1: false, b2: false };
+  var count = 30;
+
+  var srcCards = document.getElementById("rl-src-cards");
+  var vocabOpts = document.getElementById("rl-vocab-opts");
+  var note = document.getElementById("rl-note");
+
+  srcCards.addEventListener("click", function (e) {
+    var card = e.target.closest(".rl-src-card");
+    if (!card) return;
+    src = card.getAttribute("data-src");
+    Array.prototype.forEach.call(srcCards.querySelectorAll(".rl-src-card"), function (c) {
+      c.classList.toggle("active", c === card);
+    });
+    vocabOpts.hidden = src !== "vocab";
+    updateNote();
+  });
+
+  document.getElementById("rl-level-chips").addEventListener("click", function (e) {
+    var chip = e.target.closest(".rl-chip");
+    if (!chip) return;
+    var lv = chip.getAttribute("data-level");
+    // keep at least one level active
+    var willBeActive = !chip.classList.contains("active");
+    if (!willBeActive) {
+      var activeCount = Object.keys(levels).filter(function (k) { return levels[k]; }).length;
+      if (activeCount <= 1) return;
+    }
+    levels[lv] = willBeActive;
+    chip.classList.toggle("active", willBeActive);
+  });
+
+  document.getElementById("rl-count-chips").addEventListener("click", function (e) {
+    var chip = e.target.closest(".rl-chip");
+    if (!chip) return;
+    count = parseInt(chip.getAttribute("data-count"), 10);
+    Array.prototype.forEach.call(chip.parentNode.querySelectorAll(".rl-chip"), function (c) {
+      c.classList.toggle("active", c === chip);
+    });
+    updateNote();
+  });
+
+  function updateNote() {
+    if (src === "kreis") { note.textContent = "33 Karten (3 Grundsätze × 11 Stationen), feste Reihenfolge."; return; }
+    if (src === "leiter") { note.textContent = "21 Karten (3 Grundsätze × 7 Sprossen), feste Reihenfolge."; return; }
+    note.textContent = "";
+  }
+  updateNote();
+
+  document.getElementById("rl-start").addEventListener("click", function () {
+    var params = new URLSearchParams();
+    params.set("src", src);
+    if (src === "vocab") {
+      var lv = Object.keys(levels).filter(function (k) { return levels[k]; }).join(",");
+      params.set("lv", lv || "a1");
+      params.set("n", String(count));
+    }
+    location.href = "practice.html?" + params.toString();
+  });
+})();
+</script>
+</body>
+</html>

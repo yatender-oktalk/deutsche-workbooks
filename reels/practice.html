@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reels</title>
+<link rel="stylesheet" href="../assets/app-shell.css">
+<link rel="stylesheet" href="reels.css">
+</head>
+<body class="level-mixed rl-body" data-dw-nosplash>
+
+<div class="controls topbar no-print">
+  <a href="index.html">&larr; Reels</a>
+</div>
+
+<div class="rl-progress"><div class="rl-progress-fill" id="rl-progress-fill"></div></div>
+<div class="rl-counter" id="rl-counter"></div>
+
+<div id="rl-stage" class="rl-stage">
+  <div class="rl-card" id="rl-card">
+    <div class="rl-kicker" id="rl-kicker">&nbsp;</div>
+    <div class="rl-front" id="rl-front">&nbsp;</div>
+    <div class="rl-front-sub" id="rl-front-sub"></div>
+    <button type="button" class="rl-speak" id="rl-speak" aria-label="Vorlesen" title="Vorlesen">&#128266;</button>
+    <div class="rl-back" id="rl-back"></div>
+  </div>
+</div>
+<p class="rl-hint" id="rl-hint">Tippen: Bedeutung zeigen &middot; nochmal tippen: weiter &middot; Pfeiltasten funktionieren auch</p>
+
+<div id="rl-end" class="rl-end" hidden>
+  <h2>Wiederholung</h2>
+  <p class="rl-end-note">Alle Karten aus dieser Runde, zum schnellen Nochmal-Drüberlesen.</p>
+  <div id="rl-review-list"></div>
+  <div class="rl-end-actions">
+    <button type="button" id="rl-again">Nochmal</button>
+    <a class="primary" href="index.html">Neue Runde</a>
+  </div>
+</div>
+
+<span id="tts-source" hidden></span>
+
+<script src="../vocab/data/a1.js"></script>
+<script src="../vocab/data/a2.js"></script>
+<script src="../vocab/data/b1.js"></script>
+<script src="../vocab/data/b2.js"></script>
+<script src="../workbooks/satz-data.js"></script>
+<script src="../assets/listening.js"></script>
+<script defer src="../assets/app-shell.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var qs = new URLSearchParams(location.search);
+  var src = qs.get("src") || "vocab";
+  var deck = [];
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function buildVocabDeck() {
+    var levels = (qs.get("lv") || "a1").split(",");
+    var n = parseInt(qs.get("n"), 10);
+    var pool = [];
+    levels.forEach(function (lv) {
+      var list = (window.VOCAB_RAW && window.VOCAB_RAW[lv]) || [];
+      list.forEach(function (e) {
+        if (e.translation_en) pool.push({ front: e.full, back: e.translation_en, kicker: lv.toUpperCase() });
+      });
+    });
+    shuffle(pool);
+    if (n > 0) pool = pool.slice(0, n);
+    return pool;
+  }
+
+  function buildSatzDeck(kind) {
+    var bases = (window.DW_SATZ && window.DW_SATZ[kind]) || [];
+    var out = [];
+    bases.forEach(function (b) {
+      b.steps.forEach(function (st) {
+        out.push({
+          front: b.base,
+          frontSub: st.s + " — " + st.p,
+          back: st.a,
+          kicker: kind === "kreis" ? "Satzkreis" : "Satzleiter"
+        });
+      });
+    });
+    return out;
+  }
+
+  if (src === "kreis") deck = buildSatzDeck("kreis");
+  else if (src === "leiter") deck = buildSatzDeck("leiter");
+  else deck = buildVocabDeck();
+
+  var idx = 0;
+  var revealed = false;
+  var seen = [];
+
+  var elCard = document.getElementById("rl-card");
+  var elKicker = document.getElementById("rl-kicker");
+  var elFront = document.getElementById("rl-front");
+  var elFrontSub = document.getElementById("rl-front-sub");
+  var elBack = document.getElementById("rl-back");
+  var elCounter = document.getElementById("rl-counter");
+  var elProgress = document.getElementById("rl-progress-fill");
+  var elStage = document.getElementById("rl-stage");
+  var elHint = document.getElementById("rl-hint");
+  var elEnd = document.getElementById("rl-end");
+
+  function renderCard() {
+    if (deck.length === 0) { showEnd(); return; }
+    var c = deck[idx];
+    revealed = false;
+    elCard.classList.remove("rl-revealed");
+    elKicker.textContent = c.kicker || "";
+    elFront.textContent = c.front;
+    elFrontSub.textContent = c.frontSub || "";
+    elBack.textContent = c.back;
+    elCounter.textContent = (idx + 1) + " / " + deck.length;
+    elProgress.style.width = Math.round(((idx) / deck.length) * 100) + "%";
+  }
+
+  function reveal() {
+    revealed = true;
+    elCard.classList.add("rl-revealed");
+    var c = deck[idx];
+    if (seen.indexOf(c) === -1) {
+      seen.push(c);
+      if (window.DW && DW.logActivity) DW.logActivity("reels", "card", { src: src });
+    }
+  }
+
+  function advance() {
+    if (idx < deck.length - 1) { idx++; renderCard(); }
+    else { showEnd(); }
+  }
+
+  function tapCard() {
+    if (!revealed) reveal();
+    else advance();
+  }
+
+  function showEnd() {
+    elStage.hidden = true;
+    elHint.hidden = true;
+    document.getElementById("rl-progress-fill").style.width = "100%";
+    elEnd.hidden = false;
+    var list = document.getElementById("rl-review-list");
+    list.innerHTML = deck.map(function (c) {
+      return '<div class="rl-review-row"><span class="f">' + esc(c.front) + '</span><span class="b">' + esc(c.back) + '</span></div>';
+    }).join("");
+  }
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+
+  elCard.addEventListener("click", tapCard);
+
+  document.getElementById("rl-speak").addEventListener("click", function (e) {
+    e.stopPropagation();
+    var c = deck[idx];
+    var srcEl = document.getElementById("tts-source");
+    srcEl.textContent = c.front;
+    speakText("tts-source");
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (elEnd.hidden === false) return;
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); tapCard(); }
+    else if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); if (!revealed) reveal(); else advance(); }
+  });
+
+  document.getElementById("rl-again").addEventListener("click", function () {
+    idx = 0; seen = [];
+    elEnd.hidden = true;
+    elStage.hidden = false;
+    elHint.hidden = false;
+    if (src === "vocab") shuffle(deck);
+    renderCard();
+  });
+
+  if (deck.length === 0) {
+    elFront.textContent = "Keine Karten gefunden.";
+  } else {
+    renderCard();
+  }
+})();
+</script>
+</body>
+</html>
