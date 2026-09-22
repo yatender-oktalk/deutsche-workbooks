@@ -25,7 +25,7 @@
     <div class="rl-back" id="rl-back"></div>
   </div>
 </div>
-<p class="rl-hint" id="rl-hint">Tippen: Bedeutung zeigen &middot; nochmal tippen: weiter &middot; Pfeiltasten funktionieren auch</p>
+<p class="rl-hint" id="rl-hint">Tippen: Bedeutung zeigen &middot; nochmal tippen / nach oben wischen: weiter &middot; nach unten wischen: zurück</p>
 
 <div id="rl-quiz" class="rl-quiz" hidden>
   <div class="rl-kicker">Kurzer Check</div>
@@ -152,15 +152,68 @@
     }
   }
 
-  function advance() {
-    if (idx < deck.length - 1) { idx++; renderCard(); }
-    else { finishCards(); }
+  /* --------------------------------------------------- card transitions */
+
+  var animating = false;
+
+  function changeCard(newIdx, forward, preReveal) {
+    if (animating || newIdx < 0) return;
+    if (newIdx >= deck.length) { exitToEnd(); return; }
+    animating = true;
+    var exitClass = forward ? "rl-off-up" : "rl-off-down";
+    var enterClass = forward ? "rl-off-down" : "rl-off-up";
+    elCard.classList.add(exitClass);
+    setTimeout(function () {
+      idx = newIdx;
+      renderCard();
+      elCard.classList.add("rl-notrans", enterClass);
+      elCard.classList.remove(exitClass);
+      void elCard.offsetWidth; // force reflow so the enter position applies without transition
+      elCard.classList.remove("rl-notrans");
+      requestAnimationFrame(function () {
+        elCard.classList.remove(enterClass);
+        if (preReveal) reveal();
+        setTimeout(function () { animating = false; }, 220);
+      });
+    }, 190);
   }
+
+  function exitToEnd() {
+    animating = true;
+    elCard.classList.add("rl-off-up");
+    setTimeout(function () { animating = false; finishCards(); }, 190);
+  }
+
+  function goNext() { changeCard(idx + 1, true); }
+  function goPrev() { if (idx > 0) changeCard(idx - 1, false, true); }
 
   function tapCard() {
     if (!revealed) reveal();
-    else advance();
+    else goNext();
   }
+
+  /* ------------------------------------------------------------- swipe */
+
+  var touchStartX = null, touchStartY = null;
+
+  elStage.addEventListener("touchstart", function (e) {
+    if (mode !== "cards") return;
+    var t = e.touches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY;
+  }, { passive: true });
+
+  elStage.addEventListener("touchend", function (e) {
+    if (mode !== "cards" || touchStartY === null) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - touchStartX;
+    var dy = t.clientY - touchStartY;
+    touchStartY = null;
+    if (Math.abs(dy) > 45 && Math.abs(dy) > Math.abs(dx)) {
+      e.preventDefault();
+      if (dy < 0) tapCard();
+      else goPrev();
+    }
+  }, { passive: false });
 
   /* ---------------------------------------------------------- quiz phase */
 
@@ -287,12 +340,14 @@
 
   document.addEventListener("keydown", function (e) {
     if (mode !== "cards") return;
-    if (e.key === " " || e.key === "Enter") { e.preventDefault(); tapCard(); }
-    else if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); if (!revealed) reveal(); else advance(); }
+    if (e.key === " " || e.key === "Enter" || e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); tapCard(); }
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); goPrev(); }
   });
 
   document.getElementById("rl-again").addEventListener("click", function () {
     clearInterval(redirectTimer);
+    animating = false;
+    elCard.classList.remove("rl-off-up", "rl-off-down", "rl-notrans");
     idx = 0; seen = []; quizRan = false;
     mode = "cards";
     elEnd.hidden = true;
