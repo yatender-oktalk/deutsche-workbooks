@@ -39,14 +39,38 @@ body.rl-body { margin: 0; }
 
 /* -------------------------------------------------------------- the reel */
 
-.rl-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--rule); z-index: 40; }
+/* Card, quiz and end are three "screens" that share one fixed on-screen
+   rectangle below the app-shell topbar + this page's own back-link bar —
+   switching between them is always an in-place swap, never something the
+   page has to be scrolled to reach. --rl-top-offset is a static fallback
+   corrected at runtime (setTopOffset() in practice.html) once both bars'
+   real heights are known, since the generic .controls styling isn't a
+   fixed height. */
+:root { --rl-top-offset: 86px; }
+
+.rl-progress { position: fixed; top: var(--rl-top-offset); left: 0; right: 0; height: 2px; background: var(--rule); z-index: 40; }
 .rl-progress-fill { height: 100%; background: var(--signal); width: 0%; transition: width 0.2s; }
 
+.rl-counter {
+  position: fixed; top: calc(var(--rl-top-offset) + 8px); right: 12px; font-family: var(--sans); font-size: 11.5px;
+  color: var(--muted); z-index: 40; background: var(--paper); padding: 2px 6px;
+}
+
+.rl-screen {
+  position: fixed;
+  top: var(--rl-top-offset); left: 0; right: 0; bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 .rl-stage {
-  min-height: calc(100vh - 46px);
-  min-height: calc(100dvh - 46px); /* the actual visible area in standalone/PWA mode — no browser chrome to size around, but also no automatic allowance for it */
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px 16px calc(40px + env(safe-area-inset-bottom, 0px));
+  /* height comes entirely from .rl-screen's top/bottom (position: fixed) —
+     a min-height here would resolve against the viewport, not that box,
+     and override bottom, pushing the stage past the real viewport edge */
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 24px 16px 40px;
   box-sizing: border-box;
   touch-action: pan-x pinch-zoom;
 }
@@ -98,13 +122,9 @@ body.rl-body { margin: 0; }
 .rl-card.rl-revealed .rl-back { opacity: 1; transform: translateY(0); }
 
 .rl-hint {
+  align-self: stretch;
   text-align: center; font-family: var(--sans); font-size: 12px; color: var(--muted);
-  margin-top: 14px;
-}
-
-.rl-counter {
-  position: fixed; top: 8px; right: 12px; font-family: var(--sans); font-size: 11.5px;
-  color: var(--muted); z-index: 40; background: var(--paper); padding: 2px 6px;
+  margin: 14px 0 0;
 }
 
 /* --------------------------------------------------------------- quiz */

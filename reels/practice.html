@@ -16,7 +16,7 @@
 <div class="rl-progress"><div class="rl-progress-fill" id="rl-progress-fill"></div></div>
 <div class="rl-counter" id="rl-counter"></div>
 
-<div id="rl-stage" class="rl-stage">
+<div id="rl-stage" class="rl-stage rl-screen">
   <div class="rl-card" id="rl-card">
     <div class="rl-kicker" id="rl-kicker">&nbsp;</div>
     <div class="rl-front" id="rl-front">&nbsp;</div>
@@ -24,10 +24,10 @@
     <button type="button" class="rl-speak" id="rl-speak" aria-label="Vorlesen" title="Vorlesen">&#128266;</button>
     <div class="rl-back" id="rl-back"></div>
   </div>
+  <p class="rl-hint" id="rl-hint">Tippen: Bedeutung zeigen &middot; nochmal tippen / nach oben wischen: weiter &middot; nach unten wischen: zurück</p>
 </div>
-<p class="rl-hint" id="rl-hint">Tippen: Bedeutung zeigen &middot; nochmal tippen / nach oben wischen: weiter &middot; nach unten wischen: zurück</p>
 
-<div id="rl-quiz" class="rl-quiz" hidden>
+<div id="rl-quiz" class="rl-quiz rl-screen" hidden>
   <div class="rl-kicker">Kurzer Check</div>
   <div class="rl-quiz-progress" id="rl-quiz-progress"></div>
   <div class="rl-quiz-q" id="rl-quiz-q"></div>
@@ -35,7 +35,7 @@
   <button type="button" class="rl-quiz-skip" id="rl-quiz-skip">Check überspringen &rarr;</button>
 </div>
 
-<div id="rl-end" class="rl-end" hidden>
+<div id="rl-end" class="rl-end rl-screen" hidden>
   <h2>Fertig</h2>
   <p class="rl-end-note" id="rl-end-score">Alle Karten aus dieser Runde, zum schnellen Nochmal-Drüberlesen.</p>
   <div id="rl-review-list"></div>
@@ -58,6 +58,22 @@
 <script>
 (function () {
   "use strict";
+
+  /* The card/quiz/end "screens" are fixed to the area below the app-shell
+     topbar + this page's own back-link bar (see .rl-screen in reels.css).
+     --rl-top-offset has a static fallback but is corrected here once the
+     app-shell topbar has been injected (it's a deferred script, so it may
+     not exist yet on the first tick), so the screens sit exactly below
+     both bars regardless of font/box-model differences across devices. */
+  function setTopOffset() {
+    var topbarSpacer = document.querySelector(".dw-topbar-spacer");
+    if (!topbarSpacer) { setTimeout(setTopOffset, 40); return; }
+    var controls = document.querySelector(".controls.topbar");
+    var offset = Math.ceil(controls ? controls.getBoundingClientRect().bottom : topbarSpacer.getBoundingClientRect().bottom);
+    document.documentElement.style.setProperty("--rl-top-offset", offset + "px");
+  }
+  setTopOffset();
+  window.addEventListener("resize", setTopOffset);
 
   var qs = new URLSearchParams(location.search);
   var src = qs.get("src") || "vocab";
@@ -227,7 +243,6 @@
 
   function finishCards() {
     elProgress.style.width = "100%";
-    window.scrollTo(0, 0); // guard against any residual scroll position leaving the next screen off-screen
     if (deck.length >= 4) { startQuiz(); }
     else { showEnd(); }
   }
@@ -299,7 +314,6 @@
     elHint.hidden = true;
     elQuiz.hidden = true;
     elEnd.hidden = false;
-    window.scrollTo(0, 0);
     elEndScore.textContent = quizRan
       ? quizCorrect + " von " + quizDeck.length + " im Check richtig."
       : deck.length + " Karten durchgesehen.";
