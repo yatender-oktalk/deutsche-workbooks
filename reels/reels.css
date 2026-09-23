@@ -44,8 +44,9 @@ body.rl-body { margin: 0; }
 
 .rl-stage {
   min-height: calc(100vh - 46px);
+  min-height: calc(100dvh - 46px); /* the actual visible area in standalone/PWA mode — no browser chrome to size around, but also no automatic allowance for it */
   display: flex; align-items: center; justify-content: center;
-  padding: 24px 16px 40px;
+  padding: 24px 16px calc(40px + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
   touch-action: pan-x pinch-zoom;
 }
