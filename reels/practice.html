@@ -185,12 +185,23 @@
   /* ------------------------------------------------------------- swipe */
 
   var touchStartX = null, touchStartY = null;
+  var suppressNextClick = false;
 
   elStage.addEventListener("touchstart", function (e) {
     if (mode !== "cards") return;
     var t = e.touches[0];
     touchStartX = t.clientX; touchStartY = t.clientY;
   }, { passive: true });
+
+  elStage.addEventListener("touchmove", function (e) {
+    if (mode !== "cards" || touchStartY === null) return;
+    var t = e.touches[0];
+    var dx = t.clientX - touchStartX;
+    var dy = t.clientY - touchStartY;
+    if (Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)) {
+      e.preventDefault(); // stop the page/browser from scrolling instead of us handling the swipe
+    }
+  }, { passive: false });
 
   elStage.addEventListener("touchend", function (e) {
     if (mode !== "cards" || touchStartY === null) return;
@@ -200,6 +211,8 @@
     touchStartY = null;
     if (Math.abs(dy) > 45 && Math.abs(dy) > Math.abs(dx)) {
       e.preventDefault();
+      suppressNextClick = true;
+      setTimeout(function () { suppressNextClick = false; }, 400);
       if (dy < 0) tapCard();
       else goPrev();
     }
@@ -214,6 +227,7 @@
 
   function finishCards() {
     elProgress.style.width = "100%";
+    window.scrollTo(0, 0); // guard against any residual scroll position leaving the next screen off-screen
     if (deck.length >= 4) { startQuiz(); }
     else { showEnd(); }
   }
@@ -285,6 +299,7 @@
     elHint.hidden = true;
     elQuiz.hidden = true;
     elEnd.hidden = false;
+    window.scrollTo(0, 0);
     elEndScore.textContent = quizRan
       ? quizCorrect + " von " + quizDeck.length + " im Check richtig."
       : deck.length + " Karten durchgesehen.";
@@ -318,7 +333,10 @@
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
 
-  elCard.addEventListener("click", tapCard);
+  elCard.addEventListener("click", function () {
+    if (suppressNextClick) { suppressNextClick = false; return; }
+    tapCard();
+  });
 
   document.getElementById("rl-speak").addEventListener("click", function (e) {
     e.stopPropagation();
