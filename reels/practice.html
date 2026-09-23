@@ -38,11 +38,10 @@
 
 <div id="rl-end" class="rl-end rl-screen" hidden>
   <h2>Fertig</h2>
-  <p class="rl-end-note" id="rl-end-score">Alle Karten aus dieser Runde, zum schnellen Nochmal-Drüberlesen.</p>
-  <div id="rl-review-list"></div>
+  <p class="rl-end-note" id="rl-end-score"></p>
   <div class="rl-end-actions">
     <button type="button" id="rl-again">Nochmal</button>
-    <a class="primary" href="index.html">Neue Runde</a>
+    <a class="primary" href="index.html">Zurück</a>
   </div>
   <p class="rl-redirect" id="rl-redirect"></p>
 </div>
@@ -366,13 +365,8 @@
     elHint.hidden = true;
     elQuiz.hidden = true;
     elEnd.hidden = false;
-    elEndScore.textContent = quizRan
-      ? quizCorrect + " von " + quizDeck.length + " im Check richtig."
-      : deck.length + " Karten durchgesehen.";
-    var list = document.getElementById("rl-review-list");
-    list.innerHTML = deck.map(function (c) {
-      return '<div class="rl-review-row"><span class="f">' + esc(c.front) + '</span><span class="b">' + esc(c.back) + '</span></div>';
-    }).join("");
+    elEndScore.textContent = deck.length + " Karten durchgesehen" +
+      (quizRan ? " · " + quizCorrect + " von " + quizDeck.length + " im Check richtig." : ".");
     startRedirectCountdown();
   }
 
@@ -396,8 +390,6 @@
     clearInterval(redirectTimer);
     elRedirect.textContent = "";
   });
-
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
 
   elCard.addEventListener("click", function () {
     if (suppressNextClick) { suppressNextClick = false; return; }

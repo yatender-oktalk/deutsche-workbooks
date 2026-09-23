@@ -64,6 +64,12 @@ body.rl-body { margin: 0; }
   box-sizing: border-box;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+/* .rl-stage/.rl-quiz set their own `display` below at the same specificity
+   as the UA [hidden] rule, so without this override the author rule wins
+   the cascade (later in source order) and the "hidden" screen stays
+   visible underneath the active one — this is what made the quiz render
+   stacked on top of the last flashcard. */
+.rl-screen[hidden] { display: none; }
 
 .rl-stage {
   /* height comes entirely from .rl-screen's top/bottom (position: fixed) —
