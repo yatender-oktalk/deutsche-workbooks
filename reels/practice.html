@@ -154,34 +154,24 @@
 
   /* --------------------------------------------------- card transitions */
 
-  var animating = false;
-
-  function changeCard(newIdx, forward, preReveal) {
-    if (animating || newIdx < 0) return;
-    if (newIdx >= deck.length) { exitToEnd(); return; }
-    animating = true;
-    var exitClass = forward ? "rl-off-up" : "rl-off-down";
-    var enterClass = forward ? "rl-off-down" : "rl-off-up";
-    elCard.classList.add(exitClass);
-    setTimeout(function () {
-      idx = newIdx;
-      renderCard();
-      elCard.classList.add("rl-notrans", enterClass);
-      elCard.classList.remove(exitClass);
-      void elCard.offsetWidth; // force reflow so the enter position applies without transition
-      elCard.classList.remove("rl-notrans");
-      requestAnimationFrame(function () {
-        elCard.classList.remove(enterClass);
-        if (preReveal) reveal();
-        setTimeout(function () { animating = false; }, 220);
-      });
-    }, 190);
+  /* State always updates instantly on every tap/swipe, however fast they
+     come in — the slide is a cosmetic CSS animation layered on top and
+     never gates input (a previous version blocked new taps until the
+     in-flight transition finished, which silently dropped rapid taps and
+     left the deck looking stuck). */
+  function playCardAnim(cls) {
+    elCard.classList.remove("rl-anim-up", "rl-anim-down");
+    void elCard.offsetWidth; // restart the animation even if re-triggered before it finished
+    elCard.classList.add(cls);
   }
 
-  function exitToEnd() {
-    animating = true;
-    elCard.classList.add("rl-off-up");
-    setTimeout(function () { animating = false; finishCards(); }, 190);
+  function changeCard(newIdx, forward, preReveal) {
+    if (newIdx < 0) return;
+    if (newIdx >= deck.length) { finishCards(); return; }
+    idx = newIdx;
+    renderCard();
+    playCardAnim(forward ? "rl-anim-up" : "rl-anim-down");
+    if (preReveal) reveal();
   }
 
   function goNext() { changeCard(idx + 1, true); }
@@ -346,8 +336,7 @@
 
   document.getElementById("rl-again").addEventListener("click", function () {
     clearInterval(redirectTimer);
-    animating = false;
-    elCard.classList.remove("rl-off-up", "rl-off-down", "rl-notrans");
+    elCard.classList.remove("rl-anim-up", "rl-anim-down");
     idx = 0; seen = []; quizRan = false;
     mode = "cards";
     elEnd.hidden = true;

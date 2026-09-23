@@ -59,12 +59,16 @@ body.rl-body { margin: 0; }
   user-select: none;
   min-height: 40vh;
   display: flex; flex-direction: column; justify-content: center; gap: 18px;
-  transition: transform 0.19s ease, opacity 0.19s ease;
   touch-action: pan-x pinch-zoom;
 }
-.rl-card.rl-notrans { transition: none; }
-.rl-card.rl-off-up { transform: translateY(-36px); opacity: 0; }
-.rl-card.rl-off-down { transform: translateY(36px); opacity: 0; }
+
+/* Purely cosmetic entrance animation — never gates input. Content already
+   updated before this class is applied, so a burst of rapid taps/swipes
+   just keeps re-triggering it (playCardAnim() forces a reflow to restart). */
+@keyframes rl-slide-up { from { transform: translateY(28px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes rl-slide-down { from { transform: translateY(-28px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.rl-card.rl-anim-up { animation: rl-slide-up 0.2s ease; }
+.rl-card.rl-anim-down { animation: rl-slide-down 0.2s ease; }
 
 .rl-card .rl-kicker {
   font-family: var(--sans); font-size: 11px; text-transform: uppercase;
