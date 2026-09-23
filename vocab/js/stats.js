@@ -1,5 +1,13 @@
 /* Stats page: daily heatmap, 14-day correct/wrong bars, per-level breakdown. */
 
+/* A card counts as "gemeistert" once FSRS's stability estimate (days until
+   recall probability drops to the app's 90% target retention, see
+   FSRS_REQUEST_RETENTION in srs.js) reaches this many days — i.e. the
+   model expects you to still remember it in three weeks without another
+   review. Not a universal definition of "mastered", just a legible,
+   round threshold for this progress view. */
+const MASTERY_STABILITY_DAYS = 21;
+
 function qsParam(name) {
   return new URLSearchParams(window.location.search).get(name);
 }
@@ -90,11 +98,33 @@ function renderLevelBreakdown(reviews, cardsByLevel) {
     const revs = reviews.filter((r) => r.level === lvl);
     const correct = revs.filter((r) => r.correct).length;
     const accuracy = revs.length ? Math.round((correct / revs.length) * 100) : 0;
-    const learned = (cardsByLevel[lvl] || []).length;
-    const row = el('div', 'level-breakdown-row');
-    row.innerHTML = `<span><strong>${lvl.toUpperCase()}</strong> &middot; ${learned} Karten gelernt</span>` +
-      `<span>${revs.length} Wdh. &middot; ${accuracy}% richtig</span>`;
-    container.appendChild(row);
+
+    const cards = cardsByLevel[lvl] || [];
+    const total = (VocabData.byLevel[lvl] || []).length;
+    const mastered = cards.filter((c) => (c.stability || 0) >= MASTERY_STABILITY_DAYS).length;
+    const inProgress = cards.length - mastered;
+    const notStarted = Math.max(0, total - cards.length);
+    const masteredPct = total ? (mastered / total) * 100 : 0;
+    const inProgressPct = total ? (inProgress / total) * 100 : 0;
+    const remainingPct = total ? Math.round(((total - mastered) / total) * 100) : 0;
+
+    const block = el('div', 'level-mastery-block');
+    block.innerHTML =
+      `<div class="level-mastery-head"><strong>${lvl.toUpperCase()}</strong><span>${total} Wörter gesamt</span></div>` +
+      `<div class="level-mastery-bar">` +
+        `<div class="seg seg-mastered" style="width:${masteredPct}%"></div>` +
+        `<div class="seg seg-progress" style="width:${inProgressPct}%"></div>` +
+      `</div>` +
+      `<div class="level-mastery-legend">` +
+        `<span class="lbl-mastered">${mastered} gemeistert</span>` +
+        `<span class="lbl-progress">${inProgress} in Arbeit</span>` +
+        `<span class="lbl-new">${notStarted} noch nicht begonnen</span>` +
+        `<span class="lbl-remaining">${remainingPct}% noch offen</span>` +
+      `</div>` +
+      `<div class="level-breakdown-row">` +
+        `<span>${revs.length} Wdh.</span><span>${accuracy}% richtig</span>` +
+      `</div>`;
+    container.appendChild(block);
   });
 }
 
