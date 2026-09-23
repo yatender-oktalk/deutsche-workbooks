@@ -30,6 +30,7 @@
 <div id="rl-quiz" class="rl-quiz rl-screen" hidden>
   <div class="rl-kicker">Kurzer Check</div>
   <div class="rl-quiz-progress" id="rl-quiz-progress"></div>
+  <div class="rl-quiz-credit" id="rl-quiz-credit"></div>
   <div class="rl-quiz-q" id="rl-quiz-q"></div>
   <div class="rl-quiz-choices" id="rl-quiz-choices"></div>
   <button type="button" class="rl-quiz-skip" id="rl-quiz-skip">Check überspringen &rarr;</button>
@@ -52,6 +53,8 @@
 <script src="../vocab/data/a2.js"></script>
 <script src="../vocab/data/b1.js"></script>
 <script src="../vocab/data/b2.js"></script>
+<script src="../vocab/js/db.js"></script>
+<script src="../vocab/js/srs.js"></script>
 <script src="../workbooks/satz-data.js"></script>
 <script src="../assets/listening.js"></script>
 <script defer src="../assets/app-shell.js"></script>
@@ -94,7 +97,7 @@
     levels.forEach(function (lv) {
       var list = (window.VOCAB_RAW && window.VOCAB_RAW[lv]) || [];
       list.forEach(function (e) {
-        if (e.translation_en) pool.push({ front: e.full, back: e.translation_en, kicker: lv.toUpperCase() });
+        if (e.translation_en) pool.push({ front: e.full, back: e.translation_en, kicker: lv.toUpperCase(), id: e.id, level: e.level });
       });
     });
     shuffle(pool);
@@ -122,6 +125,44 @@
   else if (src === "leiter") deck = buildSatzDeck("leiter");
   else deck = buildVocabDeck();
 
+  /* Vocab quiz answers are graded into the real Vokabeltrainer FSRS state
+     (same VocabDB/srs.js used by vocab/practice.js), under whichever
+     profile is currently active there, so a reels session counts toward
+     the same due/learned/weak-words picture in vocab/stats.html instead
+     of being invisible to it. Resolves to null (no writes happen) when
+     there's no vocab profile to credit, or outside a vocab-source deck. */
+  var vocabProfileP = (function () {
+    if (src !== "vocab" || typeof VocabDB === "undefined") return Promise.resolve(null);
+    var name = null;
+    try { name = localStorage.getItem("vocab.activeProfile"); } catch (e) {}
+    if (!name) return Promise.resolve(null);
+    return VocabDB.listProfiles().then(function (profiles) {
+      return profiles.some(function (p) { return p.name === name; }) ? name : null;
+    }).catch(function () { return null; });
+  })();
+
+  function recordVocabReview(card, correct) {
+    if (src !== "vocab" || !card.id) return;
+    vocabProfileP.then(function (profile) {
+      if (!profile) return;
+      var entry = { id: card.id, level: card.level };
+      return VocabDB.getCard(profile, entry.id).then(function (existing) {
+        var c = existing || newCard(profile, entry);
+        var isNew = !existing;
+        gradeCard(c, correct ? "good" : "again");
+        return VocabDB.putCard(c).then(function () {
+          return VocabDB.logReview({
+            profile: profile, entryId: entry.id, level: entry.level,
+            mode: "reels-quiz", grade: correct ? "good" : "again", correct: correct,
+            day: todayStr(), ts: Date.now()
+          });
+        }).then(function () {
+          if (window.DW && DW.logActivity) DW.logActivity("vocab", "review", { level: entry.level, correct: !!correct, isNew: isNew });
+        });
+      });
+    }).catch(function () {});
+  }
+
   var idx = 0;
   var revealed = false;
   var seen = [];
@@ -139,6 +180,7 @@
   var elHint = document.getElementById("rl-hint");
   var elQuiz = document.getElementById("rl-quiz");
   var elQuizProgress = document.getElementById("rl-quiz-progress");
+  var elQuizCredit = document.getElementById("rl-quiz-credit");
   var elQuizQ = document.getElementById("rl-quiz-q");
   var elQuizChoices = document.getElementById("rl-quiz-choices");
   var elEnd = document.getElementById("rl-end");
@@ -257,6 +299,14 @@
     elHint.hidden = true;
     elQuiz.hidden = false;
     renderQuizQuestion();
+
+    if (src === "vocab") {
+      vocabProfileP.then(function (profile) {
+        elQuizCredit.textContent = profile
+          ? "Zählt für Vokabeltrainer-Profil „" + profile + "“"
+          : "Kein Vokabeltrainer-Profil aktiv — zählt nicht mit";
+      });
+    }
   }
 
   function renderQuizQuestion() {
@@ -279,16 +329,18 @@
       btn.type = "button";
       btn.className = "rl-quiz-choice";
       btn.textContent = choice;
-      btn.addEventListener("click", function () { answerQuiz(btn, choice, c.back); });
+      btn.addEventListener("click", function () { answerQuiz(btn, choice, c); });
       elQuizChoices.appendChild(btn);
     });
   }
 
-  function answerQuiz(btn, choice, correctBack) {
+  function answerQuiz(btn, choice, card) {
     if (elQuizChoices.classList.contains("rl-answered")) return;
     elQuizChoices.classList.add("rl-answered");
+    var correctBack = card.back;
     var correct = choice === correctBack;
     if (correct) quizCorrect++;
+    recordVocabReview(card, correct);
     Array.prototype.forEach.call(elQuizChoices.querySelectorAll(".rl-quiz-choice"), function (b) {
       if (b.textContent === correctBack) b.classList.add("rl-correct");
       else if (b === btn) b.classList.add("rl-wrong");
