@@ -37,6 +37,29 @@ body.rl-body { margin: 0; }
   background: var(--ink); color: var(--paper); border: none; cursor: pointer; text-align: center;
 }
 
+.rl-hidden-panel {
+  margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+}
+.rl-hidden-panel summary {
+  font-size: 13px; color: var(--muted); cursor: pointer; user-select: none;
+}
+.rl-hidden-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 9px 0; border-bottom: 1px solid var(--rule);
+  font-size: 13.5px;
+}
+.rl-hidden-text { color: var(--ink); }
+.rl-unhide-btn {
+  flex: none; font-family: var(--sans); font-size: 12px; padding: 5px 10px;
+  border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink); cursor: pointer;
+}
+.rl-unhide-all {
+  display: block; width: 100%; box-sizing: border-box; margin-top: 14px;
+  font-family: var(--sans); font-size: 13px; padding: 9px;
+  border: 1px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; text-align: center;
+}
+
 /* -------------------------------------------------------------- the reel */
 
 /* Card, quiz and end are three "screens" that share one fixed on-screen
@@ -114,11 +137,13 @@ body.rl-body { margin: 0; }
   font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--ink); opacity: 0.85;
 }
 
-.rl-card .rl-speak {
-  align-self: center;
+.rl-card-actions { display: flex; gap: 10px; align-self: center; }
+
+.rl-card .rl-speak, .rl-card .rl-hide {
   font-size: 20px; line-height: 1; background: none; border: 1px solid var(--rule-strong);
   border-radius: 50%; width: 42px; height: 42px; cursor: pointer; color: var(--ink);
 }
+.rl-card .rl-hide { font-size: 17px; }
 
 .rl-card .rl-back {
   border-top: 1px solid var(--rule); padding-top: 18px; margin-top: 4px;

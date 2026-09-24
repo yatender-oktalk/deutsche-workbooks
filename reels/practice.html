@@ -21,7 +21,10 @@
     <div class="rl-kicker" id="rl-kicker">&nbsp;</div>
     <div class="rl-front" id="rl-front">&nbsp;</div>
     <div class="rl-front-sub" id="rl-front-sub"></div>
-    <button type="button" class="rl-speak" id="rl-speak" aria-label="Vorlesen" title="Vorlesen">&#128266;</button>
+    <div class="rl-card-actions">
+      <button type="button" class="rl-speak" id="rl-speak" aria-label="Vorlesen" title="Vorlesen">&#128266;</button>
+      <button type="button" class="rl-hide" id="rl-hide" aria-label="Nie mehr zeigen" title="Nie mehr zeigen">&#128683;</button>
+    </div>
     <div class="rl-back" id="rl-back"></div>
   </div>
   <p class="rl-hint" id="rl-hint">Tippen: Bedeutung zeigen &middot; nochmal tippen / nach oben wischen: weiter &middot; nach unten wischen: zurück</p>
@@ -81,6 +84,19 @@
   var src = qs.get("src") || "vocab";
   var deck = [];
 
+  /* "Nie mehr zeigen" — cards marked hidden are excluded from every future
+     deck build (any source/level combo), and never counted toward the
+     "seen"/progress numbers since they're spliced out immediately. Stored
+     as an object keyed by a stable per-card id, with enough of the card's
+     own data (front/back/kicker) alongside it so reels/index.html can list
+     and unhide them again without having to reload vocab/satz data. */
+  function loadHidden() {
+    try { return JSON.parse(localStorage.getItem("reels.hidden") || "{}"); } catch (e) { return {}; }
+  }
+  function saveHidden(hidden) {
+    try { localStorage.setItem("reels.hidden", JSON.stringify(hidden)); } catch (e) {}
+  }
+
   function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -92,11 +108,15 @@
   function buildVocabDeck() {
     var levels = (qs.get("lv") || "a1").split(",");
     var n = parseInt(qs.get("n"), 10);
+    var hidden = loadHidden();
     var pool = [];
     levels.forEach(function (lv) {
       var list = (window.VOCAB_RAW && window.VOCAB_RAW[lv]) || [];
       list.forEach(function (e) {
-        if (e.translation_en) pool.push({ front: e.full, back: e.translation_en, kicker: lv.toUpperCase(), id: e.id, level: e.level });
+        if (!e.translation_en) return;
+        var key = "vocab:" + e.id;
+        if (hidden[key]) return;
+        pool.push({ front: e.full, back: e.translation_en, kicker: lv.toUpperCase(), id: e.id, level: e.level, key: key });
       });
     });
     shuffle(pool);
@@ -106,14 +126,18 @@
 
   function buildSatzDeck(kind) {
     var bases = (window.DW_SATZ && window.DW_SATZ[kind]) || [];
+    var hidden = loadHidden();
     var out = [];
     bases.forEach(function (b) {
       b.steps.forEach(function (st) {
+        var key = kind + ":" + b.base + "|" + st.s;
+        if (hidden[key]) return;
         out.push({
           front: b.base,
           frontSub: st.s + " — " + st.p,
           back: st.a,
-          kicker: kind === "kreis" ? "Satzkreis" : "Satzleiter"
+          kicker: kind === "kreis" ? "Satzkreis" : "Satzleiter",
+          key: key
         });
       });
     });
@@ -233,6 +257,18 @@
 
   function goNext() { changeCard(idx + 1, true); }
   function goPrev() { if (idx > 0) changeCard(idx - 1, false, true); }
+
+  function hideCurrentCard() {
+    var c = deck[idx];
+    if (!c || !c.key) return;
+    var hidden = loadHidden();
+    hidden[c.key] = { front: c.front, back: c.back, frontSub: c.frontSub || "", kicker: c.kicker || "", src: src, ts: Date.now() };
+    saveHidden(hidden);
+    deck.splice(idx, 1);
+    if (idx >= deck.length) { finishCards(); return; }
+    renderCard();
+    playCardAnim("rl-anim-up");
+  }
 
   function tapCard() {
     if (!revealed) reveal();
@@ -402,6 +438,11 @@
     var srcEl = document.getElementById("tts-source");
     srcEl.textContent = c.front;
     speakText("tts-source");
+  });
+
+  document.getElementById("rl-hide").addEventListener("click", function (e) {
+    e.stopPropagation();
+    hideCurrentCard();
   });
 
   document.addEventListener("keydown", function (e) {
