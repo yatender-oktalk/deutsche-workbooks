@@ -11,6 +11,7 @@
 
 <div class="controls topbar">
   <a href="../index.html">&larr; Übersicht</a>
+  <a href="../vocab/stats.html">&#128202; Vokabel-Statistik</a>
 </div>
 
 <div class="doc-header">
@@ -58,6 +59,12 @@
   <p class="rl-count-note" id="rl-note"></p>
 
   <button class="rl-start-btn" id="rl-start">Los</button>
+
+  <details class="rl-hidden-panel" id="rl-hidden-panel" hidden>
+    <summary>Ausgeblendete Karten (<span id="rl-hidden-count">0</span>)</summary>
+    <div id="rl-hidden-list"></div>
+    <button type="button" class="rl-unhide-all" id="rl-unhide-all">Alle wieder anzeigen</button>
+  </details>
 </div>
 
 <div class="doc-footer">
@@ -129,6 +136,55 @@
     }
     location.href = "practice.html?" + params.toString();
   });
+
+  /* Cards marked "Nie mehr zeigen" in practice.html are stored here (with
+     enough of their own front/back/kicker to list and unhide them again)
+     rather than shared through vocab/satz-data — see reels.css/practice.html
+     for the read side. */
+  function loadHidden() {
+    try { return JSON.parse(localStorage.getItem("reels.hidden") || "{}"); } catch (e) { return {}; }
+  }
+  function saveHidden(hidden) {
+    try { localStorage.setItem("reels.hidden", JSON.stringify(hidden)); } catch (e) {}
+  }
+
+  function renderHidden() {
+    var hidden = loadHidden();
+    var keys = Object.keys(hidden).sort(function (a, b) { return hidden[b].ts - hidden[a].ts; });
+    var panel = document.getElementById("rl-hidden-panel");
+    var list = document.getElementById("rl-hidden-list");
+    document.getElementById("rl-hidden-count").textContent = keys.length;
+    panel.hidden = keys.length === 0;
+    list.innerHTML = "";
+    keys.forEach(function (key) {
+      var h = hidden[key];
+      var row = document.createElement("div");
+      row.className = "rl-hidden-row";
+      var text = document.createElement("span");
+      text.className = "rl-hidden-text";
+      text.textContent = h.kicker ? h.kicker + " · " + h.front + " — " + h.back : h.front + " — " + h.back;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rl-unhide-btn";
+      btn.textContent = "Wieder anzeigen";
+      btn.addEventListener("click", function () {
+        var cur = loadHidden();
+        delete cur[key];
+        saveHidden(cur);
+        renderHidden();
+      });
+      row.appendChild(text);
+      row.appendChild(btn);
+      list.appendChild(row);
+    });
+  }
+
+  document.getElementById("rl-unhide-all").addEventListener("click", function () {
+    saveHidden({});
+    renderHidden();
+  });
+
+  renderHidden();
 })();
 </script>
 </body>
