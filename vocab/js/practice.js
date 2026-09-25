@@ -14,7 +14,9 @@ const ALL_MODES = ['flashcard', 'mcq', 'cloze', 'type', 'listening', 'dictation'
 let session = {
   profile: null,
   queue: [], // [{entry, mode}]
-  index: 0,
+  index: 0,      // how many cards have actually been graded/recorded so far
+  viewIndex: 0,  // which position is on screen right now (can lag behind index while browsing back)
+  history: [],   // index-aligned: frozen post-answer HTML snapshot for each graded card
   correct: 0,
   wrong: 0,
 };
@@ -151,10 +153,105 @@ async function finishCard(entry, mode, grade, correct) {
     DW.logActivity('vocab', 'review', { level: entry.level, correct: !!correct, isNew });
   }
 
+  // Freeze the just-answered card's feedback (colours, diff, model answer)
+  // as a plain HTML snapshot *before* advancing — re-inserting this via
+  // innerHTML later drops all live event listeners, which is exactly what
+  // makes it safe to redisplay read-only when swiping back through history.
+  const container = document.getElementById('card-container');
+  session.history[session.index] = container.innerHTML;
   session.index++;
+  session.viewIndex = session.index - 1;
   renderProgress();
-  setTimeout(renderCurrentCard, correct ? 250 : 600);
+  showNextButton(container);
 }
+
+/* Advancing used to be a fixed setTimeout (250ms correct / up to 2400ms
+   wrong) — barely enough time to register what happened, let alone study a
+   mistake, and gave no way to slow down or go back, unlike reels/. This
+   replaces the timer with reel-style navigation: a "Weiter" button /
+   swipe-up / Enter moves forward, swipe-down / ArrowDown steps back
+   through already-answered cards (frozen read-only replays from
+   session.history — going back never re-grades or re-records anything).
+   Swiping forward only ever re-enters the live, editable card once you're
+   back at the frontier (session.index - 1); before that it just walks
+   forward through history one step at a time, same as reels/. */
+let nextKeyHandler = null;
+
+function showNextButton(container) {
+  if (container.querySelector('.next-btn')) return;
+  const btn = el('button', 'btn next-btn', 'Weiter &rarr;');
+  container.appendChild(btn);
+  btn.onclick = goForward;
+  btn.focus();
+  wireNavKeys();
+}
+
+function wireNavKeys() {
+  if (nextKeyHandler) document.removeEventListener('keydown', nextKeyHandler);
+  nextKeyHandler = (e) => {
+    if (e.key === 'Enter' || e.key === 'ArrowUp') goForward();
+    else if (e.key === 'ArrowDown') goBack();
+  };
+  document.addEventListener('keydown', nextKeyHandler);
+}
+
+function renderHistorySnapshot(idx) {
+  const container = document.getElementById('card-container');
+  if (nextKeyHandler) { document.removeEventListener('keydown', nextKeyHandler); nextKeyHandler = null; }
+  container.innerHTML = session.history[idx];
+  wireNavKeys(); // still swipeable/keyboard-navigable in both directions while browsing history
+}
+
+function goForward() {
+  if (session.viewIndex < session.index - 1) {
+    session.viewIndex++;
+    renderHistorySnapshot(session.viewIndex);
+  } else if (session.viewIndex === session.index - 1) {
+    // caught up to the frontier — this is the real "next new card" step
+    if (nextKeyHandler) { document.removeEventListener('keydown', nextKeyHandler); nextKeyHandler = null; }
+    session.viewIndex = session.index;
+    renderCurrentCard();
+  }
+  // else: viewIndex === session.index — an unanswered live card — no-op,
+  // you have to actually answer it first (tap/type/choose), same as before.
+}
+
+function goBack() {
+  if (session.viewIndex > 0) {
+    session.viewIndex--;
+    renderHistorySnapshot(session.viewIndex);
+  }
+}
+
+/* ------------------------------------------------------------- swipe ---
+   Unlike reels/ (a fixed-height "screen" that never scrolls, so it can
+   freely preventDefault() on any vertical touchmove), this page is normal
+   scrolling document flow — some modes (dictation's diff block, MCQ) run
+   taller than the viewport. So touchmove is never intercepted here, and a
+   swipe is recognised only on touchend, as a *fast flick*: distance alone
+   would also fire on an ordinary slow scroll drag, so this also requires
+   the gesture to finish quickly. A real scroll and a real swipe-to-advance
+   therefore don't fight each other. */
+(function wireSwipe() {
+  const stage = document.getElementById('card-container');
+  let startX = null, startY = null, startT = 0;
+
+  stage.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    startX = t.clientX; startY = t.clientY; startT = Date.now();
+  }, { passive: true });
+
+  stage.addEventListener('touchend', (e) => {
+    if (startY === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX, dy = t.clientY - startY;
+    const dt = Date.now() - startT;
+    startY = null;
+    if (dt < 400 && Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+      if (dy < 0) goForward(); else goBack();
+    }
+  }, { passive: true });
+})();
 
 function renderGradeRow(container, onGrade) {
   const row = el('div', 'grade-row');
@@ -288,7 +385,7 @@ function renderDictation(container, entry) {
       if (example.en) diffBlock.appendChild(el('div', 'example-en', escapeHtml(example.en)));
     }
 
-    setTimeout(() => finishCard(entry, 'dictation', correct ? 'good' : 'again', correct), correct ? 900 : 2400);
+    finishCard(entry, 'dictation', correct ? 'good' : 'again', correct);
   }
   checkBtn.onclick = check;
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
@@ -321,7 +418,7 @@ function renderMCQ(container, entry) {
       if (!correct) {
         [...grid.children].find((c) => c.textContent === entry.translation_en)?.classList.add('correct');
       }
-      setTimeout(() => finishCard(entry, 'mcq', correct ? 'good' : 'again', correct), 700);
+      finishCard(entry, 'mcq', correct ? 'good' : 'again', correct);
     };
     grid.appendChild(btn);
   });
@@ -360,7 +457,7 @@ function renderCloze(container, entry) {
     checkBtn.disabled = true;
     feedback.classList.add(correct ? 'correct' : 'incorrect');
     feedback.textContent = correct ? 'Richtig!' : `Richtig wäre: ${entry.word}`;
-    setTimeout(() => finishCard(entry, 'cloze', correct ? 'good' : 'again', correct), 1100);
+    finishCard(entry, 'cloze', correct ? 'good' : 'again', correct);
   }
   checkBtn.onclick = check;
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
@@ -396,7 +493,7 @@ function renderType(container, entry) {
     checkBtn.disabled = true;
     feedback.classList.add(correct ? 'correct' : 'incorrect');
     feedback.textContent = correct ? 'Richtig!' : `Richtig wäre: ${VocabData.headword(entry)}`;
-    setTimeout(() => finishCard(entry, 'type', correct ? 'good' : 'again', correct), 1100);
+    finishCard(entry, 'type', correct ? 'good' : 'again', correct);
   }
   checkBtn.onclick = check;
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
@@ -440,6 +537,11 @@ function renderCurrentCard() {
   else if (mode === 'type') renderType(container, entry);
   else if (mode === 'listening') renderListening(container, entry);
   else if (mode === 'dictation') renderDictation(container, entry);
+
+  // Even before this card is answered, ArrowDown/swipe-down must still be
+  // able to step back into history — only forward navigation is gated on
+  // having answered (goForward() itself no-ops until then).
+  wireNavKeys();
 }
 
 function showSummary() {

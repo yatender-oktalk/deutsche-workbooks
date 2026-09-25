@@ -94,6 +94,10 @@ button {
 
 .btn-block { width: 100%; }
 
+.next-btn { display: block; width: 100%; margin-top: 1.2em; font-weight: 700; }
+
+.swipe-hint { text-align: center; font-size: 0.78em; color: var(--muted); margin: -0.6em 0 1em; }
+
 /* ---------- Profile picker ---------- */
 
 .profile-grid {
@@ -190,7 +194,8 @@ button {
 .card {
   background: var(--card-bg);
   border: 1px solid var(--rule);
-  border-radius: 14px;
+  border-radius: 22px;
+  box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.22);
   padding: 32px 26px;
   text-align: center;
   min-height: 220px;
