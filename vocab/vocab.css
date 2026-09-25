@@ -335,6 +335,32 @@ button.play-btn {
 .stat-tile .num { font-size: 1.6em; font-weight: 700; color: var(--accent); }
 .stat-tile .label { font-size: 0.78em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
+/* ---------- Progress hero (index.html, top of the setup screen) ---------- */
+
+.progress-hero {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--accent) 150%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 20px 20px 16px;
+  margin: 0.4em 0 1.6em;
+  box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.35);
+}
+.progress-hero-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.85;
+  margin-bottom: 8px;
+}
+.progress-hero-pct { font-size: 1.3em; font-weight: 800; letter-spacing: 0; text-transform: none; opacity: 1; }
+.progress-hero-bar-track { background: rgba(255, 255, 255, 0.2); border-radius: 999px; height: 10px; overflow: hidden; }
+.progress-hero-bar-fill {
+  background: linear-gradient(90deg, #f2c94c, #6fcf97);
+  height: 100%; width: 0%; transition: width 0.4s ease;
+}
+.progress-hero .summary-stats { margin: 14px 0 0; }
+.progress-hero .stat-tile { background: rgba(255, 255, 255, 0.14); }
+.progress-hero .stat-tile .num { color: #fff; }
+.progress-hero .stat-tile .label { color: rgba(255, 255, 255, 0.75); }
+
 /* ---------- Stats page ---------- */
 
 .heatmap-wrap { overflow-x: auto; padding-bottom: 6px; }

@@ -36,6 +36,21 @@
 </div>
 
 <div id="setup-screen" hidden>
+  <div class="progress-hero">
+    <div class="progress-hero-top">
+      <span>Gesamtfortschritt</span>
+      <span class="progress-hero-pct" id="hero-pct">&hellip;</span>
+    </div>
+    <div class="progress-hero-bar-track"><div class="progress-hero-bar-fill" id="hero-bar-fill" style="width:0%"></div></div>
+    <div class="summary-stats">
+      <div class="stat-tile"><div class="num" id="hero-total">&ndash;</div><div class="label">Wörter</div></div>
+      <div class="stat-tile"><div class="num" id="hero-mastered">&ndash;</div><div class="label">Gelernt</div></div>
+      <div class="stat-tile"><div class="num" id="hero-due">&ndash;</div><div class="label">Fällig</div></div>
+    </div>
+  </div>
+  <div class="field-label">Nach Niveau</div>
+  <div class="level-breakdown" id="index-level-breakdown"></div>
+
   <h2>Übung starten</h2>
 
   <div class="field-label">Niveau</div>

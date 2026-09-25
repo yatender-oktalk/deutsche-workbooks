@@ -2,6 +2,12 @@
 
 const ACTIVE_PROFILE_KEY = 'vocab.activeProfile';
 
+/* Same threshold and rationale as MASTERY_STABILITY_DAYS in js/stats.js —
+   duplicated rather than shared (this file and stats.js are never loaded
+   together, same precedent as situations/js/srs.js's verbatim copy of
+   vocab/js/srs.js). Keep both in sync if the threshold ever changes. */
+const MASTERY_STABILITY_DAYS = 21;
+
 let state = {
   profile: localStorage.getItem(ACTIVE_PROFILE_KEY) || null,
   levels: ['a1', 'a2', 'b1', 'b2'],
@@ -56,13 +62,67 @@ async function showSetupScreen() {
   document.getElementById('profile-indicator').innerHTML =
     `Profil: <span class="profile-name">${escapeHtml(state.profile)}</span>`;
   document.getElementById('stats-link').href = `stats.html?profile=${encodeURIComponent(state.profile)}`;
-  await updateDueSummary();
+  await Promise.all([updateDueSummary(), renderProgressOverview()]);
 }
 
 function escapeHtml(s) {
   const div = document.createElement('div');
   div.textContent = s;
   return div.innerHTML;
+}
+
+/* Overall progress hero + per-level mastery bars at the top of the setup
+   screen — always computed across all four levels (independent of the
+   level chips below, which only scope the next practice session), so it
+   reads as "how much of the whole deck have I learned" at a glance. */
+async function renderProgressOverview() {
+  const levels = ['a1', 'a2', 'b1', 'b2'];
+  const today = todayStr();
+  const cardsByLevel = {};
+  for (const lvl of levels) {
+    cardsByLevel[lvl] = await VocabDB.getCardsForProfile(state.profile, lvl);
+  }
+
+  let totalWords = 0, totalMastered = 0, totalDue = 0;
+  const breakdown = document.getElementById('index-level-breakdown');
+  breakdown.innerHTML = '';
+
+  levels.forEach((lvl) => {
+    const cards = cardsByLevel[lvl];
+    const total = (VocabData.byLevel[lvl] || []).length;
+    const mastered = cards.filter((c) => (c.stability || 0) >= MASTERY_STABILITY_DAYS).length;
+    const inProgress = cards.length - mastered;
+    const notStarted = Math.max(0, total - cards.length);
+    const due = cards.filter((c) => c.due <= today).length;
+    const masteredPct = total ? (mastered / total) * 100 : 0;
+    const inProgressPct = total ? (inProgress / total) * 100 : 0;
+
+    totalWords += total;
+    totalMastered += mastered;
+    totalDue += due;
+
+    const block = document.createElement('div');
+    block.className = 'level-mastery-block';
+    block.innerHTML =
+      `<div class="level-mastery-head"><strong>${lvl.toUpperCase()}</strong><span>${total} Wörter gesamt</span></div>` +
+      `<div class="level-mastery-bar">` +
+        `<div class="seg seg-mastered" style="width:${masteredPct}%"></div>` +
+        `<div class="seg seg-progress" style="width:${inProgressPct}%"></div>` +
+      `</div>` +
+      `<div class="level-mastery-legend">` +
+        `<span class="lbl-mastered">${mastered} gemeistert</span>` +
+        `<span class="lbl-progress">${inProgress} in Arbeit</span>` +
+        `<span class="lbl-new">${notStarted} noch nicht begonnen</span>` +
+      `</div>`;
+    breakdown.appendChild(block);
+  });
+
+  const overallPct = totalWords ? Math.round((totalMastered / totalWords) * 100) : 0;
+  document.getElementById('hero-pct').textContent = `${overallPct}%`;
+  document.getElementById('hero-bar-fill').style.width = `${overallPct}%`;
+  document.getElementById('hero-total').textContent = totalWords;
+  document.getElementById('hero-mastered').textContent = totalMastered;
+  document.getElementById('hero-due').textContent = totalDue;
 }
 
 async function updateDueSummary() {
