@@ -96,7 +96,7 @@
     levels.forEach(function (lv) {
       var list = (window.VOCAB_RAW && window.VOCAB_RAW[lv]) || [];
       list.forEach(function (e) {
-        if (e.translation_en) pool.push({ front: e.full, back: e.translation_en, kicker: lv.toUpperCase(), id: e.id, level: e.level });
+        if (e.translation_en) pool.push({ front: e.full, back: e.translation_en, kicker: lv.toUpperCase(), id: e.id, level: e.level, gender: e.article });
       });
     });
     shuffle(pool);
@@ -186,11 +186,23 @@
   var elEndScore = document.getElementById("rl-end-score");
   var elRedirect = document.getElementById("rl-redirect");
 
+  /* Which of the four gradient card themes (reels.css) to show — reuses
+     the vocab entry's own article (der/die/das) so the colour anchor
+     matches the word itself, falling back to the neutral/amber theme for
+     non-nouns and for the Satzkreis/Satzleiter decks (no gender). */
+  function themeClassFor(c) {
+    if (c.gender === "der") return "rl-theme-der";
+    if (c.gender === "die") return "rl-theme-die";
+    if (c.gender === "das") return "rl-theme-das";
+    return "rl-theme-neutral";
+  }
+
   function renderCard() {
     if (deck.length === 0) { showEnd(); return; }
     var c = deck[idx];
     revealed = false;
-    elCard.classList.remove("rl-revealed");
+    elCard.classList.remove("rl-revealed", "rl-theme-der", "rl-theme-die", "rl-theme-das", "rl-theme-neutral");
+    elCard.classList.add(themeClassFor(c));
     elKicker.textContent = c.kicker || "";
     elFront.textContent = c.front;
     elFrontSub.textContent = c.frontSub || "";
