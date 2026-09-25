@@ -120,6 +120,7 @@ body.rl-body { margin: 0; }
 }
 
 .rl-card {
+  box-sizing: border-box;
   width: 100%; max-width: 480px;
   background: linear-gradient(150deg, var(--rl-bg1, var(--paper)) 0%, var(--rl-bg2, var(--paper-2)) 100%);
   border: 2px solid var(--rl-theme-border, var(--rule-strong));
