@@ -65,15 +65,19 @@ body.rl-body { margin: 0; }
   --rl-shadow: 0 20px 40px -16px rgba(33, 29, 24, 0.28), 0 6px 16px -6px rgba(33, 29, 24, 0.12);
   --rl-shadow-sm: 0 8px 20px -8px rgba(33, 29, 24, 0.18);
 
-  /* Per-gender flashcard themes, reusing the existing level-coding colours
-     (der -> --lv-b1 cobalt, die -> --lv-b2 oxblood/rose, das -> --lv-a1
-     forest/emerald) rather than inventing an unrelated palette, so the
-     Gemini-mockup "der/die/das" colour anchors stay inside this repo's own
-     colour-as-coding-system rather than becoming decorative brand paint. */
-  --rl-der-bg1: #eef4fc; --rl-der-bg2: #dbe7f9; --rl-der-border: #a9c8ec; --rl-der-ink: var(--lv-b1);
-  --rl-die-bg1: #fbeef1; --rl-die-bg2: #f5dde2; --rl-die-border: #e6b8c1; --rl-die-ink: var(--lv-b2);
-  --rl-das-bg1: #eaf3ec; --rl-das-bg2: #d9ecdd; --rl-das-border: #a9d6b6; --rl-das-ink: var(--lv-a1);
-  --rl-neutral-bg1: var(--signal-bg); --rl-neutral-bg2: #efdcb2; --rl-neutral-border: #dcc27e; --rl-neutral-ink: var(--signal);
+  /* Per-gender flashcard themes. der/die keep the existing --lv-b1/--lv-b2
+     level colours (blue/rose); das is a dark mustard-gold instead of the
+     earlier pale green — distinct from both the level palette and the
+     neutral theme, and saturated enough to read as a colour, not a tint.
+     Neutral (non-nouns, Satzkreis/Satzleiter) takes the app's own
+     level-mixed violet instead, since --signal/ochre is reserved for
+     "live" chrome elsewhere (countdown, "du bist hier"). All four are
+     pushed noticeably more saturated than the first pass so the card
+     reads as themed at a glance instead of a faint tint. */
+  --rl-der-bg1: #d9e8fb; --rl-der-bg2: #b9d3f4; --rl-der-border: #6ea3e0; --rl-der-ink: #123a63;
+  --rl-die-bg1: #fbdde6; --rl-die-bg2: #f4b9c9; --rl-die-border: #e3798f; --rl-die-ink: #6e0d2c;
+  --rl-das-bg1: #faedb0; --rl-das-bg2: #f0d060; --rl-das-border: #c99a15; --rl-das-ink: #5c4200;
+  --rl-neutral-bg1: #e6defa; --rl-neutral-bg2: #cbb9ef; --rl-neutral-border: #9a7cd6; --rl-neutral-ink: #382a63;
 }
 
 .rl-card.rl-theme-der     { --rl-bg1: var(--rl-der-bg1);     --rl-bg2: var(--rl-der-bg2);     --rl-theme-border: var(--rl-der-border);     --rl-theme-ink: var(--rl-der-ink); }
@@ -110,7 +114,7 @@ body.rl-body { margin: 0; }
      a min-height here would resolve against the viewport, not that box,
      and override bottom, pushing the stage past the real viewport edge */
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 24px 16px 40px;
+  padding: 24px 22px 40px;
   box-sizing: border-box;
   touch-action: pan-x pinch-zoom;
 }
@@ -177,7 +181,7 @@ body.rl-body { margin: 0; }
 
 /* --------------------------------------------------------------- quiz */
 
-.rl-quiz { max-width: 480px; margin: 24px auto 0; padding: 0 16px 40px; text-align: center; }
+.rl-quiz { max-width: 480px; margin: 24px auto 0; padding: 0 22px 40px; text-align: center; }
 .rl-quiz-progress {
   display: inline-block; font-family: var(--sans); font-size: 11px; font-weight: 700; color: #fff;
   background: var(--accent); border-radius: 999px; padding: 4px 12px; margin-top: 4px;
