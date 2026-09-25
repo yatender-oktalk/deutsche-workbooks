@@ -114,8 +114,10 @@ async function renderProgressOverview() {
     const cardByEntry = new Map(cards.map((c) => [c.entryId, c]));
     const total = (VocabData.byLevel[lvl] || []).length;
     const mastered = cards.filter((c) => (c.stability || 0) >= MASTERY_STABILITY_DAYS).length;
+    const inProgress = cards.length - mastered;
     const due = cards.filter((c) => c.due <= today).length;
-    const pct = total ? Math.round((mastered / total) * 100) : 0;
+    const masteredPct = total ? (mastered / total) * 100 : 0;
+    const inProgressPct = total ? (inProgress / total) * 100 : 0;
 
     totalWords += total;
     totalMastered += mastered;
@@ -146,11 +148,15 @@ async function renderProgressOverview() {
         `</div>` +
         `<div class="level-card-stats">` +
           `<div class="level-card-stat"><span class="num">${mastered}/${total}</span><span class="lbl">Gemeistert</span></div>` +
+          `<div class="level-card-stat"><span class="num">${inProgress}</span><span class="lbl">In Arbeit</span></div>` +
           `<div class="level-card-stat"><span class="num">${due}</span><span class="lbl">Fällig</span></div>` +
         `</div>` +
       `</div>` +
-      `<div class="level-card-progress-label"><span>Fortschritt Niveau ${lvl.toUpperCase()}</span><span>${pct}%</span></div>` +
-      `<div class="level-card-progress-track"><div class="level-card-progress-fill" style="width:${pct}%"></div></div>` +
+      `<div class="level-card-progress-label"><span>Fortschritt Niveau ${lvl.toUpperCase()}</span><span>${Math.round(masteredPct)}% gemeistert${inProgress ? ` · ${inProgress} in Arbeit` : ''}</span></div>` +
+      `<div class="level-card-progress-track">` +
+        `<div class="level-card-progress-fill" style="width:${masteredPct}%"></div>` +
+        `<div class="level-card-progress-fill-inprogress" style="width:${inProgressPct}%"></div>` +
+      `</div>` +
       `<div class="level-card-modules-label">20-Wörter-Module</div>` +
       `<div class="level-module-row">` +
         `<div>` +
