@@ -8,6 +8,28 @@ const ACTIVE_PROFILE_KEY = 'vocab.activeProfile';
    vocab/js/srs.js). Keep both in sync if the threshold ever changes. */
 const MASTERY_STABILITY_DAYS = 21;
 
+/* Fixed 20-word "modules" per level, sliced in the dataset's own stable
+   order (not stored anywhere — recomputed from VocabData.byLevel[lvl] each
+   time), so a level card can point at a concrete, repeatable chunk to
+   start next rather than only offering the due/fresh mixed queue below.
+   Purely a navigation aid over the existing SRS data — a module has no
+   state of its own beyond "which of its 20 entries already have a card". */
+const MODULE_SIZE = 20;
+
+const LEVEL_META = {
+  a1: { title: 'A1 – Grundwortschatz', desc: 'Alltägliche Begriffe für einfache Sätze und Informationen.' },
+  a2: { title: 'A2 – Erweiterter Wortschatz', desc: 'Einkaufen, Reisen, Arbeit und kleine Gespräche im Alltag.' },
+  b1: { title: 'B1 – Mittelstufe Wortschatz', desc: 'Meinungen, Medien und zusammenhängende Themen.' },
+  b2: { title: 'B2 – Fortgeschrittener Wortschatz', desc: 'Abstrakte Themen, Nuancen und berufliche Sprache.' },
+};
+
+function moduleChunks(lvl) {
+  const words = VocabData.byLevel[lvl] || [];
+  const chunks = [];
+  for (let i = 0; i < words.length; i += MODULE_SIZE) chunks.push(words.slice(i, i + MODULE_SIZE));
+  return chunks;
+}
+
 let state = {
   profile: localStorage.getItem(ACTIVE_PROFILE_KEY) || null,
   levels: ['a1', 'a2', 'b1', 'b2'],
@@ -84,37 +106,61 @@ async function renderProgressOverview() {
   }
 
   let totalWords = 0, totalMastered = 0, totalDue = 0;
-  const breakdown = document.getElementById('index-level-breakdown');
-  breakdown.innerHTML = '';
+  const container = document.getElementById('level-cards');
+  container.innerHTML = '';
 
   levels.forEach((lvl) => {
     const cards = cardsByLevel[lvl];
+    const cardByEntry = new Map(cards.map((c) => [c.entryId, c]));
     const total = (VocabData.byLevel[lvl] || []).length;
     const mastered = cards.filter((c) => (c.stability || 0) >= MASTERY_STABILITY_DAYS).length;
-    const inProgress = cards.length - mastered;
-    const notStarted = Math.max(0, total - cards.length);
     const due = cards.filter((c) => c.due <= today).length;
-    const masteredPct = total ? (mastered / total) * 100 : 0;
-    const inProgressPct = total ? (inProgress / total) * 100 : 0;
+    const pct = total ? Math.round((mastered / total) * 100) : 0;
 
     totalWords += total;
     totalMastered += mastered;
     totalDue += due;
 
-    const block = document.createElement('div');
-    block.className = 'level-mastery-block';
-    block.innerHTML =
-      `<div class="level-mastery-head"><strong>${lvl.toUpperCase()}</strong><span>${total} Wörter gesamt</span></div>` +
-      `<div class="level-mastery-bar">` +
-        `<div class="seg seg-mastered" style="width:${masteredPct}%"></div>` +
-        `<div class="seg seg-progress" style="width:${inProgressPct}%"></div>` +
+    // Next module to work on: the first one that isn't fully mastered yet,
+    // or the last one if the whole level is already done.
+    const chunks = moduleChunks(lvl);
+    let moduleIdx = chunks.findIndex((chunk) =>
+      chunk.some((e) => (cardByEntry.get(e.id)?.stability || 0) < MASTERY_STABILITY_DAYS));
+    if (moduleIdx === -1) moduleIdx = Math.max(0, chunks.length - 1);
+    const chunk = chunks[moduleIdx] || [];
+    const chunkMastered = chunk.filter((e) => (cardByEntry.get(e.id)?.stability || 0) >= MASTERY_STABILITY_DAYS).length;
+    const chunkPct = chunk.length ? Math.round((chunkMastered / chunk.length) * 100) : 0;
+    const moduleIds = chunk.map((e) => e.id).join(',');
+    const start = moduleIdx * MODULE_SIZE + 1;
+    const end = moduleIdx * MODULE_SIZE + chunk.length;
+
+    const meta = LEVEL_META[lvl];
+    const card = document.createElement('div');
+    card.className = `level-card level-card-${lvl}`;
+    card.innerHTML =
+      `<div class="level-card-head">` +
+        `<div>` +
+          `<span class="level-card-badge">NIVEAU ${lvl.toUpperCase()}</span>` +
+          `<div class="level-card-title">${meta.title}</div>` +
+          `<div class="level-card-desc">${meta.desc}</div>` +
+        `</div>` +
+        `<div class="level-card-stats">` +
+          `<div class="level-card-stat"><span class="num">${mastered}/${total}</span><span class="lbl">Gemeistert</span></div>` +
+          `<div class="level-card-stat"><span class="num">${due}</span><span class="lbl">Fällig</span></div>` +
+        `</div>` +
       `</div>` +
-      `<div class="level-mastery-legend">` +
-        `<span class="lbl-mastered">${mastered} gemeistert</span>` +
-        `<span class="lbl-progress">${inProgress} in Arbeit</span>` +
-        `<span class="lbl-new">${notStarted} noch nicht begonnen</span>` +
+      `<div class="level-card-progress-label"><span>Fortschritt Niveau ${lvl.toUpperCase()}</span><span>${pct}%</span></div>` +
+      `<div class="level-card-progress-track"><div class="level-card-progress-fill" style="width:${pct}%"></div></div>` +
+      `<div class="level-card-modules-label">20-Wörter-Module</div>` +
+      `<div class="level-module-row">` +
+        `<div>` +
+          `<span class="lm-title">Modul ${moduleIdx + 1}: Wörter ${start}&ndash;${end}</span>` +
+          `<span class="lm-badge">${chunkPct}% erfüllt</span>` +
+          `<div class="lm-sub">${chunkMastered} von ${chunk.length} Wörtern gemeistert</div>` +
+        `</div>` +
+        `<a class="lm-start" href="practice.html?profile=${encodeURIComponent(state.profile)}&levels=${lvl}&mode=mixed&ids=${encodeURIComponent(moduleIds)}">Start Modul ${moduleIdx + 1}</a>` +
       `</div>`;
-    breakdown.appendChild(block);
+    container.appendChild(card);
   });
 
   const overallPct = totalWords ? Math.round((totalMastered / totalWords) * 100) : 0;
