@@ -362,9 +362,17 @@ button.play-btn {
   height: 100%; width: 0%; transition: width 0.4s ease;
 }
 .progress-hero .summary-stats { margin: 14px 0 0; }
-.progress-hero .stat-tile { background: rgba(255, 255, 255, 0.14); }
+.progress-hero .stat-tile { background: rgba(255, 255, 255, 0.14); padding: 14px 4px; }
 .progress-hero .stat-tile .num { color: #fff; }
 .progress-hero .stat-tile .label { color: rgba(255, 255, 255, 0.75); }
+/* 4 stats (Wörter/Gelernt/In Arbeit/Fällig) instead of the 3-tile session-
+   summary layout .summary-stats/.stat-tile are otherwise shared with —
+   "In Arbeit" surfaces real review activity that hasn't crossed the
+   mastery bar yet, so the very first thing you see isn't a misleadingly
+   flat 0% right after a real practice session. */
+.hero-stats-4 { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.hero-stats-4 .stat-tile .num { font-size: 1.3em; }
+.hero-stats-4 .stat-tile .label { font-size: 0.68em; }
 
 /* ---------- Level cards (index.html, one per CEFR level) ---------- */
 

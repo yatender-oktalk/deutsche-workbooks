@@ -105,7 +105,7 @@ async function renderProgressOverview() {
     cardsByLevel[lvl] = await VocabDB.getCardsForProfile(state.profile, lvl);
   }
 
-  let totalWords = 0, totalMastered = 0, totalDue = 0;
+  let totalWords = 0, totalMastered = 0, totalInProgress = 0, totalDue = 0;
   const container = document.getElementById('level-cards');
   container.innerHTML = '';
 
@@ -121,6 +121,7 @@ async function renderProgressOverview() {
 
     totalWords += total;
     totalMastered += mastered;
+    totalInProgress += inProgress;
     totalDue += due;
 
     // Next module to work on: the first one that isn't fully mastered yet,
@@ -174,6 +175,7 @@ async function renderProgressOverview() {
   document.getElementById('hero-bar-fill').style.width = `${overallPct}%`;
   document.getElementById('hero-total').textContent = totalWords;
   document.getElementById('hero-mastered').textContent = totalMastered;
+  document.getElementById('hero-inprogress').textContent = totalInProgress;
   document.getElementById('hero-due').textContent = totalDue;
 }
 
