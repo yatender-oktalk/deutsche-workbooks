@@ -1,0 +1,16 @@
+{
+  "name": "Deutsch — telc B1/B2 Workbooks",
+  "short_name": "Deutsch",
+  "description": "Arbeitshefte, Prüfungstraining und Trainer A1–B2",
+  "start_url": "index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f1e7",
+  "theme_color": "#f6f1e7",
+  "lang": "de",
+  "icons": [
+    { "src": "vocab/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "vocab/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "vocab/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

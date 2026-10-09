@@ -827,7 +827,50 @@
     document.head.appendChild(s);
   }
 
+  /* ---- installable app: manifest, iOS meta, service worker, launch splash ---- */
+  function isStandalone() {
+    return (window.navigator && window.navigator.standalone === true) ||
+           (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+  }
+  function setupPWA() {
+    var head = document.head;
+    function add(tag, attrs) {
+      var key = attrs.rel || attrs.name;
+      if (head.querySelector(tag + "[" + (attrs.rel ? "rel" : "name") + "=\"" + key + "\"]")) return;
+      head.appendChild(el(tag, attrs));
+    }
+    add("link", { rel: "manifest", href: ROOT + "manifest.webmanifest" });
+    add("link", { rel: "apple-touch-icon", href: ROOT + "vocab/icons/apple-touch-icon.png" });
+    add("meta", { name: "apple-mobile-web-app-capable", content: "yes" });
+    add("meta", { name: "mobile-web-app-capable", content: "yes" });
+    add("meta", { name: "apple-mobile-web-app-title", content: "Deutsch" });
+    // the vocab trainer registers its own narrower-scope worker; leave it alone there
+    if ("serviceWorker" in navigator && !/\/vocab\//.test(location.pathname) && /^https?:/.test(location.protocol)) {
+      navigator.serviceWorker.register(ROOT + "sw.js").catch(function () {});
+    }
+  }
+  /* Installed app always opens on the hub (start_url) and greets with a short launch splash. */
+  function runLaunchSplash() {
+    if (!isStandalone() || !/[?&]source=pwa/.test(location.search)) return;
+    var p = readProfile();
+    if (!p) return;                                   // first run: the onboarding splash takes over
+    try { if (sessionStorage.getItem("dw.launchSplash")) return; sessionStorage.setItem("dw.launchSplash", "1"); } catch (e) {}
+    var line = "A1 → B2 · telc-Vorbereitung";
+    if (p.examDate) {
+      var n = daysBetween(startOfToday(), parseISO(p.examDate));
+      if (n >= 0) line = "Noch " + n + " " + (n === 1 ? "Tag" : "Tage") + " bis zur Prüfung";
+    }
+    var wrap = el("div", { "class": "dw-launch", id: "dw-launch" });
+    wrap.innerHTML = "<div class=\"dw-launch-word\">Deutsch</div><div class=\"dw-launch-line\"></div>";
+    wrap.lastChild.textContent = (p.name ? p.name + " · " : "") + line;
+    document.body.appendChild(wrap);
+    setTimeout(function () { wrap.classList.add("is-out"); }, 1100);
+    setTimeout(function () { if (wrap.parentNode) wrap.parentNode.removeChild(wrap); }, 1600);
+  }
+
   function boot() {
+    setupPWA();
+    runLaunchSplash();
     injectTopbar();
     loadScript("assets/glossary-data.js");
     loadScript("assets/glossary.js");

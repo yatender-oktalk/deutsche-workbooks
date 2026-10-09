@@ -657,6 +657,19 @@ html { background: #e6e2d6; }
   .dw-table-scroll th, .dw-table-scroll td { padding: 5px 7px; }
 }
 
+/* Launch splash — installed app only, shown once per session on the hub */
+.dw-launch {
+  position: fixed; inset: 0; z-index: 300;
+  background: var(--paper);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--sans);
+  transition: opacity 0.45s ease;
+}
+.dw-launch.is-out { opacity: 0; pointer-events: none; }
+.dw-launch-word { font-family: var(--serif); font-size: 3.2rem; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+.dw-launch-line { font-size: 12px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--signal); }
+@media print { .dw-launch { display: none !important; } }
+
 /* Touch devices (iPad, phones): bigger hit areas, no layout change */
 @media screen and (pointer: coarse) {
   .dw-menu-btn, .dw-countdown, .dw-tb-btn { min-height: 44px; min-width: 44px; padding-left: 12px; padding-right: 12px; }
