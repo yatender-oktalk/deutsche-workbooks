@@ -119,6 +119,7 @@
 
     // 04 — Referenz
     { p: "study-plan.html",                        t: "Studienplan & Zeitplan",           g: "reference", lv: "ref", tag: "PLAN" },
+    { p: "lernplan.html",                          t: "Lernplan — Tag für Tag (B1 & B2)", g: "reference", lv: "ref", tag: "PLAN" },
     { p: "kursbegleiter.html",                     t: "Kursbegleiter — A2-Videokurs → Hefte", g: "reference", lv: "ref", tag: "PLAN" },
     { p: "narration-plan.html",                    t: "Selbstnarration — 3-Wochen-Plan",  g: "reference", lv: "ref", tag: "PLAN" },
     { p: "progress.html",                          t: "Fortschritt — letzte 7 Tage",     g: "reference", lv: "ref", tag: "PLAN" },

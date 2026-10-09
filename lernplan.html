@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lernplan — Tag für Tag (B1 &amp; B2)</title>
+<link rel="stylesheet" href="assets/app-shell.css">
+<link rel="stylesheet" href="assets/print-workbook.css">
+</head>
+<body class="level-ref">
+
+<div class="controls no-print">
+  <a class="back-link" href="index.html">&larr; Index</a>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="doc-header">
+  <div class="level-badge">PLAN — B1 · B2</div>
+  <h1>Lernplan — Tag für Tag</h1>
+  <p class="doc-meta">Kalenderplan für die telc-Prüfung: B1 in 42 Tagen, B2 in 48 Tagen · jeder Tag = ein Schwerpunkt, ca. 2 Stunden · jede Aufgabe führt zu einer Seite in diesem Repo · Häkchen bleiben auf diesem Gerät gespeichert</p>
+</div>
+
+<div class="tip-box no-print">
+  <strong>How to use this page:</strong> pick B1 or B2, set the start date (or press the exam button to end the plan 3 days before your exam date from the profile), then work one day at a time and tick it off. The plan rotates through grammar, reading, language modules, listening, writing and speaking, moves from untimed to timed, and ends with model-test days. It is an original plan built on this repo's pages — it is <em>not</em> a copy of any course. Time estimates are rough. Exact telc task formats can shift between test versions — check the current telc Modellsatz.
+</div>
+
+<div class="cheatsheet">
+  <h2 style="margin-top:0; border:none;">Steuerung</h2>
+  <table>
+    <tr><th>Niveau</th><td><label><input type="radio" name="lvl" value="b1"> B1 (42 Tage)</label> &nbsp; <label><input type="radio" name="lvl" value="b2" checked> B2 (48 Tage)</label></td></tr>
+    <tr><th>Starttag</th><td><input type="date" id="lp-start"> &nbsp; <button type="button" id="lp-today">Heute starten</button> <button type="button" id="lp-exam">Plan endet 3 Tage vor der Prüfung</button></td></tr>
+    <tr><th>Fortschritt</th><td id="lp-progress">–</td></tr>
+  </table>
+</div>
+
+<div id="lp-root"></div>
+
+<div class="cheatsheet">
+  <h2 style="margin-top:0; border:none;">Was dieser Plan nicht abdeckt</h2>
+  <p>Für <strong>B2</strong> gibt es hier keine Lückenbrief-Seite wie <code>schriftlicher-ausdruck-luecken</code> (nur B1), und keine vollständigen Modelltests im Repo — an den Modelltest-Tagen die offiziellen telc-Modellsätze verwenden und die Repo-Seiten als Ergänzung nehmen. Bewertet wird selbst: es gibt keinen automatischen Prüfer für Schreiben und Sprechen, also Modellantworten und Checklisten ehrlich nutzen.</p>
+</div>
+
+<div class="doc-footer no-print">
+  <a class="back-link" href="index.html">&larr; Index</a> · <a href="study-plan.html">Studienplan</a>
+</div>
+
+<script>
+(function () {
+  var P = {
+    b1: { lese: 'exam-prep/B1/leseverstehen-practice.html', hoer: 'exam-prep/B1/hoerverstehen-practice.html', sprach: 'exam-prep/B1/sprachbausteine-practice.html',
+          luecke: 'exam-prep/B1/schriftlicher-ausdruck-luecken.html', schr: 'exam-prep/B1/schriftlicher-ausdruck-guide.html', muend: 'exam-prep/B1/muendliche-pruefung-guide.html',
+          wb1: 'workbooks/B1/workbook-1-praeteritum-perfekt.html', wb2: 'workbooks/B1/workbook-2-passive-voice.html', wb3: 'workbooks/B1/workbook-3-relative-clauses.html',
+          wb4: 'workbooks/B1/workbook-4-genitive-case.html', wb5: 'workbooks/B1/workbook-5-adjective-declension.html', wb6: 'workbooks/B1/workbook-6-konjunktiv-ii.html',
+          wb7: 'workbooks/B1/workbook-7-modalverben.html', wb8: 'workbooks/B1/workbook-8-satzleiter.html', wb9: 'workbooks/B1/workbook-9-uebersetzung-kumulativ.html' },
+    b2: { lese: 'exam-prep/B2/leseverstehen-practice.html', hoer: 'exam-prep/B2/hoerverstehen-practice.html', sprach: 'exam-prep/B2/sprachbausteine-practice.html',
+          schr: 'exam-prep/B2/schriftlicher-ausdruck-guide.html', muend: 'exam-prep/B2/muendliche-pruefung-guide.html',
+          wb1: 'workbooks/B2/workbook-1-konjunktiv-i-reported-speech.html', wb2: 'workbooks/B2/workbook-2-passive-advanced.html', wb3: 'workbooks/B2/workbook-3-advanced-connectors.html',
+          wb4: 'workbooks/B2/workbook-4-nominalization-partizip.html', wb5: 'workbooks/B2/workbook-5-relative-clauses-advanced.html', wb6: 'workbooks/B2/workbook-6-futur-modal-speculation.html',
+          wb7: 'workbooks/B2/workbook-7-satzkreis.html', wb8: 'workbooks/B2/workbook-8-werden.html', wb9: 'workbooks/B2/workbook-9-uebersetzung-kumulativ.html' }
+  };
+  var C = { voc: ['vocab/index.html', 'Vokabeltrainer'], reels: ['reels/index.html', 'Reels'], sit: ['situations/index.html', 'Gesprächstrainer'],
+            satz: ['workbooks/satztraining.html', 'Satztraining'], conn: ['workbooks/connectors-reference.html', 'Konnektoren-Übersicht'],
+            cap: ['workbooks/translation-capstone.html', 'Abschlussübersetzung'], prog: ['progress.html', 'Fortschritt'], plan: ['study-plan.html', 'Studienplan'] };
+
+  /* day = [skill, hours, goal, [taskText, linkKey], ...]   linkKey: level page key (lese, wb3 …) or common key (voc, sit …) */
+  var D = {
+    b1: [
+      ['Orientierung', 1.5, 'Du kennst die Teile der Prüfung und weißt, was du kannst.', ['Tipp-Boxen und Aufgabenüberblick lesen (nichts bearbeiten)', 'lese'], ['Tipp-Boxen der Hör- und Sprechseite lesen', 'hoer'], ['20 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Perfekt und Präteritum sicher bilden.', ['Heft: erste Hälfte', 'wb1'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Perfekt vs. Präteritum wählen.', ['Heft: zweite Hälfte', 'wb1'], ['15 Min. Wörter', 'voc']],
+      ['Schreiben — Brief', 2.5, 'Anfang und Schluss eines Briefs automatisch parat haben.', ['Briefe mit Lücken: Brief 1–2', 'luecke'], ['Briefaufbau und Redemittel lesen; Anfang und Schlussformeln auf einen Zettel schreiben', 'schr']],
+      ['Grammatik', 2, 'Vorgangspassiv bilden.', ['Heft: erste Hälfte', 'wb2'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Passiv mit Modalverb und im Nebensatz.', ['Heft: zweite Hälfte', 'wb2'], ['15 Min. Wörter', 'voc']],
+      ['Lesen', 2, 'Lesetexte ohne Zeitdruck verstehen.', ['Erste Aufgaben, ohne Zeitlimit', 'lese']],
+      ['Hören', 2, 'Hörtexte mit Transkript prüfen.', ['Erste Aufgaben; danach Transkript lesen', 'hoer']],
+      ['Wiederholung 1', 1.5, 'Alter Stoff bleibt frisch.', ['Fällige Wörter', 'voc'], ['Reels: Wörter im Rutsch', 'reels'], ['Fortschritt der Woche ansehen', 'prog']],
+      ['Grammatik', 2, 'Relativsätze im Nominativ, Akkusativ, Dativ.', ['Heft: erste Hälfte', 'wb3'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Relativsätze mit Präposition.', ['Heft: zweite Hälfte', 'wb3'], ['15 Min. Wörter', 'voc']],
+      ['Sprachbausteine', 1.5, 'Lückentexte lösen: Grammatik und Wortschatz.', ['Erste Aufgaben, ohne Zeitlimit', 'sprach']],
+      ['Schreiben — Brief', 2.5, 'Die vier Leitpunkte eines Briefs sicher einbauen.', ['Briefe mit Lücken: Brief 3–4', 'luecke'], ['Eigenen kurzen Brief schreiben, Vorlage erlaubt; mit Modellbrief vergleichen', 'schr']],
+      ['Sprechen — Kontaktaufnahme', 1.5, 'Dich flüssig vorstellen.', ['Redemittel und Beispieldialog lesen; laut vorstellen', 'muend']],
+      ['Grammatik', 2, 'Genitiv im Alltag und bei Präpositionen.', ['Heft: erste Hälfte', 'wb4'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Genitiv: Rest und Mischübungen.', ['Heft: zweite Hälfte', 'wb4'], ['15 Min. Wörter', 'voc']],
+      ['Lesen', 2, 'Lesen mit lockerem Zeitrahmen.', ['Weitere Aufgaben; Lösungen prüfen und Fehler notieren', 'lese']],
+      ['Hören', 2, 'Hören ohne Transkript zuerst.', ['Weitere Aufgaben; erst hören, dann Transkript', 'hoer']],
+      ['Wiederholung 2', 1.5, 'Stoff der Wochen 1–3 festigen.', ['Fällige Wörter', 'voc'], ['Gesprächs-Situationen laut beantworten', 'sit'], ['Fortschritt ansehen', 'prog']],
+      ['Grammatik', 2, 'Adjektivendungen in Nominativ, Akkusativ, Dativ.', ['Heft: erste Hälfte', 'wb5'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Adjektivendungen: Genitiv und gemischte Übungen.', ['Heft: zweite Hälfte', 'wb5'], ['15 Min. Wörter', 'voc']],
+      ['Schreiben — Brief', 2.5, 'Vom Gerüst zum eigenen Brief.', ['Briefe mit Lücken: Brief 5–6', 'luecke'], ['Zweiten Brief schreiben, Vorlage nur noch für Anfang und Schluss', 'schr']],
+      ['Sprachbausteine', 1.5, 'Lückentexte mit Zeitgefühl.', ['Weitere Aufgaben; 20 Min. Limit probieren', 'sprach']],
+      ['Sprechen — Erfahrungen', 1.5, 'Über Erlebnisse in Vergangenheitsformen sprechen.', ['Phrasenbank lesen; 2 Minuten laut erzählen, aufnehmen', 'muend']],
+      ['Grammatik', 2, 'Konjunktiv II für Wünsche und höfliche Bitten.', ['Heft: erste Hälfte', 'wb6'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Konjunktiv II: irreale Bedingungen, Ratschläge.', ['Heft: zweite Hälfte', 'wb6'], ['15 Min. Wörter', 'voc']],
+      ['Lesen — mit Zeit', 2, 'Mit Zeitlimit arbeiten.', ['Aufgaben mit Uhr; Zeit pro Teil notieren', 'lese']],
+      ['Hören — mit Zeit', 2, 'Hören unter Prüfungsbedingungen.', ['Aufgaben ohne Pause und Wiederholung', 'hoer']],
+      ['Wiederholung 3', 1.5, 'Stoff der Wochen 1–4 sichern.', ['Fällige Wörter', 'voc'], ['Fortschritt ansehen; schwächstes Thema wählen', 'prog'], ['Eine Konnektoren-Seite lesen', 'conn']],
+      ['Grammatik', 2, 'Modalverben: subjektive Bedeutung.', ['Heft: erste Hälfte', 'wb7'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Modalverben: Perfekt und doppelter Infinitiv.', ['Heft: zweite Hälfte', 'wb7'], ['15 Min. Wörter', 'voc']],
+      ['Satzbau und Flüssigkeit', 2, 'Aus einem Satz viele machen.', ['Heft: Satzleiter durcharbeiten', 'wb8'], ['Satztraining: Leiter-Modus', 'satz']],
+      ['Schreiben — Prüfungsbedingungen', 2, 'Brief in 30 Minuten, ohne Vorlage.', ['Brief unter Zeit schreiben; mit Checkliste bewerten', 'schr']],
+      ['Sprechen — gemeinsam planen', 1.5, 'Mit dem Partner etwas aushandeln.', ['Phrasenbank und Beispieldialog; laut spielen, aufnehmen', 'muend']],
+      ['Sprachbausteine — mit Zeit', 1.5, 'Lückentexte im Zeitlimit.', ['Aufgaben mit Uhr', 'sprach']],
+      ['Übersetzung kumulativ', 2, 'Alle B1-Themen in einem Satz.', ['Englisch → Deutsch durcharbeiten', 'wb9']],
+      ['Modelltest — Lesen &amp; Sprachbausteine', 2.5, 'Zwei Prüfungsteile am Stück.', ['Offiziellen telc-Modellsatz Lesen + Sprachbausteine unter Zeit', null], ['Fehler auswerten', 'lese']],
+      ['Modelltest — Hören &amp; Schreiben', 2.5, 'Hören und Brief am Stück.', ['Offiziellen telc-Modellsatz Hören + Schreiben unter Zeit', null], ['Brief mit Checkliste bewerten', 'schr']],
+      ['Modelltest — Sprechen', 1.5, 'Gesprächssimulation.', ['Alle drei Teile laut, aufnehmen, anhören', 'muend']],
+      ['Schwachstellen 1', 2, 'Dein schwächstes Gebiet gezielt üben.', ['Fortschritt ansehen und Thema wählen', 'prog'], ['Passendes Heft noch einmal', 'wb1']],
+      ['Schwachstellen 2', 2, 'Zweitschwächstes Gebiet üben.', ['Fällige Wörter', 'voc'], ['Gesprächs-Situationen', 'sit']],
+      ['Leichte Wiederholung', 1, 'Ruhig bleiben, nichts Neues.', ['Briefformeln und Redemittel überfliegen', 'schr'], ['Fällige Wörter', 'voc']]
+    ],
+    b2: [
+      ['Orientierung', 1.5, 'Du kennst die Prüfungsteile und deinen Stand.', ['Tipp-Boxen lesen (nichts bearbeiten)', 'lese'], ['Tipp-Box Schreiben lesen', 'schr'], ['20 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Alle Funktionen von werden erkennen.', ['Heft: erste Hälfte', 'wb8'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'werden: Passiv, würde, werde.', ['Heft: zweite Hälfte', 'wb8'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Passiv in allen Zeiten.', ['Heft: erste Hälfte', 'wb2'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik + Sprachbausteine', 2, 'Passiv festigen, Lückentext ausprobieren.', ['Heft: zweite Hälfte', 'wb2'], ['Erste Aufgabe, ohne Zeitlimit', 'sprach']],
+      ['Lesen', 2, 'Lesetexte ohne Zeitdruck verstehen.', ['Erste Aufgaben, ohne Zeitlimit', 'lese']],
+      ['Schreiben', 2, 'Aufbau, Redemittel und Muster kennen.', ['Modellantworten und Redemittel lesen; Anfang und Schluss ins Heft schreiben', 'schr']],
+      ['Grammatik', 2, 'Konnektoren richtig im Satz.', ['Heft: erste Hälfte', 'wb3'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Konnektoren: Rest und Übersicht.', ['Heft: zweite Hälfte', 'wb3'], ['Übersicht lesen', 'conn']],
+      ['Hören', 2, 'Hören mit Transkript prüfen.', ['Erste Aufgaben; danach Transkript lesen', 'hoer']],
+      ['Wiederholung 1', 1.5, 'Alter Stoff bleibt frisch.', ['Fällige Wörter', 'voc'], ['Reels', 'reels'], ['Fortschritt ansehen', 'prog']],
+      ['Sprechen — Kontaktaufnahme', 1.5, 'Dich flüssig vorstellen und Fragen beantworten.', ['Redemittel und Beispiele; laut üben', 'muend']],
+      ['Grammatik', 2, 'Konjunktiv I und indirekte Rede.', ['Heft: erste Hälfte', 'wb1'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Indirekte Rede: Ersatzformen und Nachrichtenstil.', ['Heft: zweite Hälfte', 'wb1'], ['15 Min. Wörter', 'voc']],
+      ['Lesen — mit Zeit', 2, 'Ein Textteil mit Uhr.', ['Aufgaben mit Zeitlimit; Fehler notieren', 'lese']],
+      ['Sprachbausteine', 1.5, 'Lückentexte lösen.', ['Weitere Aufgaben', 'sprach']],
+      ['Schreiben — mit Gerüst', 2.5, 'Einen kompletten Text mit Hilfsmitteln schreiben.', ['Text mit Vorlage schreiben; mit Modellantwort vergleichen', 'schr']],
+      ['Grammatik', 2, 'Nominalisierung und Partizipialkonstruktionen.', ['Heft: erste Hälfte', 'wb4'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Nominalisierung: Rest und Umformungen.', ['Heft: zweite Hälfte', 'wb4'], ['15 Min. Wörter', 'voc']],
+      ['Hören', 2, 'Weitere Hörtexte, erst ohne Transkript.', ['Aufgaben; danach Transkript', 'hoer']],
+      ['Wiederholung 2', 1.5, 'Stoff der Wochen 1–3 festigen.', ['Fällige Wörter', 'voc'], ['Gesprächs-Situationen laut beantworten', 'sit'], ['Fortschritt ansehen', 'prog']],
+      ['Sprechen — Präsentation', 2, 'Ein Thema zusammenhängend vorstellen.', ['Phrasenbank; 2–3 Minuten-Vortrag laut, aufnehmen', 'muend']],
+      ['Grammatik', 2, 'Erweiterte Relativsätze.', ['Heft: erste Hälfte', 'wb5'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Relativsätze: Rest und Mischformen.', ['Heft: zweite Hälfte', 'wb5'], ['15 Min. Wörter', 'voc']],
+      ['Lesen — mit Zeit', 2, 'Zweiter Durchgang mit Uhr.', ['Aufgaben mit Zeitlimit; Strategie anpassen', 'lese']],
+      ['Sprachbausteine — mit Zeit', 1.5, 'Lückentexte im Zeitlimit.', ['Aufgaben mit Uhr', 'sprach']],
+      ['Schreiben — ohne Gerüst', 2.5, 'Text in 30 Minuten schreiben.', ['Text unter Zeit schreiben; Checkliste nutzen', 'schr']],
+      ['Grammatik', 2, 'Futur, Vermutung, Modalverben.', ['Heft: erste Hälfte', 'wb6'], ['15 Min. Wörter', 'voc']],
+      ['Grammatik', 2, 'Vermutung über die Vergangenheit.', ['Heft: zweite Hälfte', 'wb6'], ['15 Min. Wörter', 'voc']],
+      ['Hören — mit Zeit', 2, 'Hören unter Prüfungsbedingungen.', ['Aufgaben ohne Wiederholung', 'hoer']],
+      ['Wiederholung 3', 1.5, 'Wochen 1–4 sichern.', ['Fällige Wörter', 'voc'], ['Fortschritt ansehen', 'prog'], ['Satztraining: Kreis-Modus', 'satz']],
+      ['Satzkreis', 2, 'Ein Satz durch alle Zeiten und Modi.', ['Heft: erste Hälfte', 'wb7'], ['Satztraining', 'satz']],
+      ['Satzkreis', 2, 'Satzkreis: Rest und eigene Vorlage.', ['Heft: zweite Hälfte', 'wb7'], ['15 Min. Wörter', 'voc']],
+      ['Sprechen — Diskussion', 2, 'Für und Wider abwägen.', ['Phrasenbank; 2–3 Minuten dafür und dagegen, aufnehmen', 'muend']],
+      ['Lesen — Prüfungsbedingungen', 2, 'Alle Lesetexte am Stück.', ['Alle Aufgaben mit Uhr', 'lese']],
+      ['Sprachbausteine — Prüfungsbedingungen', 1.5, 'Alle Lückentexte am Stück.', ['Alle Aufgaben mit Uhr', 'sprach']],
+      ['Schreiben — Prüfungsbedingungen', 2.5, 'Text in der Prüfungszeit.', ['Text schreiben, danach Fehler nach Checkliste', 'schr']],
+      ['Hören — Prüfungsbedingungen', 2, 'Alle Hörteile am Stück.', ['Alle Aufgaben', 'hoer']],
+      ['Sprechen — Gesamtprobe', 2, 'Alle drei Teile, aufgenommen.', ['Alle Teile laut, anhören und bewerten', 'muend']],
+      ['Übersetzung kumulativ', 2, 'Alle B2-Themen in einem Satz.', ['Englisch → Deutsch durcharbeiten', 'wb9']],
+      ['Wiederholung 4', 1.5, 'Lücken finden.', ['Fortschritt ansehen: schwächste Themen notieren', 'prog'], ['Fällige Wörter', 'voc']],
+      ['Modelltest — Lesen &amp; Sprachbausteine', 2.5, 'Zwei Prüfungsteile am Stück.', ['Offiziellen telc-Modellsatz Lesen + Sprachbausteine unter Zeit', null], ['Fehler auswerten', 'lese']],
+      ['Modelltest — Hören &amp; Schreiben', 2.5, 'Hören und Schreiben am Stück.', ['Offiziellen telc-Modellsatz Hören + Schreiben unter Zeit', null], ['Text mit Checkliste bewerten', 'schr']],
+      ['Modelltest — Sprechen', 1.5, 'Gesprächssimulation.', ['Alle drei Teile, aufnehmen', 'muend']],
+      ['Schwachstellen 1', 2, 'Schwächstes Gebiet gezielt üben.', ['Passendes Heft noch einmal', 'wb1'], ['Fällige Wörter', 'voc']],
+      ['Schwachstellen 2', 2, 'Zweitschwächstes Gebiet üben.', ['Abschlussübersetzung (alle Niveaus)', 'cap'], ['Gesprächs-Situationen', 'sit']],
+      ['Leichte Wiederholung', 1, 'Nichts Neues mehr.', ['Redemittel und Konnektoren überfliegen', 'conn'], ['Fällige Wörter', 'voc']],
+      ['Letzter Tag', 0.5, 'Ruhe, Ablauf, Unterlagen.', ['Studienplan: Checkliste', 'plan']]
+    ]
+  };
+
+  var PLAN_KEY = 'dw.lernplan', START_KEY = 'dw.lernplan.start.';
+  var lvl = 'b2', done = {}, root = document.getElementById('lp-root'), startEl = document.getElementById('lp-start');
+
+  function load() {
+    try { done = JSON.parse(localStorage.getItem(PLAN_KEY) || '{}') || {}; } catch (e) { done = {}; }
+    try { var l = localStorage.getItem('dw.lernplan.level'); if (l === 'b1' || l === 'b2') lvl = l; } catch (e) {}
+  }
+  function save() { try { localStorage.setItem(PLAN_KEY, JSON.stringify(done)); } catch (e) {} }
+  function iso(d) { var m = d.getMonth() + 1, dd = d.getDate(); return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (dd < 10 ? '0' : '') + dd; }
+  function parse(s) { var p = (s || '').split('-'); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; }
+  function getStart() { try { return localStorage.getItem(START_KEY + lvl) || ''; } catch (e) { return ''; } }
+  function setStart(v) { try { localStorage.setItem(START_KEY + lvl, v); } catch (e) {} }
+  function esc(s) { return String(s); }
+  function link(t) {
+    if (t[1] === null) return esc(t[0]);
+    var href = P[lvl][t[1]] || (C[t[1]] && C[t[1]][0]);
+    if (!href) return esc(t[0]);
+    return '<a href="' + href + '">' + esc(t[0]) + '</a>';
+  }
+  var WD = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+
+  function render() {
+    var days = D[lvl], start = parse(getStart()), todayIso = iso(new Date()), h = '', n = days.length, count = 0, weekOpen = false;
+    startEl.value = getStart();
+    for (var i = 0; i < n; i++) {
+      var d = days[i], key = lvl + ':' + (i + 1), date = start ? new Date(start.getFullYear(), start.getMonth(), start.getDate() + i) : null;
+      if (i % 7 === 0) {
+        if (weekOpen) h += '</table></div></div>';
+        h += '<div class="section"><div class="section-title">Woche ' + (i / 7 + 1) + ' — Tag ' + (i + 1) + '–' + Math.min(i + 7, n) + '</div><div class="dw-table-scroll"><table>' +
+             '<tr><th style="width:2.2em"></th><th>Tag</th><th>Schwerpunkt · Ziel</th><th>Aufgaben</th><th>Zeit</th></tr>';
+        weekOpen = true;
+      }
+      if (done[key]) count++;
+      var when = date ? WD[date.getDay()] + ' ' + iso(date).slice(5).split('-').reverse().join('.') + (iso(date) === todayIso ? ' <strong>◀ heute</strong>' : '') : '';
+      var tasks = '';
+      for (var j = 3; j < d.length; j++) tasks += (j > 3 ? '<br>' : '') + link(d[j]);
+      h += '<tr><td><input type="checkbox" data-k="' + key + '"' + (done[key] ? ' checked' : '') + ' aria-label="Tag ' + (i + 1) + ' erledigt"></td>' +
+           '<td><strong>' + (i + 1) + '</strong><br>' + when + '</td>' +
+           '<td><strong>' + d[0] + '</strong><br>' + d[2] + '</td><td>' + tasks + '</td><td>ca. ' + String(d[1]).replace('.', ',') + ' Std.</td></tr>';
+    }
+    if (weekOpen) h += '</table></div></div>';
+    root.innerHTML = h;
+    document.getElementById('lp-progress').textContent = count + ' / ' + n + ' Tage erledigt (' + Math.round(100 * count / n) + ' %)';
+    var radios = document.querySelectorAll('input[name=lvl]');
+    for (var r = 0; r < radios.length; r++) radios[r].checked = radios[r].value === lvl;
+  }
+
+  load();
+  if (!getStart()) setStart(iso(new Date()));
+  render();
+
+  root.addEventListener('change', function (e) {
+    var k = e.target.getAttribute && e.target.getAttribute('data-k');
+    if (!k) return;
+    if (e.target.checked) done[k] = 1; else delete done[k];
+    save(); render();
+  });
+  document.addEventListener('change', function (e) {
+    if (e.target.name === 'lvl') { lvl = e.target.value; try { localStorage.setItem('dw.lernplan.level', lvl); } catch (x) {} if (!getStart()) setStart(iso(new Date())); render(); }
+  });
+  startEl.addEventListener('change', function () { if (startEl.value) { setStart(startEl.value); render(); } });
+  document.getElementById('lp-today').addEventListener('click', function () { setStart(iso(new Date())); render(); });
+  document.getElementById('lp-exam').addEventListener('click', function () {
+    var p = null; try { p = JSON.parse(localStorage.getItem('dw.profile') || 'null'); } catch (e) {}
+    var ex = p && parse(p.examDate);
+    if (!ex) { alert('Kein Prüfungsdatum im Profil. Oben rechts im Countdown-Chip eintragen.'); return; }
+    var n = D[lvl].length, s = new Date(ex.getFullYear(), ex.getMonth(), ex.getDate() - 3 - (n - 1));
+    setStart(iso(s)); render();
+  });
+})();
+</script>
+<script defer src="assets/app-shell.js"></script>
+</body>
+</html>
