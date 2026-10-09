@@ -24,7 +24,9 @@
   function readMode() {
     var m = null; try { m = localStorage.getItem(MODE_KEY); } catch (e) {}
     if (m === "print" || m === "interactive") return m;
-    return (window.matchMedia && window.matchMedia("(max-width: 640px)").matches) ? "interactive" : "print";
+    // phones and touch tablets (iPad is wider than 640px) default to interactive
+    var mm = window.matchMedia;
+    return (mm && (mm("(max-width: 640px)").matches || mm("(pointer: coarse)").matches)) ? "interactive" : "print";
   }
   function writeMode(m) { try { localStorage.setItem(MODE_KEY, m); } catch (e) {} }
 
@@ -108,6 +110,7 @@
     ".dw-ix-btns{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}",
     ".dw-ix-btns button{font-family:var(--sans);font-size:12.5px;padding:7px 13px;border:1px solid var(--ink);background:var(--paper);color:var(--ink);cursor:pointer}",
     ".dw-ix-btns .dw-ix-primary{background:var(--ink);color:var(--paper);font-weight:700}",
+    "@media (pointer:coarse){.dw-ix-bar button,.dw-ix-btns button,.dw-ix-sg{min-height:44px;padding:8px 16px!important;font-size:15px!important}.dw-ix-soltoggle,.dw-ix-reset{min-height:44px;font-size:14px!important}.dw-ix-field{font-size:17px}}",
     ".dw-ix-fb{margin:8px 0 0;font-family:var(--sans);font-size:12.5px;line-height:1.5}",
     ".dw-ix-fb .tag{font-weight:700}",
     ".dw-ix-fb.is-ok .tag{color:#2f7d32}",
